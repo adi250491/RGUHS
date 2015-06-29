@@ -19,7 +19,8 @@ public class LookupAction extends ActionSupport {
 	static Logger log = Logger.getLogger(LookupAction.class.getName());
 	private LookupBean lookupdata;
 	private LookupDAO lookupdao = new LookupDAO();
-	private ArrayList<LookupBean>paramList=new ArrayList<LookupBean>();
+	private ArrayList<LookupBean> paramList = new ArrayList<LookupBean>();
+	private List<LookupBean> lookupBeansList = new ArrayList<LookupBean>();
 
 	// End of Global Variables
 
@@ -28,31 +29,25 @@ public class LookupAction extends ActionSupport {
 	// Action Methods Here
 	public String AddParameter() {
 		try {
-			if(lookupdata.getLookupType().contentEquals("Boolean"))
-			{
-				List<FvBean>valueList=new ArrayList<FvBean>();
-				FvBean paramvalues=new FvBean();
+			if (lookupdata.getLookupType().contentEquals("Boolean")) {
+				List<FvBean> valueList = new ArrayList<FvBean>();
+				FvBean paramvalues = new FvBean();
 				paramvalues.setValue("1");
 				valueList.add(paramvalues);
-				paramvalues=new FvBean();
+				paramvalues = new FvBean();
 				paramvalues.setValue("0");
 				valueList.add(paramvalues);
-				lookupdata.setFvBeansList(valueList);	
+				lookupdata.setFvBeansList(valueList);
 			}
 			lookupdata = lookupdao.saveLookupData(lookupdata);
 			if (lookupdata.getLookupId() != null) {
 				request.setAttribute("redirectLink", "ParamForm.jsp");
-				if(lookupdata.getLookupType().contentEquals("Boolean"))
-				{
+				if (lookupdata.getLookupType().contentEquals("Boolean")) {
 					return "Boolean";
-				}
-				else if(lookupdata.getLookupType().contentEquals("Integer"))
-				{
+				} else if (lookupdata.getLookupType().contentEquals("Integer")) {
 					return "Numeric";
-				}
-				else
-				{
-				return SUCCESS;
+				} else {
+					return SUCCESS;
 				}
 			} else {
 				return ERROR;
@@ -64,16 +59,20 @@ public class LookupAction extends ActionSupport {
 		}
 
 	}
-	
-	public String GetParameterListAll()
-	{
+
+	public String GetParameterListAll() {
 		try {
-			paramList=lookupdao.getLookupData("All", null, null);
+			paramList = lookupdao.getLookupData("All", null, null);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
+	}
+
+	public String parameterValList() {
+		lookupBeansList = lookupdao.getListOfLookUpValues();
+		return SUCCESS;
 	}
 
 	// End of Action Methods
@@ -92,5 +91,13 @@ public class LookupAction extends ActionSupport {
 	public ArrayList<LookupBean> getParamList() {
 		return paramList;
 	}
-	
+
+	public List<LookupBean> getLookupBeansList() {
+		return lookupBeansList;
+	}
+
+	public void setLookupBeansList(List<LookupBean> lookupBeansList) {
+		this.lookupBeansList = lookupBeansList;
+	}
+
 }

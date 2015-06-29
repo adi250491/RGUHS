@@ -127,7 +127,7 @@
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
-							<li><a class="ajax-link" href="Admin-FeeConfig.html"><i
+							<li><a class="ajax-link" href="getFeeParameterList"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
 							<li><a class="ajax-link" href="Admin-Reports.html"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>

@@ -2,6 +2,7 @@ package com.dexpert.feecollection.main.fee.lookup;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -76,4 +77,18 @@ public class LookupDAO {
 		}
 	}
 	// ----------------------------
+
+	public List<LookupBean> getListOfLookUpValues() {
+		Session session = factory.openSession();
+		try {
+
+			Criteria criteria = session.createCriteria(LookupBean.class);
+			List<LookupBean> list = criteria.list();
+			return list;
+
+		} finally {
+			// close Session
+			session.close();
+		}
+	}
 }

@@ -158,6 +158,16 @@
 		</action>
 
 	</package>
+<package name="Fee parameter Values" extends="struts-default">
 
+		<action name="getFeeParameterList"
+			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
+			method="parameterValList">
+
+
+			<result name="success">Admin-FeeConfig.jsp</result>
+		</action>
+
+	</package>
 
 </struts>
