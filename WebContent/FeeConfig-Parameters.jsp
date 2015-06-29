@@ -128,7 +128,7 @@
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> My Colleges</span></a></li>
-							<li><a class="ajax-link" href="Admin-FeeConfig.html"><i
+							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
 							<li><a class="ajax-link" href="Admin-Reports.html"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
@@ -225,10 +225,7 @@
 											class="btn btn-default ">Add New Parameter</button>
 										
 									</div>
-									<button class="btn btn-default"
-										onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Search
-										Parameters</button>
-
+									
 									
 
 									<table
@@ -266,191 +263,7 @@
 										</tr>
 										</s:iterator>
 										</s:else>
-											<tr>
-												<td>1</td>
-												<td>Course</td>
-												<td class="center">Course Type</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Course</td>
-												<td class="center">Course Duration</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Course</td>
-												<td class="center">Course Name</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>Course</td>
-												<td class="center">Faculty</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>Student</td>
-												<td class="center">Category</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>Student</td>
-												<td class="center">Physically Challenged</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>7</td>
-												<td>Student</td>
-												<td class="center">Nationality</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>College</td>
-												<td class="center">Autonomous?</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td>College</td>
-												<td class="center">Aided?</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td>Service</td>
-												<td class="center">Document Type</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>10</td>
-												<td>Service</td>
-												<td class="center">Document Year</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>11</td>
-												<td>Service</td>
-												<td class="center">Late Fee</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>12</td>
-												<td>Service</td>
-												<td class="center">Priority Request?</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>13</td>
-												<td>Course</td>
-												<td class="center">Sanctioned Seats</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-
-
-										</tbody>
+																					</tbody>
 									</table>
 								</div>
 

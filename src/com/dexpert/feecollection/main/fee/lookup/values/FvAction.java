@@ -27,7 +27,7 @@ public class FvAction extends ActionSupport {
 		ArrayList<LookupBean>paramList=new ArrayList<LookupBean>();
 		LookupBean paramBean=new LookupBean();
 		Integer id=Integer.parseInt(request.getParameter("paramId"));
-		paramList=lpDao.getLookupData("ID",null,id);
+		paramList=lpDao.getLookupData("ID",null,id,null);
 		if(paramList.size()==0)
 		{
 			return ERROR;

@@ -156,18 +156,14 @@
 			<result name="success">FeeForm.jsp</result>
 
 		</action>
+<action name="GenerateCombination"
+			class="com.dexpert.feecollection.main.fee.config.FcAction"
+			method="GenerateCombination">
 
-	</package>
-<package name="Fee parameter Values" extends="struts-default">
+			<result name="success">FeeForm.jsp</result>
+	
 
-		<action name="getFeeParameterList"
-			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
-			method="parameterValList">
-
-
-			<result name="success">Admin-FeeConfig.jsp</result>
 		</action>
-
 	</package>
 
 </struts>

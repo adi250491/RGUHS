@@ -40,7 +40,7 @@ public class LookupDAO {
 		}
 	}
 
-	public ArrayList<LookupBean> getLookupData(String filterKey,String filterValue,Integer id) {
+	public ArrayList<LookupBean> getLookupData(String filterKey,String filterValue,Integer id,ArrayList<Integer>Ids) {
 		// Declarations
 
 		// Open session from session factory
@@ -58,6 +58,10 @@ public class LookupDAO {
 			if(filterKey.contentEquals("Type"))
 			{
 				lookupCr.add(Restrictions.eq("lookupType", filterValue));
+			}
+			if(filterKey.contentEquals("Ids"))
+			{
+				lookupCr.add(Restrictions.in("lookupId",Ids));
 			}
 			
 			ArrayList<LookupBean>resultList=new ArrayList<LookupBean>();

@@ -130,7 +130,7 @@
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> My Colleges</span></a></li>
-							<li><a class="ajax-link" href="Admin-FeeConfig.html"><i
+							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
 							<li><a class="ajax-link" href="Admin-Reports.html"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
@@ -183,9 +183,9 @@
 
 									<p class="btn-group">
 										<button class="btn btn-default">Fee Templates</button>
-										<button class="btn btn-default" onclick='ShowFeeValues()'>Fee
+										<button class="btn btn-default" onclick='window.location="FeeConfig-Values.jsp"'>Fee
 											Values</button>
-										<button class="btn btn-default" onclick='ShowFeeParameters()'>Fee
+										<button class="btn btn-default" onclick='window.location="GetAllParameters"'>Fee
 											Parameters</button>
 									</p>
 

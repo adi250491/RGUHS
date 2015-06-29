@@ -62,7 +62,7 @@ public class LookupAction extends ActionSupport {
 
 	public String GetParameterListAll() {
 		try {
-			paramList = lookupdao.getLookupData("All", null, null);
+			paramList = lookupdao.getLookupData("All", null, null,null);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
