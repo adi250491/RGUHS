@@ -245,16 +245,14 @@
 											</tr>
 										</thead>
 										<tbody>
-											<%
-												int i = 1;
-											%>
+											
 											<s:iterator value="lookupBeansList">
 
 												<tr>
 
-													<td><%=i%></td>
-													<td><s:property value="lookupName" /></td>
-													<td class="center"><s:property value="lookupType" /></td>
+													<td></td>
+													<td><s:property value="lookupType" /></td>
+													<td class="center"><s:property value="lookupName" /></td>
 													<td class="center"><a class="btn btn-success btn-sm"
 														href="#"> <i
 															class="glyphicon glyphicon-zoom-in icon-white"></i> View
@@ -271,9 +269,7 @@
 
 
 
-												<%
-													i++;
-												%>
+												
 											</s:iterator>
 										</tbody>
 									</table>

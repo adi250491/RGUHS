@@ -176,6 +176,37 @@ public class AffAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	// edit college doc
+
+	public String editCollegeDoc() {
+		String id = request.getParameter("instId");
+
+		Integer instId = Integer.parseInt(id);
+
+		affInstBean = affDao.getOneCollegeRecord(instId);
+		return SUCCESS;
+
+	}
+
+	// update College Doc
+
+	public String updateCollegeDoc() {
+
+		String path = request.getServletContext().getRealPath("/");
+		path = path + File.separator;
+		File f = new File(path + "/RGUHS/");
+		f.mkdir();
+
+		affInstBean.setFileUpload(fileUpload);
+		affInstBean.setFileUploadFileName(fileUploadFileName);
+		affDao.updateCollegeDoc(affInstBean, f + File.separator);
+
+		String msg = "File Successfully Updated";
+		request.setAttribute("msg", msg);
+
+		return SUCCESS;
+	}
+
 	// deleteInstitute()
 	// getAssociatedFees()
 	// getAssociatedApplicants()

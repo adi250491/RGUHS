@@ -71,13 +71,14 @@
 				<!-- content starts -->
 				<div></div>
 
-				<form action="updateCollegeDetails" method="get">
+				<form action="updateCollegeDoc" enctype="multipart/form-data"
+					method="post">
 					<div class="row">
 						<div class="box col-md-12">
 							<div class="box-inner">
 								<div class="box-header well">
 									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> College Details
+										<i class="glyphicon glyphicon-info-sign"></i> College Document
 									</h2>
 
 									<div class="box-icon">
@@ -107,74 +108,13 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-
-													<td style="font-weight: bold;">District/Area Name</td>
-													<td><input type="text" required="required"
-														name="affInstBean.place" class="form-control"
-														value="<s:property value="affInstBean.place" />"></td>
-
-												</tr>
-												<tr>
-
-													<td style="font-weight: bold;">College Name</td>
-													<td><input type="text" class="form-control"
-														required="required" name="affInstBean.instName"
-														value="<s:property value="affInstBean.instName" />"></td>
-
-												</tr>
-												<tr>
-
-													<td style="font-weight: bold;">Principal's Name</td>
-													<td><input type="text" class="form-control"
-														required="required" name="affInstBean.contactPerson"
-														value="<s:property value="affInstBean.contactPerson" />"></td>
-
-												</tr>
-												<tr>
-
-													<td style="font-weight: bold;">Telephone Number</td>
-													<td><input type="text" class="form-control"
-														pattern="[0-9]*" required="required"
-														name="affInstBean.contactNumber"
-														value="<s:property value="affInstBean.contactNumber" />"></td>
-
-												</tr>
-												<tr>
-
-													<td style="font-weight: bold;">Mobile Number</td>
-													<td><input type="text" class="form-control"
-														pattern="[789][0-9]{9}" required="required"
-														name="affInstBean.mobileNum"
-														value="<s:property value="affInstBean.mobileNum" />"></td>
-
-												</tr>
-												<tr>
-
-													<td style="font-weight: bold;">Email Id</td>
-													<td><input type="email" class="form-control"
-														required="required" name="affInstBean.email"
-														value="<s:property value="affInstBean.email" />"></td>
-
-												</tr>
-
-												<tr>
-
-													<td style="font-weight: bold;">Address</td>
-													<td><input type="text" class="form-control"
-														required="required" name="affInstBean.instAddress"
-														value="<s:property value="affInstBean.instAddress" />"></td>
-
-												</tr>
-
 
 
 												<tr>
 
 													<td style="font-weight: bold;">Update Document</td>
-													<td><input type="button" value="Update File"
-														class="btn btn-success"
-														onclick="editCollegeDoc(<s:property value="affInstBean.instId" />)"></td>
+													<td><input type="file" name="fileUpload" size="40"
+														class="form-control" required="required"></td>
 
 												</tr>
 
@@ -191,12 +131,9 @@
 						</div>
 						<div class="col-md-12">
 
-							<input type="submit" class="btn btn-success"
-								value="Update College Info">
+							<input type="submit" class="btn btn-success" value="Update File">
 
-							<button class="btn btn-warning"
-								onclick='window.location="CollegeFeeDetails.html"'>View
-								Associated Fees</button>
+
 
 							<button onclick="window.close()" class="btn btn-info">Close</button>
 
@@ -295,15 +232,6 @@
 			window.opener.location = "College-Payment-Summary.html";
 			window.close();
 
-		}
-		
-		function editCollegeDoc(id)
-		{
-			
-			window.location="editCollegeDoc?instId="+id;
-			
-			
-			
 		}
 	</script>
 </body>

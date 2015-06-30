@@ -128,7 +128,7 @@ public class AffDAO {
 		Criteria criteria = session.createCriteria(AffBean.class);
 
 		ArrayList<AffBean> affBeansList = (ArrayList<AffBean>) criteria.list();
-
+		session.close();
 		return affBeansList;
 	}
 
@@ -150,7 +150,7 @@ public class AffDAO {
 		Session session = factory.openSession();
 
 		AffBean affBean = (AffBean) session.get(AffBean.class, instId);
-
+		session.close();
 		return affBean;
 	}
 
@@ -159,14 +159,72 @@ public class AffDAO {
 
 		Session session = factory.openSession();
 
-		Transaction tx = session.beginTransaction();
-		// AffBean oldBean = (AffBean) session.get(AffBean.class,
-		// newAffInstBean.getInstId());
+		try {
+			Transaction tx = session.beginTransaction();
+			AffBean oldBean = (AffBean) session.get(AffBean.class, newAffInstBean.getInstId());
 
-		session.merge(newAffInstBean);
-		
-		tx.commit();
+			oldBean.setPlace(newAffInstBean.getPlace());
+			oldBean.setInstName(newAffInstBean.getInstName());
+			oldBean.setContactPerson(newAffInstBean.getContactPerson());
+			oldBean.setContactNumber(newAffInstBean.getContactNumber());
+			oldBean.setMobileNum(newAffInstBean.getMobileNum());
+			oldBean.setEmail(newAffInstBean.getEmail());
+			oldBean.setInstAddress(newAffInstBean.getInstAddress());
 
+			session.merge(oldBean);
+
+			tx.commit();
+		} finally {
+			session.close();
+		}
+
+	}
+
+	public void updateCollegeDoc(AffBean newAffInstBean, String path) {
+
+		Session session = factory.openSession();
+		try {
+			AffBean oldBean = (AffBean) session.get(AffBean.class, newAffInstBean.getInstId());
+			// file input Stream is use to save file in to DataBase
+
+			FileInputStream fileInputStream = null;
+
+			// to create new file with actual name with extension
+			File dstfile = new File(path, newAffInstBean.getFileUploadFileName());
+
+			// to copy files at specified destination path
+			FileUtils.copyFile(newAffInstBean.getFileUpload(), dstfile);
+
+			// convert file into array of bytes
+			byte[] bFile = new byte[(int) dstfile.length()];
+			fileInputStream = new FileInputStream(dstfile);
+
+			int fileSize = fileInputStream.read(bFile);
+
+			// fileinputStream must be close
+			fileInputStream.close();
+
+			newAffInstBean.setFilesByteSize(bFile);
+			newAffInstBean.setFileSize(fileSize);
+			session.beginTransaction();
+
+			oldBean.setFilesByteSize(newAffInstBean.getFilesByteSize());
+			oldBean.setFileSize(newAffInstBean.getFileSize());
+			oldBean.setFileUploadFileName(newAffInstBean.getFileUploadFileName());
+
+			session.saveOrUpdate(oldBean);
+			session.getTransaction().commit();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			// close session
+			session.close();
+
+		}
 	}
 
 	// ---------------------------------------------------

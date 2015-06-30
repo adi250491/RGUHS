@@ -89,9 +89,11 @@
 			<result name="input">/ParamForm.jsp</result>
 			<result name="invalid.token">/ParamValForm.jsp</result>
 		</action>
-		<action name="GetAllParameters" class="com.dexpert.feecollection.main.fee.lookup.LookupAction" method="GetParameterListAll">
-		    <result name="success">/FeeConfig-Parameters.jsp</result>
-		    
+		<action name="GetAllParameters"
+			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
+			method="GetParameterListAll">
+			<result name="success">/FeeConfig-Parameters.jsp</result>
+
 		</action>
 	</package>
 
@@ -133,6 +135,27 @@
 
 		</action>
 
+		<action name="editCollegeDoc"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="editCollegeDoc">
+
+			<result name="success">Update-AffDocs.jsp</result>
+
+		</action>
+
+
+		<action name="updateCollegeDoc"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="updateCollegeDoc">
+
+			<result name="success">Success.jsp</result>
+
+		</action>
+
+
+
+
+
 	</package>
 
 	<package name="FeeParamValues" extends="struts-default">
@@ -146,22 +169,20 @@
 		</action>
 
 	</package>
-	
+
 	<package name="FeeConfig" extends="struts-default">
 
 		<action name="GetParamValues"
-			class="com.dexpert.feecollection.main.fee.config.FcAction"
-			method="populateFeeForm">
+			class="com.dexpert.feecollection.main.fee.config.FcAction" method="populateFeeForm">
 
 			<result name="success">FeeForm.jsp</result>
 
 		</action>
-<action name="GenerateCombination"
-			class="com.dexpert.feecollection.main.fee.config.FcAction"
-			method="GenerateCombination">
+		<action name="GenerateCombination"
+			class="com.dexpert.feecollection.main.fee.config.FcAction" method="GenerateCombination">
 
 			<result name="success">FeeForm.jsp</result>
-	
+
 
 		</action>
 	</package>

@@ -50,7 +50,9 @@
 </head>
 
 <body>
-<%int i=1; %>
+	<%
+		int i = 1;
+	%>
 	<!-- topbar starts -->
 	<div class="navbar navbar-default" role="navigation">
 
@@ -181,9 +183,11 @@
 
 									<p class="btn-group">
 										<button class="btn btn-default">Fee Templates</button>
-										<button class="btn btn-default" onclick='window.location="FeeConfig-Values.jsp"'>Fee
+										<button class="btn btn-default"
+											onclick='window.location="FeeConfig-Values.jsp"'>Fee
 											Values</button>
-										<button class="btn btn-default" onclick='window.location="GetAllParameters"'>Fee
+										<button class="btn btn-default"
+											onclick='window.location="GetAllParameters"'>Fee
 											Parameters</button>
 									</p>
 
@@ -198,7 +202,7 @@
 				<!--/row-->
 
 				<!-- Fee Parameters Row -->
-				<div class="row" id="FeeParametersBox" >
+				<div class="row" id="FeeParametersBox">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
@@ -223,10 +227,10 @@
 										<button
 											onclick='window.open("ParamForm.jsp", "Admin Report", "height=1080,width=1000")'
 											class="btn btn-default ">Add New Parameter</button>
-										
+
 									</div>
-									
-									
+
+
 
 									<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
@@ -240,30 +244,35 @@
 											</tr>
 										</thead>
 										<tbody>
-										<s:if test="%{getParamListt.isEmpty()}">
-										<tr>
-										<td colspan="4"> No Parameters Found. Please add new Parameters using the Add New Parameter Button.</td>
-										</tr>
-										</s:if>
-										<s:else>
-										<s:iterator value="paramList">
-										<tr>
-										<td><%=i %>
-										<%i=i++; %></td>
-										<td><s:property value="lookupScope"/> </td>
-										<td><s:property value="lookupName"/> </td>
-										<td><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-										</tr>
-										</s:iterator>
-										</s:else>
-																					</tbody>
+											<s:if test="%{getParamListt.isEmpty()}">
+												<tr>
+													<td colspan="4">No Parameters Found. Please add new
+														Parameters using the Add New Parameter Button.</td>
+												</tr>
+											</s:if>
+											<s:else>
+
+												<s:iterator value="paramList">
+													<tr>
+														<td><%=i%></td>
+														<td><s:property value="lookupScope" /></td>
+														<td><s:property value="lookupName" /></td>
+														<td><a class="btn btn-success btn-sm" href="#"> <i
+																class="glyphicon glyphicon-zoom-in icon-white"></i> View
+														</a> <a class="btn btn-info btn-sm" href="#"> <i
+																class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
+														</a> <a class="btn btn-danger btn-sm" href="#"> <i
+																class="glyphicon glyphicon-zoom-in icon-white"></i>
+																Delete
+														</a></td>
+													</tr>
+
+													<%
+														 i++;
+													%>
+												</s:iterator>
+											</s:else>
+										</tbody>
 									</table>
 								</div>
 
@@ -300,8 +309,7 @@
 										<button class="btn btn-default "
 											onclick='window.open("GetParamValues", "Fee Form", "height=1080,width=1000")'>Add
 											New Fee</button>
-										<button class="btn btn-default">Search
-											Fees</button>
+										<button class="btn btn-default">Search Fees</button>
 
 									</p>
 

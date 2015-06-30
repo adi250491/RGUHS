@@ -137,6 +137,13 @@
 												<td><s:property value="affInstBean.email" /></td>
 
 											</tr>
+											
+											<tr>
+
+												<td style="font-weight: bold;">Address</td>
+												<td><s:property value="affInstBean.instAddress" /></td>
+
+											</tr>
 											<tr>
 
 												<td style="font-weight: bold;">Uploaded FIle</td>
