@@ -79,7 +79,8 @@
 							<div class="box-inner">
 								<div class="box-header well">
 									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> New University Form
+										<i class="glyphicon glyphicon-info-sign"></i> New University
+										Form
 									</h2>
 
 									<div class="box-icon">
@@ -105,8 +106,8 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td>1</td>
-													<td>Institute Name</td>
+
+													<td>University Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="instName"
 																name="parBean.parInstName" placeholder="University Name"
@@ -115,7 +116,7 @@
 
 												</tr>
 												<tr>
-													<td>2</td>
+
 													<td>Address</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="instAddress"
@@ -128,7 +129,7 @@
 												</tr>
 
 												<tr>
-													<td>2</td>
+
 													<td>Contact Person</td>
 													<td><div id="the-basics" class="has-success">
 															<textarea required="required" id="instContactPerson"
@@ -139,7 +140,7 @@
 
 												</tr>
 												<tr>
-													<td>3</td>
+
 													<td>Email</td>
 													<td><div id="the-basics" class="has-success">
 															<input id="instEmail" name="parBean.parInstEmail"
@@ -150,7 +151,7 @@
 
 												</tr>
 												<tr>
-													<td>4</td>
+
 													<td>Contact Number</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
@@ -162,7 +163,7 @@
 
 												</tr>
 												<tr>
-													<td>5</td>
+
 													<td>Upload Document</td>
 													<td><div id="the-basics" class="has-success">
 															<input name="fileUpload" type="file" class="form-control">
@@ -185,7 +186,7 @@
 						</div>
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-success">Save
-								Institute</button>
+								University</button>
 
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>
