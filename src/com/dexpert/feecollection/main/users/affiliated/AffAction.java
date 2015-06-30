@@ -48,14 +48,9 @@ public class AffAction extends ActionSupport {
 	public String registerInstitute() throws Exception {
 
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
+		log.info("List Size is ::" + instNameList.size());
 
-		if (instNameList.size() > 1) {
-			log.info("College NaME ALREADY AVAILABLE");
-
-			request.setAttribute("msg", "Institute Name is Already Registered");
-			return "failure";
-
-		} else {
+		if (instNameList.isEmpty()) {
 
 			String path = request.getServletContext().getRealPath("/");
 			path = path + File.separator;
@@ -122,6 +117,13 @@ public class AffAction extends ActionSupport {
 
 		// else forward error message on input page
 
+		else {
+			log.info("College NaME ALREADY AVAILABLE");
+
+			request.setAttribute("msg", "Institute Name is Already Registered");
+			return "failure";
+		}
+
 	}
 
 	// getInstituteDetails()
@@ -186,19 +188,20 @@ public class AffAction extends ActionSupport {
 	public String updateCollegeDetail() {
 
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
+		log.info("list Size is ::" + instNameList.size());
+		if (instNameList.isEmpty()) {
 
-		if (instNameList.size() > 1) {
-			log.info("College NaME ALREADY AVAILABLE");
-
-			request.setAttribute("msg", "Institute Name is Already Registered");
-			return "failure";
-		} else {
-			log.info("list Size is ::" + instNameList.size());
 			affDao.updateCollege(affInstBean);
 
 			request.setAttribute("msg", "Institute Updated Successfully");
 
 			return SUCCESS;
+		} else {
+
+			log.info("College NaME ALREADY AVAILABLE");
+
+			request.setAttribute("msg", "Institute Name is Already Registered");
+			return "failure";
 
 		}
 
