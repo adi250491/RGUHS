@@ -38,6 +38,26 @@
 			<result name="success">Admin-MyColleges.jsp</result>
 
 		</action>
+
+
+		<action name="downloadFile"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="downloadFile">
+
+			<result name="success" type="stream">
+				<!-- <param name="contentType">application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,text/html,text/plain,application/msword,text/richtext</param> -->
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
+				<param name="bufferSize">10024</param>
+			</result>
+
+
+
+
+
+
+
+		</action>
 	</package>
 
 

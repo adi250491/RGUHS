@@ -107,7 +107,7 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td>1</td>
+													
 													<td>District Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="District/Area"
@@ -118,7 +118,7 @@
 
 												</tr>
 												<tr>
-													<td>2</td>
+													
 													<td>College Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="CollegeName"
@@ -130,7 +130,7 @@
 												</tr>
 
 												<tr>
-													<td>2</td>
+													
 													<td>Address</td>
 													<td><div id="the-basics" class="has-success">
 															<textarea required="required" id="CollegeName"
@@ -141,7 +141,7 @@
 
 												</tr>
 												<tr>
-													<td>3</td>
+													
 													<td>Principal's Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input id="PrinciName" name="affInstBean.contactPerson"
@@ -152,7 +152,7 @@
 
 												</tr>
 												<tr>
-													<td>4</td>
+													
 													<td>Telephone Number</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
@@ -165,7 +165,7 @@
 												</tr>
 
 												<tr>
-													<td>4</td>
+													
 													<td>Mobile Number</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
@@ -177,7 +177,7 @@
 
 												</tr>
 												<tr>
-													<td>4</td>
+												
 													<td>Email Id</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
@@ -189,7 +189,7 @@
 												</tr>
 
 												<tr>
-													<td>5</td>
+													
 													<td>Upload Document</td>
 													<td><div id="the-basics" class="has-success">
 															<input name="fileUpload" type="file" class="form-control">

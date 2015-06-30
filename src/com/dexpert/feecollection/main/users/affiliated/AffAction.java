@@ -1,6 +1,9 @@
 package com.dexpert.feecollection.main.users.affiliated;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -26,7 +29,8 @@ public class AffAction extends ActionSupport {
 	AffDAO affDao = new AffDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
-
+	String fileFileName;
+	FileInputStream inputStream;
 	private File fileUpload;
 
 	private String fileUploadFileName;
@@ -207,6 +211,28 @@ public class AffAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	// download File
+
+	public String downloadFile() throws IOException {
+		String docuId = request.getParameter("documentId");
+		log.info("Document ID ::" + docuId);
+		Integer id = Integer.parseInt(docuId);
+		affInstBean = affDao.getOneCollegeRecord(id);
+
+		FileOutputStream fileOuputStream = new FileOutputStream(affInstBean.getFileUploadFileName());
+
+		// byte[] bFile = new byte[(int)
+		// documentsBean.getFilesByteSize().length];
+
+		fileOuputStream.write(affInstBean.getFilesByteSize());
+		fileOuputStream.close();
+
+		fileFileName = affInstBean.getFileUploadFileName();
+		inputStream = new FileInputStream(affInstBean.getFileUploadFileName());
+
+		return SUCCESS;
+	}
+
 	// deleteInstitute()
 	// getAssociatedFees()
 	// getAssociatedApplicants()
@@ -263,6 +289,22 @@ public class AffAction extends ActionSupport {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public FileInputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(FileInputStream inputStream) {
+		this.inputStream = inputStream;
 	}
 
 	// End of Getter Setter Methods

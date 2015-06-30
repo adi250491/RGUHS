@@ -137,7 +137,7 @@
 												<td><s:property value="affInstBean.email" /></td>
 
 											</tr>
-											
+
 											<tr>
 
 												<td style="font-weight: bold;">Address</td>
@@ -147,7 +147,10 @@
 											<tr>
 
 												<td style="font-weight: bold;">Uploaded FIle</td>
-												<td><s:property value="affInstBean.fileUploadFileName" /></td>
+												<td><strong><a
+														href="downloadFile?documentId=<s:property value="affInstBean.instId" />"
+														title="Click to Download File"><s:property
+																value="affInstBean.fileUploadFileName" /></a></strong></td>
 
 											</tr>
 

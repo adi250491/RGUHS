@@ -2,9 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
-<%
-	int i = 1;
-%>
+
 <meta charset="utf-8">
 <title>Fee Collection Portal- My Colleges</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -209,21 +207,20 @@
 										<thead>
 											<tr>
 												<th width="7%">Sr. No.</th>
-												<!-- <th>ID</th> -->
+
 												<th>College Name</th>
 												<th>Place</th>
 												<th>Actions</th>
 											</tr>
 										</thead>
 										<tbody>
+											<%
+												int i = 1;
+											%>
 											<s:iterator value="affInstList">
 												<tr>
-													<td><%=i%> <%
- 	i++;
- %> <input type="hidden"
-														value="<s:property value="instId"/>"
-														name="<s:property value="instId"/>"></td>
-													<%-- 	<td><s:property value="instId"/> </td> --%>
+													<td><%=i%> </td>
+
 													<td class="center"><s:property value="instName" /></td>
 													<td class="center"><s:property value="place" /></td>
 													<td class="center"><a class="btn btn-success btn-sm"
@@ -231,6 +228,10 @@
 															class="glyphicon glyphicon-zoom-in icon-white"></i> View
 													</a></td>
 												</tr>
+
+												<%
+													i++;
+												%>
 											</s:iterator>
 
 
