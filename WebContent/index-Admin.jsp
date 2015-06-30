@@ -178,7 +178,7 @@
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 									<h1>
-										Welcome &lt;University Name&gt;<br> <small>This
+										Welcome &lt;Super Admin Name&gt;<br> <small>This
 											is the online fee payment portal</small>
 									</h1>
 									<p>You can use the portal to monitor and manage the fee

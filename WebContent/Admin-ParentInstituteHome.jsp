@@ -142,7 +142,8 @@
 							<li class="nav-header">Main</li>
 							<li><a class="ajax-link" href="index-Admin.jsp"><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
-							<li><a class="ajax-link" href="Admin-ParentInstituteHome.jsp"><i
+							<li><a class="ajax-link"
+								href="Admin-ParentInstituteHome.jsp"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
@@ -185,7 +186,8 @@
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-list-alt"></i> All Colleges
+									<i class="glyphicon glyphicon-list-alt"></i> &nbsp;Total
+									Universities
 								</h2>
 
 								<div class="box-icon">
@@ -197,7 +199,7 @@
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
-								<%-- <s:if> --%>
+									<%-- <s:if> --%>
 									<div class="row">
 										<div class="col-md-12">
 											<button class="btn btn-sm btn-info pull-right"
@@ -208,40 +210,40 @@
 									</div>
 									<%-- </s:if> --%>
 									<s:else>
-									<!---Content-->
-									<table
-										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
-										<thead>
-											<tr>
-												<th width="7%">Sr. No.</th>
-												<!-- <th>ID</th> -->
-												<th>College Name</th>
-												<th>Place</th>
-												<th>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											<s:iterator value="affInstList">
+										<!---Content-->
+										<table
+											class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
+											<thead>
 												<tr>
-													<td><%=i%> <%
- 	i++;
- %> <input type="hidden"
-														value="<s:property value="instId"/>"
-														name="<s:property value="instId"/>"></td>
-													<%-- 	<td><s:property value="instId"/> </td> --%>
-													<td class="center"><s:property value="instName" /></td>
-													<td class="center"><s:property value="place" /></td>
-													<td class="center"><a class="btn btn-success btn-sm"
-														onclick="showDetails(<s:property value="instId"/>)"> <i
-															class="glyphicon glyphicon-zoom-in icon-white"></i> View
-													</a></td>
+													<th width="7%">Sr. No.</th>
+													<!-- <th>ID</th> -->
+													<th>College Name</th>
+													<th>Place</th>
+													<th>Actions</th>
 												</tr>
-											</s:iterator>
+											</thead>
+											<tbody>
+												<s:iterator value="affInstList">
+													<tr>
+														<td><%=i%> <%
+ 	i++;
+ %> <input type="hidden" value="<s:property value="instId"/>"
+															name="<s:property value="instId"/>"></td>
+														<%-- 	<td><s:property value="instId"/> </td> --%>
+														<td class="center"><s:property value="instName" /></td>
+														<td class="center"><s:property value="place" /></td>
+														<td class="center"><a class="btn btn-success btn-sm"
+															onclick="showDetails(<s:property value="instId"/>)">
+																<i class="glyphicon glyphicon-zoom-in icon-white"></i>
+																View
+														</a></td>
+													</tr>
+												</s:iterator>
 
 
-										</tbody>
-									</table>
-</s:else>
+											</tbody>
+										</table>
+									</s:else>
 								</div>
 
 

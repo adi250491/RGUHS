@@ -79,7 +79,7 @@
 							<div class="box-inner">
 								<div class="box-header well">
 									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> New College Form
+										<i class="glyphicon glyphicon-info-sign"></i> New University Form
 									</h2>
 
 									<div class="box-icon">
@@ -109,7 +109,7 @@
 													<td>Institute Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="instName"
-																name="parBean.parInstName" placeholder="Institute Name"
+																name="parBean.parInstName" placeholder="University Name"
 																type="text" class="form-control">
 														</div></td>
 
@@ -120,7 +120,7 @@
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="instAddress"
 																name="parBean.parInstAddress"
-																placeholder="Instute Address" type="text"
+																placeholder="University Address" type="text"
 																class="form-control">
 
 														</div></td>
@@ -143,7 +143,7 @@
 													<td>Email</td>
 													<td><div id="the-basics" class="has-success">
 															<input id="instEmail" name="parBean.parInstEmail"
-																placeholder="Institute Email" type="text"
+																placeholder="University Email" type="text"
 																class="form-control">
 
 														</div></td>
@@ -281,7 +281,7 @@
 
 	<script>
 		function OpenSummaryInParent() {
-			window.opener.location = "College-Payment-Summary.html";
+			window.opener.location.reload(true);
 			window.close();
 
 		}
