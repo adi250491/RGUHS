@@ -218,12 +218,7 @@ public class AffAction extends ActionSupport {
 		log.info("Document ID ::" + docuId);
 		Integer id = Integer.parseInt(docuId);
 		affInstBean = affDao.getOneCollegeRecord(id);
-
 		FileOutputStream fileOuputStream = new FileOutputStream(affInstBean.getFileUploadFileName());
-
-		// byte[] bFile = new byte[(int)
-		// documentsBean.getFilesByteSize().length];
-
 		fileOuputStream.write(affInstBean.getFilesByteSize());
 		fileOuputStream.close();
 
