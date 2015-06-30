@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,69 +47,78 @@ public class AffAction extends ActionSupport {
 	// registerInstitute()
 	public String registerInstitute() throws Exception {
 
-		String path = request.getServletContext().getRealPath("/");
-		path = path + File.separator;
-		File f = new File(path + "/RGUHS/");
-		f.mkdir();
+		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 
-		// add parent institute details to affInstBean
+		if (instNameList.size() > 1) {
+			log.info("College NaME ALREADY AVAILABLE");
 
-		// forward to save method in dao
-		log.info("file Name  is ::" + fileUploadFileName);
+			request.setAttribute("msg", "Institute Name is Already Registered");
+			return "failure";
 
-		log.info("file temp  is ::" + fileUpload);
+		} else {
 
-		affInstBean.setFileUpload(fileUpload);
-		affInstBean.setFileUploadFileName(fileUploadFileName);
+			String path = request.getServletContext().getRealPath("/");
+			path = path + File.separator;
+			File f = new File(path + "/RGUHS/");
+			f.mkdir();
 
-		// affInstBean = affDao.saveOrUpdate(affInstBean);
-		log.info("The ID after saving is is " + affInstBean.getInstId());
-		// if saved successfully generate credentials and forward success
-		String username;
-		// generate credentials for admin login
-		try {
-			username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
-					.concat(affDao.getRowCount().toString()));
+			// add parent institute details to affInstBean
 
-		} catch (java.lang.NullPointerException e) {
-			username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
-			// TODO: handle exception
-		}
+			affInstBean.setFileUpload(fileUpload);
+			affInstBean.setFileUploadFileName(fileUploadFileName);
 
-		String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
-		log.info("Password Generated is " + password);
+			// affInstBean = affDao.saveOrUpdate(affInstBean);
+			log.info("The ID after saving is is " + affInstBean.getInstId());
+			// if saved successfully generate credentials and forward success
+			String username;
+			// generate credentials for admin login
+			try {
+				username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
+						.concat(affDao.getRowCount().toString()));
 
-		PasswordEncryption.encrypt(password);
-		String encryptedPwd = PasswordEncryption.encStr;
+			} catch (java.lang.NullPointerException e) {
+				username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
 
-		LoginBean creds = new LoginBean();
-		creds.setPassword(encryptedPwd);
-		creds.setUserName(username);
+			}
 
-		log.info("User Name is ::" + username);
-		log.info("Password is ::" + password);
+			String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
+			log.info("Password Generated is " + password);
 
-		log.info("User Profile is  ::" + affInstBean.getLoginBean().getProfile());
-		creds.setProfile(affInstBean.getLoginBean().getProfile());
+			PasswordEncryption.encrypt(password);
+			String encryptedPwd = PasswordEncryption.encStr;
 
-		// for bidirectional relationship ,set parent record to child
-		// record
-		creds.setAffBean(affInstBean);
-		if (creds.getProfile().equals("Admin")) {
+			LoginBean creds = new LoginBean();
+			creds.setPassword(encryptedPwd);
+			creds.setUserName(username);
 
-			// for bidirectional relationship ,set child record to Parent
+			log.info("User Name is ::" + username);
+			log.info("Password is ::" + password);
+
+			log.info("User Profile is  ::" + affInstBean.getLoginBean().getProfile());
+			creds.setProfile(affInstBean.getLoginBean().getProfile());
+
+			// for bidirectional relationship ,set parent record to child
 			// record
-			affInstBean.setLoginBean(creds);
+			creds.setAffBean(affInstBean);
+			if (creds.getProfile().equals("Admin")) {
+
+				// for bidirectional relationship ,set child record to Parent
+				// record
+				affInstBean.setLoginBean(creds);
+
+			}
+
+			affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
+			// -----Code for sending email//--------------------
+			EmailSessionBean email = new EmailSessionBean();
+			email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
+					affInstBean.getInstName());
+
+			request.setAttribute("msg", "Institute Added Successfully");
+			request.setAttribute("redirectLink", "Success.jsp");
+			return SUCCESS;
 
 		}
-
-		affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
-		// -----Code for sending email//--------------------
-		EmailSessionBean email = new EmailSessionBean();
-		email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
-				affInstBean.getInstName());
-		request.setAttribute("redirectLink", "CollegeForm.jsp");
-		return SUCCESS;
 
 		// else forward error message on input page
 
@@ -175,9 +185,23 @@ public class AffAction extends ActionSupport {
 
 	public String updateCollegeDetail() {
 
-		affDao.updateCollege(affInstBean);
+		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 
-		return SUCCESS;
+		if (instNameList.size() > 1) {
+			log.info("College NaME ALREADY AVAILABLE");
+
+			request.setAttribute("msg", "Institute Name is Already Registered");
+			return "failure";
+		} else {
+			log.info("list Size is ::" + instNameList.size());
+			affDao.updateCollege(affInstBean);
+
+			request.setAttribute("msg", "Institute Updated Successfully");
+
+			return SUCCESS;
+
+		}
+
 	}
 
 	// edit college doc

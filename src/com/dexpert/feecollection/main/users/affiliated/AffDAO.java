@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
@@ -225,6 +227,20 @@ public class AffDAO {
 			session.close();
 
 		}
+	}
+
+	// to check whether record is already exist or New
+	public List<String> getCollegeNameList(String instName) {
+
+		Session session = factory.openSession();
+
+		Criteria criteria = session.createCriteria(AffBean.class);
+		criteria.add(Restrictions.eq("instName", instName));
+		criteria.setProjection(Projections.property("instName"));
+
+		List<String> affList = criteria.list();
+
+		return affList;
 	}
 
 	// ---------------------------------------------------

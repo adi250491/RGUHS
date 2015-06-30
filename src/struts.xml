@@ -18,7 +18,9 @@
 			</interceptor-ref>
 
 			<result name="success">/WaitPage.jsp</result>
-			<result name="failure">CollegeForm.jsp</result>
+			<result name="failure">
+				CollegeForm.jsp
+			</result>
 			<result name="input">/CollegeForm.jsp</result>
 
 
@@ -152,6 +154,8 @@
 			method="updateCollegeDetail">
 
 			<result name="success">Success.jsp</result>
+			<result name="failure">UpdateCollegeDetails.jsp</result>
+
 
 		</action>
 

@@ -71,7 +71,7 @@
 				<!-- content starts -->
 				<div></div>
 
-				<form action="updateCollegeDetails" method="get">
+				<form action="updateCollegeDetails" method="post">
 					<div class="row">
 						<div class="box col-md-12">
 							<div class="box-inner">
@@ -192,7 +192,7 @@
 						<div class="col-md-12">
 
 							<input type="submit" class="btn btn-success"
-								value="Update College Info">
+								onclick="OpenSummaryInParent()" value="Update College Info">
 
 							<button class="btn btn-warning"
 								onclick='window.location="CollegeFeeDetails.html"'>View
@@ -292,8 +292,8 @@
 
 	<script>
 		function OpenSummaryInParent() {
-			window.opener.location = "College-Payment-Summary.html";
-			window.close();
+			window.opener.document.location.reload();
+			//window.close();
 
 		}
 		

@@ -67,6 +67,29 @@
 				</div>
 			</noscript>
 
+
+
+			<%
+				String msg = (String) request.getAttribute("msg");
+			%>
+
+			<%
+				if (msg != null)
+
+				{
+			%>
+
+			<div
+				style="color: red; text-align: center; font-weight: bold; font-size: medium;">
+
+
+				<%=msg%>
+			</div>
+			<%
+				}
+			%>
+
+
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
 				<div></div>
@@ -107,18 +130,19 @@
 											</thead>
 											<tbody>
 												<tr>
-													
+
 													<td>District Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="District/Area"
 																name="affInstBean.place"
+																value='<s:property value="affInstBean.place"/>'
 																placeholder="District/Area Name" type="text"
 																class="form-control">
 														</div></td>
 
 												</tr>
 												<tr>
-													
+
 													<td>College Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="CollegeName"
@@ -130,34 +154,37 @@
 												</tr>
 
 												<tr>
-													
+
 													<td>Address</td>
 													<td><div id="the-basics" class="has-success">
 															<textarea required="required" id="CollegeName"
 																name="affInstBean.instAddress" placeholder="Address"
+																<s:property value="affInstBean.place"/>
 																class="form-control"></textarea>
 
 														</div></td>
 
 												</tr>
 												<tr>
-													
+
 													<td>Principal's Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input id="PrinciName" name="affInstBean.contactPerson"
 																required="required" placeholder="Principal's Name"
+																value='<s:property value="affInstBean.contactPerson"/>'
 																type="text" class="form-control">
 
 														</div></td>
 
 												</tr>
 												<tr>
-													
+
 													<td>Telephone Number</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
 																name="affInstBean.contactNumber" maxlength="12"
 																placeholder="Telephone Number" pattern="[0-9]*"
+																value='<s:property value="affInstBean.contactNumber"/>'
 																type="tele" class="form-control">
 
 														</div></td>
@@ -165,11 +192,12 @@
 												</tr>
 
 												<tr>
-													
+
 													<td>Mobile Number</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
 																name="affInstBean.mobileNum" maxlength="10"
+																value='<s:property value="affInstBean.mobileNum"/>'
 																placeholder="Mobile Number" pattern="[789][0-9]{9}"
 																type="tele" class="form-control">
 
@@ -177,10 +205,11 @@
 
 												</tr>
 												<tr>
-												
+
 													<td>Email Id</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
+																value='<s:property value="affInstBean.email"/>'
 																name="affInstBean.email" placeholder="Email ID"
 																type="email" class="form-control">
 
@@ -189,10 +218,11 @@
 												</tr>
 
 												<tr>
-													
+
 													<td>Upload Document</td>
 													<td><div id="the-basics" class="has-success">
-															<input name="fileUpload" type="file" class="form-control">
+															<input name="fileUpload" type="file" class="form-control"
+																value='<s:property value="affInstBean.fileUploadFileName"/>'>
 
 
 
@@ -213,8 +243,8 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-success">Save
-								College</button>
+							<button type="submit" class="btn btn-success"
+								onclick="OpenSummaryInParent()">Save College</button>
 
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>
@@ -310,8 +340,8 @@
 
 	<script>
 		function OpenSummaryInParent() {
-			window.opener.location = "College-Payment-Summary.html";
-			window.close();
+			window.opener.document.location.reload();
+			//window.close();
 
 		}
 	</script>
