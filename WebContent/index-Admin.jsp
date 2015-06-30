@@ -73,7 +73,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
 					<li class="divider"></li>
-					<li><a href="login.html">Logout</a></li>
+					<li><a href="logOutUser">Logout</a></li>
 				</ul>
 			</div>
 			<!-- user dropdown ends -->
@@ -123,7 +123,8 @@
 							<li class="nav-header">Main</li>
 							<li><a class="ajax-link" href="index-Admin.jsp"><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
-							<li><a class="ajax-link" href="Admin-ParentInstituteHome.jsp"><i
+							<li><a class="ajax-link"
+								href="Admin-ParentInstituteHome.jsp"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
