@@ -49,7 +49,10 @@
 
 <body>
 	<!-- topbar starts -->
-
+	<%
+		Integer headCount = 4;
+		Integer colCount = 0;
+	%>
 	<!-- topbar ends -->
 	<div class="ch-container">
 		<div class="row">
@@ -89,6 +92,23 @@
 							<div class="box-content row">
 								<form action="GenerateCombination">
 									<div class="col-lg-12 col-md-12 animated fadeIn">
+<%-- <%int headcount=4;
+Integer count=0;%>
+
+										<table>
+											<s:iterator value="ComboList" >
+											<tr>
+											<s:iterator status="incr">
+											<td>
+											<s:if test="%{#incr.index==0}">This is first</s:if>
+											<s:property></s:property>
+											</td>
+											</s:iterator>
+											
+											</tr>
+											</s:iterator>
+										</table>
+ --%>
 
 										<table class="table table-condensed">
 											<thead>
@@ -136,10 +156,11 @@
 
 
 															<div class="controls">
-																<s:select theme="simple" list="CourseParamList" listValue="lookupName"
-																	listKey="lookupId" multiple="CourseParamList"
-																	data-rel="chosen" cssStyle="width:60%"
-																	cssClass="form-control" name="SelectedCourseParam"></s:select>
+																<s:select theme="simple" list="CourseParamList"
+																	listValue="lookupName" listKey="lookupId"
+																	multiple="CourseParamList" data-rel="chosen"
+																	cssStyle="width:60%" cssClass="form-control"
+																	name="SelectedCourseParam"></s:select>
 
 															</div>
 														</div></td>
@@ -189,10 +210,11 @@
 
 
 															<div class="controls">
-																<s:select theme="simple" list="ServiceParamList" listValue="lookupName"
-																	listKey="lookupId" multiple="ServiceParamList"
-																	data-rel="chosen" cssStyle="width:60%"
-																	cssClass="form-control" name="SelectedSerParam"></s:select>
+																<s:select theme="simple" list="ServiceParamList"
+																	listValue="lookupName" listKey="lookupId"
+																	multiple="ServiceParamList" data-rel="chosen"
+																	cssStyle="width:60%" cssClass="form-control"
+																	name="SelectedSerParam"></s:select>
 
 															</div>
 														</div></td>

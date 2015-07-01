@@ -43,7 +43,10 @@ public class FvDAO {
 				Session session = factory.openSession();
 				try {
 					Criteria searchCr=session.createCriteria(FvBean.class);
-					
+					if(filterKey.contentEquals("Ids"))
+					{
+						searchCr.add(Restrictions.in("feeValueId", Ids));
+					}
 					if(filterKey.contentEquals("LookupIds"))
 					{
 						searchCr.add(Restrictions.in("FeeLookupId_Fk", Ids));

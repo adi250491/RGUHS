@@ -205,7 +205,7 @@
 		<action name="GenerateCombination"
 			class="com.dexpert.feecollection.main.fee.config.FcAction" method="GenerateCombination">
 
-			<result name="success">FeeForm.jsp</result>
+			<result name="success">FeeForm2.jsp</result>
 
 
 		</action>

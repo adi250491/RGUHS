@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <meta charset="utf-8">
 
 <title>Fee Collection Portal - Fee Form</title>
@@ -77,20 +77,54 @@
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-info-sign"></i> Set Fee Values for Admission Fee
+									<i class="glyphicon glyphicon-info-sign"></i> Set Fee Values
+									for Admission Fee
 								</h2>
 
 								<div class="box-icon">
 
 									<a href="#" class="btn btn-minimize btn-round btn-default"><i
-										class="glyphicon glyphicon-chevron-down"></i></a>
+										class="glyphicon"></i></a>
 
 								</div>
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 
+
 									<table class="table table-condensed">
+
+										<thead>
+											<tr>
+											<th></th>
+												<s:iterator value="HeaderList">
+
+													<th><s:property /></th>
+
+												</s:iterator>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<s:iterator value="BodyList">
+												<tr>
+													<s:iterator status="incr">
+														<td><s:if test="%{#incr.index==0}">
+																<input value='<s:property />' name="id" hidden="hidden">
+															</s:if> <s:else>
+																<s:property />
+															</s:else></td>
+
+
+													</s:iterator>
+													<td><input type="text" placeholder="Enter Fee Value"> <button>Remove</button></td>
+												</tr>
+											</s:iterator>
+										</tbody>
+									</table>
+
+
+									<!-- <table class="table table-condensed">
 										<thead>
 
 											<tr>
@@ -260,7 +294,7 @@
 
 										</tbody>
 									</table>
-									
+ -->
 								</div>
 
 
