@@ -67,7 +67,8 @@
 
 			<result name="success">Success.jsp</result>
 			<result name="failure">AddBulkInstitutes.jsp</result>
-			<result name="input">AddBulkInstitutes.jsp</result>
+			<result name="error">Login.jsp</result>
+
 
 		</action>
 	</package>

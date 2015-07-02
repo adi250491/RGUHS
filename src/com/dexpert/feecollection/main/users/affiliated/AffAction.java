@@ -260,31 +260,37 @@ public class AffAction extends ActionSupport {
 	public String bulkCollegesAdd() throws Exception {
 		log.info("file Name ::" + fileUploadFileName);
 		log.info("file IS  ::" + fileUpload);
-		if (fileUploadFileName.endsWith(".xlsx")) {
-			String path = request.getServletContext().getRealPath("/");
-			path = path + File.separator;
-			File f = new File(path + "/RGUHS/");
-			f.mkdir();
-			affInstBean = affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
 
-			// checking for college name is Already Registered or New
-			if (AffDAO.isExist == true) {
-				log.info("Already Registered College");
-				String msg = "College Name is Already Registered";
-				// affInstList = AffDAO.existingCollegeList;
-				request.setAttribute("msg", msg);
-				return "failure";
+		try {
+			if (fileUploadFileName.endsWith(".xlsx")) {
+				String path = request.getServletContext().getRealPath("/");
+				path = path + File.separator;
+				File f = new File(path + "/RGUHS/");
+				f.mkdir();
+				affInstBean = affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+
+				// checking for college name is Already Registered or New
+				if (AffDAO.isExist == true) {
+					log.info("Already Registered College");
+					String msg = "College Name is Already Registered";
+					// affInstList = AffDAO.existingCollegeList;
+					request.setAttribute("msg", msg);
+					return "failure";
+
+				} else {
+					return SUCCESS;
+				}
 
 			} else {
-				return SUCCESS;
+
+				String msg = "Please Select Proper File Format";
+				request.setAttribute("msg", msg);
+				return "failure";
 			}
-
-		} else {
-
-			String msg = "Please Select Proper File Format";
-			request.setAttribute("msg", msg);
-			return "failure";
+		} catch (Exception e) {
+			return ERROR;
 		}
+
 	}
 
 	// deleteInstitute()
