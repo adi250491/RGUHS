@@ -1,8 +1,35 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
 
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("loginUser"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Parameter Form</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -96,22 +123,23 @@
 										<table class="table table-condensed">
 											<thead>
 												<tr>
-													<th>
-													</th>
+													<th></th>
 													<th></th>
 													<th></th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-												<s:token/>
+													<s:token />
 													<td>1</td>
 													<td>Parameter Scope</td>
 													<td><div class="control-group">
 															<div class="controls">
-																<select required="required" style="width:30%" id="selectParamScope" 
-																	class="form-control" name="lookupdata.lookupScope" data-rel="chosen">
-																	<option disabled selected value="">Select Scope of Parameter</option>
+																<select required="required" style="width: 30%"
+																	id="selectParamScope" class="form-control"
+																	name="lookupdata.lookupScope" data-rel="chosen">
+																	<option disabled selected value="">Select
+																		Scope of Parameter</option>
 																	<option value="Institute">Institute Parameter</option>
 																	<option value="Applicant">Applicant Parameter</option>
 																	<option value="Course">Course Parameter</option>
@@ -125,8 +153,9 @@
 													<td>Parameter Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="CollegeName"
-																name="lookupdata.lookupName" placeholder="Parameter Name"
-																type="text" class="form-control">
+																name="lookupdata.lookupName"
+																placeholder="Parameter Name" type="text"
+																class="form-control">
 
 														</div></td>
 												</tr>
@@ -135,9 +164,11 @@
 													<td>Parameter type</td>
 													<td><div class="control-group">
 															<div class="controls">
-																<select required="required" style="width:30%" id="selectParamType" 
-																	class="form-control" data-rel="chosen" name="lookupdata.lookupType">
-																	<option disabled selected value="">Select Type of Parameter</option>
+																<select required="required" style="width: 30%"
+																	id="selectParamType" class="form-control"
+																	data-rel="chosen" name="lookupdata.lookupType">
+																	<option disabled selected value="">Select Type
+																		of Parameter</option>
 																	<option value="String">String</option>
 																	<option value="Integer">Numeric</option>
 																	<option value="Boolean">True/False</option>
@@ -152,7 +183,8 @@
 													<td><div id="the-basics" class="has-success">
 															<textarea required="required" id="DescriptionName"
 																name="lookupdata.lookupDesc"
-																placeholder="Description of Parameter" class="form-control"></textarea>
+																placeholder="Description of Parameter"
+																class="form-control"></textarea>
 
 														</div></td>
 												</tr>

@@ -1,7 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
 
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+			if (cookie.getName().equals("loginUser"))
+				usercookie = cookie.getValue();
+			if (cookie.getName().equals("JSESSIONID"))
+				sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <meta charset="utf-8">
 <title>Fee Collection Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,9 +141,12 @@
 						class="hidden-sm hidden-xs"> Cart</span> <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="College-Payment-Summary.html">Proceed To Checkout</a></li>
+					<li><a href="College-Payment-Summary.html">Proceed To
+							Checkout</a></li>
 					<li class="divider"></li>
-					<li><a href="#" onclick='window.open("Cart.html", "MyCart", "width=500,height=900")'>View Cart</a></li>
+					<li><a href="#"
+						onclick='window.open("Cart.html", "MyCart", "width=500,height=900")'>View
+							Cart</a></li>
 				</ul>
 			</div>
 			<!-- cart button ends -->
@@ -148,7 +177,8 @@
 							<li><a class="ajax-link" href="College-Payment-History.html"><i
 									class="fa fa-history"></i><span> Payment History</span></a></li>
 							<li><a class="ajax-link" href="College-Fee-Structure.html"><i
-									class="glyphicon glyphicon-list-alt"></i><span> Quick Reports</span></a></li>
+									class="glyphicon glyphicon-list-alt"></i><span> Quick
+										Reports</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -249,7 +279,7 @@
 			</div>
 		</div>
 
-		  <!-- <footer>
+		<!-- <footer>
 			<p class="col-md-9 col-sm-9 col-xs-12 copyright">
 				&copy; <a href="http://dexpertsystems.com" target="_blank">Dexpert
 					Systems Pvt. Ltd</a>

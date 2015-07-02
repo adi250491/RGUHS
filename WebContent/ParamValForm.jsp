@@ -1,8 +1,35 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
 
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("loginUser"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Parameter Values</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -113,83 +140,85 @@
 
 
 				<div class="row">
-					
-						<div class="box col-md-12">
-							<div class="box-inner">
-								<div class="box-header well">
-									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> Indicate All
-										Possible Parameter Values
-									</h2>
 
-									<div class="box-icon">
+					<div class="box col-md-12">
+						<div class="box-inner">
+							<div class="box-header well">
+								<h2>
+									<i class="glyphicon glyphicon-info-sign"></i> Indicate All
+									Possible Parameter Values
+								</h2>
 
-										<a href="#" class="btn btn-minimize btn-round btn-default"><i
-											class="glyphicon glyphicon-chevron-down"></i></a>
+								<div class="box-icon">
 
-									</div>
-								</div>
-								<div class="box-content row">
-									<div class="col-lg-12 col-md-12 animated fadeIn">
-
-
-										<table class="table table-condensed">
-											<thead>
-												<tr>
-													<th></th>
-													<th></th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-												
-													<td>1</td>
-													<td>Parameter Scope</td>
-													<input hidden="hidden" id="paramID" value='<s:property value="lookupdata.lookupId"/>'>
-													<td><s:property value="lookupdata.lookupScope" /> </td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Parameter Name</td>
-													<td><s:property value="lookupdata.lookupName" /></td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>Parameter type</td>
-													<td><s:property value="lookupdata.lookupType" /></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Description</td>
-													<td><s:property value="lookupdata.lookupDesc" /></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Possible Values</td>
-													<td><div id="tags">
-															<input type="text" value="" placeholder="Enter a possible value" />
-														</div></td>
-												</tr>
-											</tbody>
-										</table>
-
-
-									</div>
-
+									<a href="#" class="btn btn-minimize btn-round btn-default"><i
+										class="glyphicon glyphicon-chevron-down"></i></a>
 
 								</div>
 							</div>
-						</div>
-						<div class="col-md-12">
-							<button type="button" onclick="saveValues()" class="btn btn-success">Save
-								Parameter</button>
+							<div class="box-content row">
+								<div class="col-lg-12 col-md-12 animated fadeIn">
 
-							<button onclick="window.close()" class="btn btn-info">Close
-							</button>
 
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+
+												<td>1</td>
+												<td>Parameter Scope</td>
+												<input hidden="hidden" id="paramID"
+													value='<s:property value="lookupdata.lookupId"/>'>
+												<td><s:property value="lookupdata.lookupScope" /></td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>Parameter Name</td>
+												<td><s:property value="lookupdata.lookupName" /></td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>Parameter type</td>
+												<td><s:property value="lookupdata.lookupType" /></td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>Description</td>
+												<td><s:property value="lookupdata.lookupDesc" /></td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>Possible Values</td>
+												<td><div id="tags">
+														<input type="text" value=""
+															placeholder="Enter a possible value" />
+													</div></td>
+											</tr>
+										</tbody>
+									</table>
+
+
+								</div>
+
+
+							</div>
 						</div>
-					
+					</div>
+					<div class="col-md-12">
+						<button type="button" onclick="saveValues()"
+							class="btn btn-success">Save Parameter</button>
+
+						<button onclick="window.close()" class="btn btn-info">Close
+						</button>
+
+					</div>
+
 				</div>
 
 				<!--/row-->
@@ -283,54 +312,50 @@
 			window.close();
 
 		}
-		var values={};
+		var values = {};
 
 		$(function() {
 
-			$('#tags input').on('keyup', function(e){
-				if (/(188|13)/.test(e.which)){
-						
-						var txt = this.value.replace(/[^a-zA-Z]/g,
-								'');
-						AddToArray(txt);
-						if (txt) {
-							$(this).before(
-									'<span class="tag">' + txt
-											+ '</span>');
-						}
-						this.value = "";}
-					})
+			$('#tags input').on('keyup', function(e) {
+				if (/(188|13)/.test(e.which)) {
+
+					var txt = this.value.replace(/[^a-zA-Z]/g, '');
+					AddToArray(txt);
+					if (txt) {
+						$(this).before('<span class="tag">' + txt + '</span>');
+					}
+					this.value = "";
+				}
+			})
 
 			$('#tags').on('click', '.tag', function() {
-				
-					RemoveFromValues($(this).text());
-					$(this).remove();
+
+				RemoveFromValues($(this).text());
+				$(this).remove();
 			});
 
 		});
-		
-		function AddToArray(value)
-		{
+
+		function AddToArray(value) {
 			/* alert("value received from jquery function "+value); */
-			values[value]=value;	
+			values[value] = value;
 			/* alert(JSON.stringify(values)); */
 
 		}
-		
-		function RemoveFromValues(value)
-		{
+
+		function RemoveFromValues(value) {
 			delete values[value];
 			//alert(JSON.stringify(values));
 		}
-		
-		function saveValues()
-		{
-			var id=document.getElementById("paramID").value;
+
+		function saveValues() {
+			var id = document.getElementById("paramID").value;
 			var dataArray = new Array;
-			for(var value in values) {
-			    dataArray.push(values[value]);
+			for ( var value in values) {
+				dataArray.push(values[value]);
 			}
-			window.location="saveParamValues?values="+dataArray+"&paramId="+id;
+			window.location = "saveParamValues?values=" + dataArray
+					+ "&paramId=" + id;
 		}
 	</script>
 </body>

@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <html lang="en">
@@ -51,7 +52,33 @@
 <link rel="shortcut icon" href="img/favicon.ico">
 
 </head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
 
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <body>
 	<!-- topbar starts -->
 	<div class="navbar navbar-default" role="navigation">
@@ -183,9 +210,11 @@
 
 									<p class="btn-group">
 										<button class="btn btn-default">Fee Templates</button>
-										<button class="btn btn-default" onclick='window.location="FeeConfig-Values.jsp"'>Fee
+										<button class="btn btn-default"
+											onclick='window.location="FeeConfig-Values.jsp"'>Fee
 											Values</button>
-										<button class="btn btn-default" onclick='window.location="GetAllParameters"'>Fee
+										<button class="btn btn-default"
+											onclick='window.location="GetAllParameters"'>Fee
 											Parameters</button>
 									</p>
 
@@ -245,7 +274,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											
+
 											<s:iterator value="lookupBeansList">
 
 												<tr>
@@ -269,7 +298,7 @@
 
 
 
-												
+
 											</s:iterator>
 										</tbody>
 									</table>

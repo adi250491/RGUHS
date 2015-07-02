@@ -44,6 +44,7 @@ public class AffDAO {
 	public static SessionFactory factory = ConnectionClass.getFactory();
 	static Logger log = Logger.getLogger(AffDAO.class.getName());
 	static Boolean isExist = false;
+	static ArrayList<AffBean> existingCollegeList = new ArrayList<AffBean>();
 
 	// End of Global Variables
 
@@ -336,7 +337,24 @@ public class AffDAO {
 			affBean.setInstAddress(instAddress);
 			affBean.setPlace(place);
 
+			// List<String> instNameList =
+			// getCollegeNameList(affBean.getInstName());
+
+			// if (instNameList.isEmpty()) {
+			// isExist = false;
+			// log.info("Existing College List is Empty...");
 			addBulkData(affBean);
+			// return affBean;
+
+			// } else {
+			// isExist = true;
+			// existingCollegeList.add(affBean);
+
+			// log.info(" existing college Name inst " +
+			// existingCollegeList.size());
+			// return affBean;
+			// existingCollegeList.add(affBean);
+			// }
 
 		}
 		return affBean;
@@ -356,7 +374,7 @@ public class AffDAO {
 
 		if (instNameList.isEmpty()) {
 			isExist = false;
-			log.info("College List is Empty...");
+			// log.info("Existing College List is Empty...");
 
 			String username;
 
@@ -405,7 +423,10 @@ public class AffDAO {
 
 		} else {
 			isExist = true;
-			log.info("College List is Not Empty...");
+
+			// log.info(" existing college Name inst " +
+			// existingCollegeList.size());
+			// log.info("College List is Not Empty...");
 
 		}
 

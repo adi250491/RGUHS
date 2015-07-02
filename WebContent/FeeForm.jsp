@@ -1,6 +1,34 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <html lang="en">
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Fee Form</title>
@@ -51,7 +79,7 @@
 	<!-- topbar starts -->
 	<%
 		Integer headCount = 4;
-		Integer colCount = 0;
+			Integer colCount = 0;
 	%>
 	<!-- topbar ends -->
 	<div class="ch-container">
@@ -92,7 +120,7 @@
 							<div class="box-content row">
 								<form action="GenerateCombination">
 									<div class="col-lg-12 col-md-12 animated fadeIn">
-<%-- <%int headcount=4;
+										<%-- <%int headcount=4;
 Integer count=0;%>
 
 										<table>

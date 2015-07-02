@@ -1,8 +1,35 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <html lang="en">
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
 
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("loginUser"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <meta charset="utf-8">
 <title>Fee Collection Portal - College Details</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">

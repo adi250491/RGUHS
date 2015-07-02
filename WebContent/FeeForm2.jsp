@@ -1,6 +1,34 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <html lang="en">
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <meta charset="utf-8">
 
@@ -96,7 +124,7 @@
 
 										<thead>
 											<tr>
-											<th></th>
+												<th></th>
 												<s:iterator value="HeaderList">
 
 													<th><s:property /></th>
@@ -117,7 +145,8 @@
 
 
 													</s:iterator>
-													<td><input type="text" placeholder="Enter Fee Value"> <button>Remove</button></td>
+													<td><input type="text" placeholder="Enter Fee Value">
+														<button>Remove</button></td>
 												</tr>
 											</s:iterator>
 										</tbody>

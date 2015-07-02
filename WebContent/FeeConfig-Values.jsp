@@ -1,7 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
 
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <meta charset="utf-8">
 <title>Fee Collection Portal- Reports</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -178,9 +204,11 @@
 
 									<p class="btn-group">
 										<button class="btn btn-default">Fee Templates</button>
-										<button class="btn btn-default" onclick='window.location="FeeConfig-Values.jsp"'>Fee
+										<button class="btn btn-default"
+											onclick='window.location="FeeConfig-Values.jsp"'>Fee
 											Values</button>
-										<button class="btn btn-default" onclick='window.location="GetAllParameters"'>Fee
+										<button class="btn btn-default"
+											onclick='window.location="GetAllParameters"'>Fee
 											Parameters</button>
 									</p>
 
@@ -195,7 +223,7 @@
 				<!--/row-->
 
 				<!-- Fee Parameters Row -->
-				<div class="row" id="FeeParametersBox" style="display: none" >
+				<div class="row" id="FeeParametersBox" style="display: none">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
@@ -220,7 +248,7 @@
 										<button
 											onclick='window.open("ParamForm.jsp", "Admin Report", "height=1080,width=1000")'
 											class="btn btn-default ">Add New Parameter</button>
-										
+
 									</div>
 									<button class="btn btn-default"
 										onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Search
@@ -437,7 +465,7 @@
 
 				<!--/row-->
 				<!-- Fee Values Row -->
-				<div class="row" id="FeeValuesBox" >
+				<div class="row" id="FeeValuesBox">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
@@ -461,8 +489,7 @@
 										<button class="btn btn-default "
 											onclick='window.open("GetParamValues", "Fee Form", "height=1080,width=1000")'>Add
 											New Fee</button>
-										<button class="btn btn-default">Search
-											Fees</button>
+										<button class="btn btn-default">Search Fees</button>
 
 									</p>
 

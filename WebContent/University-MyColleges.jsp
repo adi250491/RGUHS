@@ -1,8 +1,38 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
-<%int i=1; %>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
+
+		return;
+
+	}
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("loginUser"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
+<%
+	int i=1;
+%>
 <meta charset="utf-8">
 <title>Fee Collection Portal- My Colleges</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,7 +161,7 @@
 	<div class="ch-container">
 		<div class="row">
 
-		<!-- left menu starts -->
+			<!-- left menu starts -->
 			<div class="col-sm-2 col-lg-2">
 				<div class="sidebar-nav">
 					<div class="nav-canvas">
@@ -173,7 +203,7 @@
 				</div>
 
 
-				
+
 
 				<!--/row-->
 				<div class="row">
@@ -206,7 +236,7 @@
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
 											<tr>
-												<th width="7%" >Sr. No.</th>
+												<th width="7%">Sr. No.</th>
 												<th>ID</th>
 												<th>College Name</th>
 												<th>Place</th>
@@ -214,19 +244,23 @@
 											</tr>
 										</thead>
 										<tbody>
-										<s:iterator value="affInstList">
-										<tr>
-												<td><%=i%><% i++; %></td>
-												<td><s:property value="instId"/> </td>
-												<td class="center"><s:property value="instName"/></td>
-												<td class="center"><s:property value="place"/></td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													onclick="showDetails()" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a></td>
-											</tr></s:iterator>
-											
-											
+											<s:iterator value="affInstList">
+												<tr>
+													<td><%=i%>
+														<%
+															i++;
+														%></td>
+													<td><s:property value="instId" /></td>
+													<td class="center"><s:property value="instName" /></td>
+													<td class="center"><s:property value="place" /></td>
+													<td class="center"><a class="btn btn-success btn-sm"
+														onclick="showDetails()" href="#"> <i
+															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+													</a></td>
+												</tr>
+											</s:iterator>
+
+
 										</tbody>
 									</table>
 
@@ -269,7 +303,7 @@
 			</div>
 		</div>
 
-		  <!-- <footer>
+		<!-- <footer>
 			<p class="col-md-9 col-sm-9 col-xs-12 copyright">
 				&copy; <a href="http://dexpertsystems.com" target="_blank">Dexpert
 					Systems Pvt. Ltd</a>
@@ -327,7 +361,8 @@
 			document.getElementById("CollegeDetailBox").style.display = "none";
 		}
 		function showDetails() {
-			window.open("CollegeDetails.html", "CollegeDetails", "width=700,height=900");
+			window.open("CollegeDetails.html", "CollegeDetails",
+					"width=700,height=900");
 		}
 	</script>
 
@@ -358,9 +393,8 @@
 			};
 		};
 
-		var states = [ 'Bangalore', 'Mysore', 'Tumkur', 'Belgaum',
-				'BG Nagar', 'Hubli', 'Bijapur', 'Gulbarga', 'Bellary',
-				'Kolar'];
+		var states = [ 'Bangalore', 'Mysore', 'Tumkur', 'Belgaum', 'BG Nagar',
+				'Hubli', 'Bijapur', 'Gulbarga', 'Bellary', 'Kolar' ];
 
 		$('#the-basics .typeahead').typeahead({
 			hint : true,

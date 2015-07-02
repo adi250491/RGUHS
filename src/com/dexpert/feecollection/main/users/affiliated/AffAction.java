@@ -265,18 +265,20 @@ public class AffAction extends ActionSupport {
 			path = path + File.separator;
 			File f = new File(path + "/RGUHS/");
 			f.mkdir();
-			affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+			affInstBean = affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
 
 			// checking for college name is Already Registered or New
 			if (AffDAO.isExist == true) {
 				log.info("Already Registered College");
 				String msg = "College Name is Already Registered";
+				// affInstList = AffDAO.existingCollegeList;
 				request.setAttribute("msg", msg);
 				return "failure";
 
 			} else {
 				return SUCCESS;
 			}
+
 		} else {
 
 			String msg = "Please Select Proper File Format";
