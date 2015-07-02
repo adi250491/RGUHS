@@ -145,9 +145,9 @@
 
 													<td>College Name</td>
 													<td><div id="the-basics" class="has-success">
-															<input required="required" id="CollegeName" 
+															<input required="required" id="CollegeName"
 																pattern="[a-zA-Z0-9\s]*.{6}" name="affInstBean.instName"
-																placeholder="College Name (min 6 Character)" type="text" 
+																placeholder="College Name (min 6 Character)" type="text"
 																class="form-control">
 
 														</div></td>
@@ -341,8 +341,10 @@
 
 	<script>
 		function OpenSummaryInParent() {
-			window.opener.document.location.reload();
-			//window.close();
+			window.onunload = function() {
+				window.opener.document.location.reload();
+				setTimeout(window.close(), 100);
+			}
 
 		}
 	</script>

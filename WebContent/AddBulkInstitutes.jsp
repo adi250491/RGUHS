@@ -243,11 +243,7 @@
 	<script src="js/charisma.js"></script>
 
 	<script>
-		function OpenSummaryInParent() {
-			window.opener.location = "College-Payment-Summary.html";
-			window.close();
-
-		}
+		
 	</script>
 </body>
 </html>
