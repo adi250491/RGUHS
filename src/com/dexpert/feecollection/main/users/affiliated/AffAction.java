@@ -255,6 +255,36 @@ public class AffAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	// add bulk colleges
+
+	public String bulkCollegesAdd() throws Exception {
+		log.info("file Name ::" + fileUploadFileName);
+		log.info("file IS  ::" + fileUpload);
+		if (fileUploadFileName.endsWith(".xlsx")) {
+			String path = request.getServletContext().getRealPath("/");
+			path = path + File.separator;
+			File f = new File(path + "/RGUHS/");
+			f.mkdir();
+			affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+
+			// checking for college name is Already Registered or New
+			if (AffDAO.isExist == true) {
+				log.info("Already Registered College");
+				String msg = "College Name is Already Registered";
+				request.setAttribute("msg", msg);
+				return "failure";
+
+			} else {
+				return SUCCESS;
+			}
+		} else {
+
+			String msg = "Please Select Proper File Format";
+			request.setAttribute("msg", msg);
+			return "failure";
+		}
+	}
+
 	// deleteInstitute()
 	// getAssociatedFees()
 	// getAssociatedApplicants()

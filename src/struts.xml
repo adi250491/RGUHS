@@ -52,12 +52,22 @@
 				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
 				<param name="bufferSize">10024</param>
 			</result>
+		</action>
 
 
+		<action name="AddBulkColleges"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="bulkCollegesAdd">
 
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.maximumSize">100485760</param>
+				<param name="contentType">application/vnd.ms-excel,application/msexcel,application/x-msexcelapplication/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application</param>
+				<param name="allowedTypes">application/vnd.ms-excel,application/msexcel,application/x-msexcelapplication/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application</param>
+			</interceptor-ref>
 
-
-
+			<result name="success">Success.jsp</result>
+			<result name="failure">AddBulkInstitutes.jsp</result>
+			<result name="input">AddBulkInstitutes.jsp</result>
 
 		</action>
 	</package>

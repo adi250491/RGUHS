@@ -39,7 +39,7 @@ public class AffBean {
 	private Integer fileSize;
 
 	@Lob
-	@Column(name = "filesByteSize", nullable = false, columnDefinition = "mediumblob")
+	@Column(name = "filesByteSize", columnDefinition = "mediumblob")
 	byte[] filesByteSize;
 
 	// ------------------------------------
