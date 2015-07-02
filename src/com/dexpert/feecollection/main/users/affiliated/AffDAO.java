@@ -57,27 +57,34 @@ public class AffDAO {
 		// Open session from session factory
 		Session session = factory.openSession();
 		try {
-
+			byte[] bFile = null;
+			Integer fileSize = null;
 			// file input Stream is use to save file in to DataBase
 
-			FileInputStream fileInputStream = null;
+			try {
+				FileInputStream fileInputStream = null;
 
-			// to create new file with actual name with extension
-			File dstfile = new File(path, saveData.getFileUploadFileName());
+				// to create new file with actual name with extension
+				File dstfile = new File(path, saveData.getFileUploadFileName());
 
-			// to copy files at specified destination path
-			FileUtils.copyFile(saveData.getFileUpload(), dstfile);
+				// to copy files at specified destination path
+				FileUtils.copyFile(saveData.getFileUpload(), dstfile);
 
-			// convert file into array of bytes
-			byte[] bFile = new byte[(int) dstfile.length()];
-			fileInputStream = new FileInputStream(dstfile);
+				// convert file into array of bytes
+				bFile = new byte[(int) dstfile.length()];
+				fileInputStream = new FileInputStream(dstfile);
 
-			int fileSize = fileInputStream.read(bFile);
+				fileSize = fileInputStream.read(bFile);
 
-			// fileinputStream must be close
-			fileInputStream.close();
+				// fileinputStream must be close
+				fileInputStream.close();
+
+			} catch (java.lang.NullPointerException e) {
+
+			}
 
 			saveData.setFilesByteSize(bFile);
+
 			saveData.setFileSize(fileSize);
 			session.beginTransaction();
 			session.saveOrUpdate(saveData);
