@@ -88,15 +88,15 @@ public class LoginAction extends ActionSupport {
 	public String logoutUser() throws IOException {
 
 		loginBean = (LoginBean) httpSession.getAttribute("loginUserBean");
-		
+
 		response.setHeader("Cache-Control", "no-cache, no-store");
 		response.setDateHeader("Expires", 0);
 		response.setHeader("Vary", "*");
 
 		httpSession.removeAttribute("loginBean");
-		
+
 		request.setAttribute("redirectLink", "Login.jsp");
-		
+
 		return SUCCESS;
 	}
 

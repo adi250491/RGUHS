@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <html lang="en">
 <head>
 <%
@@ -93,7 +94,7 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <username>(Username)</span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span>
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">

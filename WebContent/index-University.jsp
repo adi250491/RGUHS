@@ -21,7 +21,7 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-			if (cookie.getName().equals("loginUser"))
+			if (cookie.getName().equals("user"))
 				usercookie = cookie.getValue();
 			if (cookie.getName().equals("JSESSIONID"))
 				sessionID = cookie.getValue();
@@ -95,8 +95,8 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <username>(Username)</span>
-					<span class="caret"></span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span> <span
+						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
@@ -203,7 +203,8 @@
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 									<h1>
-										Welcome &lt;University Name&gt;<br> <small>This
+										Welcome
+										<%=loginUser.getParBean().getParInstName()%><br> <small>This
 											is the online fee payment portal</small>
 									</h1>
 									<p>You can use the portal to monitor and manage the fee

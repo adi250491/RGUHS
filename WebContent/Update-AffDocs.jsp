@@ -163,6 +163,7 @@
 
 
 							<button onclick="window.close()" class="btn btn-info">Close</button>
+							<button onclick="window.history.back();" class="btn btn-info">Back</button>
 
 						</div>
 
