@@ -221,5 +221,16 @@
 
 		</action>
 	</package>
+	
+	<package name="Test" extends="struts-default">
+
+		<action name="TestAtom"
+			class="com.test.mapping.TestAction" method="addFee">
+
+			<result name="success">Test.jsp</result>
+
+		</action>
+		
+	</package>
 
 </struts>
