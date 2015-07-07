@@ -265,9 +265,6 @@
 
 		</action>
 	</package>
-	
-<<<<<<< HEAD
-	
 
 	<package name="Student" extends="struts-default">
 		<action name="AddStudentColleges"
@@ -282,8 +279,7 @@
 	
 	
 	
-=======
->>>>>>> branch 'master' of https://github.com/adi250491/RGUHS.git
+
 	<package name="Test" extends="struts-default">
 
 		<action name="TestAtom"
