@@ -21,17 +21,17 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-			if (cookie.getName().equals("user"))
-				usercookie = cookie.getValue();
-			if (cookie.getName().equals("JSESSIONID"))
-				sessionID = cookie.getValue();
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
 		}
 	} else {
 		sessionID = session.getId();
 	}
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal</title>
+<title>Fee Collection Portal- My Colleges</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -95,8 +95,8 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span> <span
-						class="caret"></span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span>
+					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
@@ -135,7 +135,23 @@
 				</ul>
 			</div>
 			<!-- theme selector ends -->
-
+			<!-- cart button starts -->
+			<div class="btn-group pull-right">
+				<button class="btn btn-default dropdown-toggle"
+					data-toggle="dropdown">
+					<i class=" glyphicon glyphicon-shopping-cart"></i><span
+						class="hidden-sm hidden-xs"> Cart</span> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="College-Payment-Summary.html">Proceed To
+							Checkout</a></li>
+					<li class="divider"></li>
+					<li><a href="#"
+						onclick='window.open("Cart.html", "MyCart", "width=500,height=900")'>View
+							Cart</a></li>
+				</ul>
+			</div>
+			<!-- cart button ends -->
 		</div>
 	</div>
 	<!-- topbar ends -->
@@ -149,13 +165,13 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href='<%=session.getAttribute("dashLink").toString()%>'><i
+							<li><a class="ajax-link" href="index-Admin.jsp"><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> My Colleges</span></a></li>
-							<li><a class="ajax-link" href="University-FeeConfig.html"><i
+							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
-							<li><a class="ajax-link" href="University-Reports.jsp"><i
+							<li><a class="ajax-link" href="Admin-Reports.html"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
 					</div>
@@ -163,7 +179,6 @@
 			</div>
 			<!--/span-->
 			<!-- left menu ends -->
-
 			<noscript>
 				<div class="alert alert-block col-md-12">
 					<h4 class="alert-heading">Warning!</h4>
@@ -177,7 +192,7 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-			<!-- 	<div>
+				<!-- <div>
 					<ul class="breadcrumb">
 						<li><a href="#">Home</a></li>
 						<li><a href="#">Dashboard</a></li>
@@ -185,12 +200,15 @@
 				</div> -->
 
 
+
+
+				<!--/row-->
 				<div class="row">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-info-sign"></i> Introduction
+									<i class="glyphicon glyphicon-list-alt"></i> All Colleges
 								</h2>
 
 								<div class="box-icon">
@@ -202,48 +220,57 @@
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
-									<h1>
-										Welcome
-										<%=loginUser.getParBean().getParInstName()%><br> <small>This
-											is the online fee payment portal</small>
-									</h1>
-									<p>You can use the portal to monitor and manage the fee
-										payments done to you via colleges affiliated to you. We accept
-										various payment methods such as Cash, Cheque, Online Banking,
-										Credit/Debit Card, NEFT & RTGS. Please use the menu list on
-										the left sidebar to use the features of the portal.</p>
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn btn-sm btn-info pull-right"
+												onclick='window.open("CollegeForm.jsp", "CollegeForm", "width=500,height=900")'>
+												<i class="fa fa-plus"></i> Add College
+											</button>
+										</div>
+									</div>
+									<!---Content-->
+									<table
+										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
+										<thead>
+											<tr>
+												<th width="7%">Sr. No.</th>
+
+												<th>College Name</th>
+												<th>Place</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<%
+												int i = 1;
+											%>
+											<s:iterator value="affInstList">
+												<tr>
+													<td><%=i%> </td>
+
+													<td class="center"><s:property value="instName" /></td>
+													<td class="center"><s:property value="place" /></td>
+													<td class="center"><a class="btn btn-success btn-sm"
+														onclick="showDetails(<s:property value="instId"/>)"> <i
+															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+													</a></td>
+												</tr>
+
+												<%
+													i++;
+												%>
+											</s:iterator>
+
+
+										</tbody>
+									</table>
+
 								</div>
+
+
 							</div>
 						</div>
 					</div>
-				</div>
-				<!--/row-->
-				<div class=" row">
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<a data-toggle="tooltip"
-							title="600 new student requests. Click here to view"
-							class="well top-block" href="#"
-							onclick='window.open("UniversityReportStudent.html", "Dail Report", "width=1920,height=1080");'>
-							<i class="glyphicon glyphicon-user blue"></i>
-
-							<div>Total Student Requests</div>
-							<div>5070</div> <span class="notification">600</span>
-						</a>
-					</div>
-
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<a data-toggle="tooltip"
-							title="4 new payments by colleges. Click here to view"
-							class="well top-block" href="#"
-							onclick='window.open("University-Report.html", "University Report", "height=1080,width=1920")'>
-							<i class="fa fa-inr green"></i>
-
-							<div>Total Payments Made This Month</div>
-							<div>228</div> <span class="notification green">4</span>
-						</a>
-					</div>
-
-
 				</div>
 				<!--/row-->
 				<!-- content ends -->
@@ -277,7 +304,7 @@
 			</div>
 		</div>
 
-		<!--   <footer>
+		<!-- <footer>
 			<p class="col-md-9 col-sm-9 col-xs-12 copyright">
 				&copy; <a href="http://dexpertsystems.com" target="_blank">Dexpert
 					Systems Pvt. Ltd</a>
@@ -327,7 +354,62 @@
 	<script src="js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
+	<!-- TypeAhead Script -->
+	<script src="js/typeahead.bundle.js"></script>
+	<script>
+		function showSearchResults() {
+			document.getElementById("SearchResultBox").style.display = "block";
+			document.getElementById("CollegeDetailBox").style.display = "none";
+		}
+		function showDetails(id) {
+			
+			
+			
+			window.open("ViewCollegeDetails?instId="+id, "CollegeDetails",
+					"width=700,height=900");
+		}
+	</script>
 
+	<script>
+		var substringMatcher = function(strs) {
+			return function findMatches(q, cb) {
+				var matches, substrRegex;
+
+				// an array that will be populated with substring matches
+				matches = [];
+
+				// regex used to determine if a string contains the substring `q`
+				substrRegex = new RegExp(q, 'i');
+
+				// iterate through the pool of strings and for any string that
+				// contains the substring `q`, add it to the `matches` array
+				$.each(strs, function(i, str) {
+					if (substrRegex.test(str)) {
+						// the typeahead jQuery plugin expects suggestions to a
+						// JavaScript object, refer to typeahead docs for more info
+						matches.push({
+							value : str
+						});
+					}
+				});
+
+				cb(matches);
+			};
+		};
+
+		var states = [ 'Bangalore', 'Mysore', 'Tumkur', 'Belgaum', 'BG Nagar',
+				'Hubli', 'Bijapur', 'Gulbarga', 'Bellary', 'Kolar' ];
+
+		$('#the-basics .typeahead').typeahead({
+			hint : true,
+			highlight : true,
+			minLength : 1
+		}, {
+			name : 'states',
+			displayKey : 'value',
+			source : substringMatcher(states)
+		});
+	</script>
 
 </body>
 </html>

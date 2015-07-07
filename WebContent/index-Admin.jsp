@@ -6,14 +6,21 @@
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
+try{
+	
 	loginUser = (LoginBean) session.getAttribute("loginUserBean");
-
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
 
 		return;
 
 	}
+}catch(java.lang.NullPointerException e)
+{response.sendRedirect("Login.jsp");
+	return ;
+}
+
+	
 	String usercookie = null;
 	String sessionID = null;
 	String dispchar = "display:none";
@@ -21,10 +28,10 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-			if (cookie.getName().equals("user"))
-				usercookie = cookie.getValue();
-			if (cookie.getName().equals("JSESSIONID"))
-				sessionID = cookie.getValue();
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
 		}
 	} else {
 		sessionID = session.getId();
@@ -99,7 +106,7 @@
 						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="#">Profile</a></li>
+					<li><a id="saveProfileTagId" onclick="openNewPage()"<%-- href="showSAdminProfile?saId=<%=loginUser.getSaBean().getSaId()%>" --%>>Profile</a></li>
 					<li class="divider"></li>
 					<li><a href="logOutUser">Logout</a></li>
 				</ul>
@@ -149,16 +156,16 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-Admin.jsp"><i
-									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<li><a class="ajax-link"
-								href="Admin-ParentInstituteHome.jsp"><i
+								href='<%=session.getAttribute("dashLink").toString()%>'><i
+									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
+							<li><a class="ajax-link" href="UniversityDetailRecord"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
-							<li><a class="ajax-link" href="Admin-Reports.html"><i
+							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
 					</div>
@@ -335,6 +342,28 @@
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
 
+	<script type="text/javascript">
+		/* var ajaxvar;
+		if (window.XMLHttpRequest) {
 
+			ajaxvar = new XMLHttpRequest();
+
+		} else {
+
+			ajaxvar = new ActiveXObject("Microsoft.XMLHttp");
+
+		}
+		ajaxvar.onreadystatechange = function() {
+
+			if (ajaxvar.readyState == 4 && ajaxvar.status == 200) {
+
+				document.getElementById("ShowListDiv").innerHTML = ajaxvar.responseText;
+				resetForm();
+			}
+		}
+
+		ajaxvar.open("GET", "showSAdminProfile" +query, true);
+		ajaxvar.send();	 */
+	</script>
 </body>
 </html>

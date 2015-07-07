@@ -107,7 +107,7 @@
 				</ul>
 			</div>
 			<!-- theme selector ends -->
-			
+
 		</div>
 	</div>
 	<!-- topbar ends -->
@@ -127,7 +127,7 @@
 									class="fa fa-building"></i><span> My Colleges</span></a></li>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
-							<li><a class="ajax-link" href="Admin-Reports.html"><i
+							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
 					</div>
@@ -149,14 +149,14 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				<div>
+				<!-- 	<div>
 					<ul class="breadcrumb">
 						<li><a href="#">Home</a></li>
 						<li><a href="#">Reports</a></li>
 					</ul>
-				</div>
+				</div> -->
 
-<div class="row">
+				<div class="row">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
@@ -171,18 +171,21 @@
 
 								</div>
 							</div>
-							<div class="box-content row" >
+							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
-									
+
 									<!---Content-->
-									
-                <p class="btn-group">
-                    <button class="btn btn-default" onclick="showDailyRequests()">Today's Student Requests</button>
+
+									<p class="btn-group">
+										<!--  <button class="btn btn-default" onclick="showDailyRequests()">Today's Student Requests</button>
                     <button class="btn btn-default" onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Payments This Month</button>
                     <button class="btn btn-default">Other Relevant Quick Links</button>
-                </p>
-               
-           
+                   -->
+										<button class="btn btn-default" onclick="window.open('ShowCollegeReport','College Report','width=1500 height=800')">College
+											Report</button>
+									</p>
+
+
 
 								</div>
 
@@ -193,7 +196,7 @@
 				</div>
 				<!--/row-->
 
-
+				<!-- 
 				<div class="row">
 					<div class="box col-md-12">
 						<div class="box-inner">
@@ -211,7 +214,7 @@
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
-									<!---Content-->
+									-Content
 									<div id="ReportTypeBox" class=" col-md-4"
 										>
 										<div class="control-group">
@@ -402,7 +405,7 @@
 						</div>
 					</div>
 				</div>
-
+ -->
 				<!--/row-->
 
 				<!--/row-->
@@ -489,131 +492,111 @@
 	<!-- TypeAhead Script -->
 	<script src="js/typeahead.bundle.js"></script>
 	<script>
-	var reportType=null;
-	var feeType=null;
-	
-	//1
-	function showFeeTypeBox(x) {
-		reportType=x;
-		if(x=="college")
-			{
-		document.getElementById("FeeTypeBoxCollege").style.display = "block";
-		document.getElementById("FeeTypeBoxStudent").style.display = "none";
-		$("#selectFeeTypeCollege").chosen({
-			disable_search_threshold : 10
-		})
+		var reportType = null;
+		var feeType = null;
+
+		//1
+		function showFeeTypeBox(x) {
+			reportType = x;
+			if (x == "college") {
+				document.getElementById("FeeTypeBoxCollege").style.display = "block";
+				document.getElementById("FeeTypeBoxStudent").style.display = "none";
+				$("#selectFeeTypeCollege").chosen({
+					disable_search_threshold : 10
+				})
+			} else if (x == "student") {
+				document.getElementById("FeeTypeBoxStudent").style.display = "block";
+				document.getElementById("FeeTypeBoxCollege").style.display = "none";
+				$("#selectFeeTypeStudent").chosen({
+					disable_search_threshold : 10
+				})
 			}
-		else if(x=="student")
-			{
-			document.getElementById("FeeTypeBoxStudent").style.display = "block";
-			document.getElementById("FeeTypeBoxCollege").style.display = "none";
-			$("#selectFeeTypeStudent").chosen({
+			document.getElementById("AreaBox").style.display = "none";
+			document.getElementById("MonthBox").style.display = "none";
+			document.getElementById("DeptBox").style.display = "none";
+			document.getElementById("StreamBox").style.display = "none";
+			document.getElementById("FacultyBox").style.display = "none";
+			document.getElementById("CollegeBox").style.display = "none";
+
+		}
+
+		//2
+		function showArea() {
+			document.getElementById("MonthBox").style.display = "none";
+			document.getElementById("DeptBox").style.display = "none";
+			document.getElementById("StreamBox").style.display = "none";
+			document.getElementById("FacultyBox").style.display = "none";
+			document.getElementById("CollegeBox").style.display = "none";
+			document.getElementById("AreaBox").style.display = "block";
+			$("#selectAreaType").chosen({
 				disable_search_threshold : 10
 			})
-			}
-		document.getElementById("AreaBox").style.display = "none";
-		document.getElementById("MonthBox").style.display = "none";
-		document.getElementById("DeptBox").style.display = "none";
-		document.getElementById("StreamBox").style.display = "none";
-		document.getElementById("FacultyBox").style.display = "none";
-		document.getElementById("CollegeBox").style.display = "none";
-		
-		
-	}
-	
-	//2
-	function showArea() {
-		document.getElementById("MonthBox").style.display = "none";
-		document.getElementById("DeptBox").style.display = "none";
-		document.getElementById("StreamBox").style.display = "none";
-		document.getElementById("FacultyBox").style.display = "none";
-		document.getElementById("CollegeBox").style.display = "none";
-		document.getElementById("AreaBox").style.display = "block";
-		$("#selectAreaType").chosen({
-			disable_search_threshold : 10
-		})
-	}
-	
-	//3
-	function showCollegeBox() {
-			
-		document.getElementById("MonthBox").style.display = "none";
-		document.getElementById("DeptBox").style.display = "none";
-		document.getElementById("StreamBox").style.display = "none";
-		document.getElementById("FacultyBox").style.display = "none";
+		}
+
+		//3
+		function showCollegeBox() {
+
+			document.getElementById("MonthBox").style.display = "none";
+			document.getElementById("DeptBox").style.display = "none";
+			document.getElementById("StreamBox").style.display = "none";
+			document.getElementById("FacultyBox").style.display = "none";
 			document.getElementById("CollegeBox").style.display = "block";
-			
+
 			$("#selectCollege").chosen({
 				disable_search_threshold : 10
 			})
 		}
-	
-	//4
-	function showDepartmentBox() {
-			
-		
-		document.getElementById("StreamBox").style.display = "none";
-		document.getElementById("FacultyBox").style.display = "none";
+
+		//4
+		function showDepartmentBox() {
+
+			document.getElementById("StreamBox").style.display = "none";
+			document.getElementById("FacultyBox").style.display = "none";
 			document.getElementById("DeptBox").style.display = "block";
 			document.getElementById("MonthBox").style.display = "none";
-			
-			
+
 			$("#selectDept").chosen({
 				disable_search_threshold : 10
 			})
 		}
-	
-	//5
-	
-	function showFacultyBox()
-		{
-			
+
+		//5
+
+		function showFacultyBox() {
+
 			document.getElementById("MonthBox").style.display = "none";
 			document.getElementById("StreamBox").style.display = "none";
 			document.getElementById("FacultyBox").style.display = "block";
-			
+
 			$("#selectFacultyType").chosen({
 				disable_search_threshold : 10
 			})
 		}
-	
-	//6
-	function showStreamBox()
-		{
-			
+
+		//6
+		function showStreamBox() {
+
 			document.getElementById("MonthBox").style.display = "none";
 			document.getElementById("StreamBox").style.display = "block";
-			
+
 			$("#selectStreamType").chosen({
 				disable_search_threshold : 10
 			})
 		}
-	
-	//7
-	function showMonthBox() {
-			
+
+		//7
+		function showMonthBox() {
+
 			document.getElementById("MonthBox").style.display = "block";
 			$("#selectMonth").chosen({
 				disable_search_threshold : 10
 			})
 		}
-		
-	function showDailyRequests()
-	{
-		window.open("AdminReportStudent.html", "Dail Report", "width=1920,height=1080");
-	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+		function showDailyRequests() {
+			window.open("AdminReportStudent.html", "Dail Report",
+					"width=1920,height=1080");
+		}
 	</script>
 
 	<script>
@@ -646,17 +629,20 @@
 		var states = [ 'Bangalore', 'Mysore', 'Tumkur', 'Belgaum', 'BG Nagar',
 				'Hubli', 'Bijapur', 'Gulbarga', 'Bellary', 'Kolar' ];
 
-		var colleges = [ 'M001 Bangalore Medical College',
+		var colleges = [
+				'M001 Bangalore Medical College',
 				'M002 Dr. B.R Ambedkar Medical College',
-				'M003 Institute of Aerospace Medicine', 'M004 St. Johns Medical College',
+				'M003 Institute of Aerospace Medicine',
+				'M004 St. Johns Medical College',
 				'M005 Kempegowda Institute Of Medical Sciences',
-				'M006 Government Medical College', 'M007 Siddartha Medical College',
+				'M006 Government Medical College',
+				'M007 Siddartha Medical College',
 				'M008 J.N Medical College',
 				'M009 Adichunchanagiri Institute of Medical Sciences',
 				'M010 MS Ramaiah Medical College',
 				'M011 Sri Jayadeva Institute of Cardiovascular Sciences & Research',
-				'M012 Kidwai Institute of Oncolgy', 'M013 Al-Ameen Medical College',
-				'M014 M.R.Medical College',
+				'M012 Kidwai Institute of Oncolgy',
+				'M013 Al-Ameen Medical College', 'M014 M.R.Medical College',
 				'M015 Vijayanagar Institute Of Medical Sciences',
 				'M016 Command Hospital', 'M017 JSS Medical College',
 				'M018 Devaraj Urs Medical College' ];
@@ -682,7 +668,7 @@
 		$("#selectReportType").chosen({
 			disable_search_threshold : 10
 		})
-		
+
 		
 	</script>
 
