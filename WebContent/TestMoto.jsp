@@ -45,10 +45,10 @@ public String getSecureCookie(HttpServletRequest request) {
 	PostLib oPostLib	= new PostLib();
 
 	oMerchant.setMerchantDetails(
-			"00001203"       
-			,"00001203"	
-			,"00001203"		
-			,"10.10.10.167"          
+			"00004725"       
+			,"00004725"	
+			,"00004725"		
+			,"localhost"          
 			, System.currentTimeMillis()+""	
 			,"ORD123"	
 			, null		

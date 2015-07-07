@@ -146,7 +146,7 @@
 
 													</s:iterator>
 													<td><input type="text" placeholder="Enter Fee Value">
-														<button>Remove</button></td>
+														<button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></td>
 												</tr>
 											</s:iterator>
 										</tbody>

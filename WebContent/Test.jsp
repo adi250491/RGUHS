@@ -10,6 +10,6 @@
 
 
 <a href="TestAtom">Click to Test Atom</a>
-
+<a href='http://localhost:8080/WebServicesExample/index.jsp?name=Aditya Kumakale&amount=855&client=RGUHS'>Make Payment Test</a>
 </body>
 </html>

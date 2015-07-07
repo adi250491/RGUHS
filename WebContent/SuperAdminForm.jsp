@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
-<%
+<%-- <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
 	loginUser = (LoginBean) session.getAttribute("loginUserBean");
@@ -29,7 +29,7 @@
 	} else {
 		sessionID = session.getId();
 	}
-%>
+%> --%>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Super Admin Form</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
