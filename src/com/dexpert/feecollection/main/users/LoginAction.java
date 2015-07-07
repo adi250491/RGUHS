@@ -56,31 +56,38 @@ public class LoginAction extends ActionSupport {
 			decrypedText = PasswordEncryption.plainStr;
 
 		}
+		try {
+			if (loginBean.getUserName().equals(loginBean.getUserName()) && loginBean.getPassword().equals(decrypedText)) {
+				log.info("valid User name and Password");
+				Cookie usercookie = new Cookie("userName", loginBean.getUserName());
+				usercookie.setMaxAge(60 * 60);
+				response.addCookie(usercookie);
 
-		if (loginBean.getUserName().equals(loginBean.getUserName()) && loginBean.getPassword().equals(decrypedText)) {
-			log.info("valid User name and Password");
-			Cookie usercookie = new Cookie("userName", loginBean.getUserName());
-			usercookie.setMaxAge(60 * 60);
-			response.addCookie(usercookie);
+				httpSession.setAttribute("loginUserBean", lgbean);
 
-			httpSession.setAttribute("loginUserBean", lgbean);
+				if (lgbean.getAffBean() != null) {
+					log.info("Valid College");
+					
+					httpSession.setAttribute("dashLink", "index-College.jsp");
+					return "college";
+				} else if (lgbean.getParBean() != null) {
+					log.info("Valid University");
+					httpSession.setAttribute("dashLink", "index-University.jsp");
+					return "university";
+				} else if (lgbean.getSaBean() != null) {
+					log.info("Valid Super Admin");
+					httpSession.setAttribute("dashLink", "index-Admin.jsp");
+					return "superAdmin";
+				} else {
+					return INPUT;
+				}
 
-			if (lgbean.getAffBean() != null) {
-				log.info("Valid College");
-				return "college";
-			} else if (lgbean.getParBean() != null) {
-				log.info("Valid University");
-				return "university";
-			} else if (lgbean.getSaBean() != null) {
-				log.info("Valid Super Admin");
-				return "superAdmin";
 			} else {
 				return INPUT;
+
 			}
-
-		} else {
-			return INPUT;
-
+		} catch (java.lang.NullPointerException e) {
+			return ERROR;
 		}
 
 	}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
-<html lang="en">
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<html lang="en">
 <head>
 <%
 	//checking session
@@ -21,7 +21,7 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-	if (cookie.getName().equals("loginUser"))
+	if (cookie.getName().equals("user"))
 		usercookie = cookie.getValue();
 	if (cookie.getName().equals("JSESSIONID"))
 		sessionID = cookie.getValue();
@@ -31,7 +31,7 @@
 	}
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal - College Details</title>
+<title>Fee Collection Portal - Student Form</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -75,7 +75,7 @@
 
 </head>
 
-<body>
+<body onload="getCollegeList()">
 	<!-- topbar starts -->
 
 	<!-- topbar ends -->
@@ -94,18 +94,42 @@
 				</div>
 			</noscript>
 
+
+
+			<%
+				String msg = (String) request.getAttribute("msg");
+			%>
+
+			<%
+				if (msg != null)
+
+																											{
+			%>
+
+			<div
+				style="color: red; text-align: center; font-weight: bold; font-size: medium;">
+
+
+				<%=msg%>
+			</div>
+			<%
+				}
+			%>
+
+
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
 				<div></div>
 
-				<form action="updateCollegeDoc" enctype="multipart/form-data"
-					method="post">
-					<div class="row">
+
+				<div class="row">
+					<form action="registerInstitute" enctype="multipart/form-data"
+						method="post">
 						<div class="box col-md-12">
 							<div class="box-inner">
 								<div class="box-header well">
 									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> College Document
+										<i class="glyphicon glyphicon-info-sign"></i> New Student Form
 									</h2>
 
 									<div class="box-icon">
@@ -115,33 +139,135 @@
 
 									</div>
 								</div>
-
 								<div class="box-content row">
 									<div class="col-lg-12 col-md-12 animated fadeIn">
+
 
 										<table class="table table-condensed">
 											<thead>
 
 												<tr>
-
-													<th><input type="hidden" name="affInstBean.instId"
-														class="form-control"
-														value="<s:property value="affInstBean.instId" />">
-
-
-													</th>
+													<th></th>
+													<th></th>
 													<th></th>
 
 												</tr>
 											</thead>
 											<tbody>
+												<tr>
+
+													<td>Student Enrollment Number</td>
+													<td colspan="2"><div id="the-basics"
+															class="has-success">
+															<input required="required" id="District/Area"
+																name="studentBean.enrollmentNumber"
+																value='<s:property value="affInstBean.place"/>'
+																placeholder="Enrollment Number" type="text"
+																class="form-control">
+														</div></td>
+
+												</tr>
+												<tr>
+
+													<td>Student Name</td>
+													<td><div id="the-basics" class="has-success">
+															<input required="required" id="District/Area"
+																name="studentBean.studentName"
+																value='<s:property value="affInstBean.place"/>'
+																placeholder="First Name" type="text"
+																class="form-control">
+														</div></td>
+
+													<td><div id="the-basics" class="has-success">
+															<input required="required" id="District/Area"
+																name="studentBean.studetnLstName"
+																value='<s:property value="affInstBean.place"/>'
+																placeholder="Last Name" type="text" class="form-control">
+														</div></td>
+
+												</tr>
 
 
 												<tr>
 
-													<td style="font-weight: bold;">Update Document</td>
-													<td><input type="file" name="fileUpload" size="40"
-														class="form-control" required="required"></td>
+													<td>College Name</td>
+													<td colspan="2">
+														<div class="box-content">
+															<div class="control-group">
+																<div class="controls">
+																	<select data-rel="chosen" required="required">
+																		<option value="">--Select College--</option>
+																		<s:iterator value="affInstList">
+
+																			<option value='<s:property value="instId" />'><s:property
+																					value="instName" /></option>
+
+																		</s:iterator>
+																	</select>
+																</div>
+															</div>
+
+
+														</div>
+
+													</td>
+
+												</tr>
+
+
+												<tr>
+
+													<td>Address</td>
+													<td colspan="2"><div id="the-basics"
+															class="has-success">
+															<textarea required="required" id="CollegeName"
+																name="studentBean.address" placeholder="Address"
+																<s:property value="affInstBean.place"/>
+																class="form-control"></textarea>
+
+														</div></td>
+
+												</tr>
+
+												<tr>
+
+													<td>Primary Mobile Number</td>
+													<td colspan="2"><div id="the-basics"
+															class="has-success">
+															<input required="required" id="Contact"
+																name="studentBean.mobilePri" maxlength="10"
+																value='<s:property value="affInstBean.mobileNum"/>'
+																placeholder="Mobile Number" pattern="[789][0-9]{9}"
+																type="text" class="form-control">
+
+														</div></td>
+
+												</tr>
+												<tr>
+
+													<td>Secondary Mobile Number</td>
+													<td colspan="2"><div id="the-basics"
+															class="has-success">
+															<input required="required" id="Contact"
+																name="studentBean.mobileSec" maxlength="10"
+																value='<s:property value="affInstBean.mobileNum"/>'
+																placeholder="Mobile Number" pattern="[789][0-9]{9}"
+																type="text" class="form-control">
+
+														</div></td>
+
+												</tr>
+												<tr>
+
+													<td>Email Id</td>
+													<td colspan="2"><div id="the-basics"
+															class="has-success">
+															<input required="required" id="Contact"
+																value='<s:property value="affInstBean.email"/>'
+																name="affInstBean.email" placeholder="Email ID"
+																type="email" class="form-control">
+
+														</div></td>
 
 												</tr>
 
@@ -149,26 +275,23 @@
 											</tbody>
 										</table>
 
+
 									</div>
 
 
 								</div>
-
 							</div>
 						</div>
 						<div class="col-md-12">
+							<button type="submit" class="btn btn-success"
+								onclick="OpenSummaryInParent()">Save Student Detail</button>
 
-							<input type="submit" class="btn btn-success" value="Update File">
-
-
-
-							<button onclick="window.close()" class="btn btn-info">Close</button>
-							<button onclick="window.history.back();" class="btn btn-default">Back</button>
+							<button onclick="window.close()" class="btn btn-info">Close
+							</button>
 
 						</div>
-
-					</div>
-				</form>
+					</form>
+				</div>
 
 				<!--/row-->
 
@@ -257,8 +380,14 @@
 
 	<script>
 		function OpenSummaryInParent() {
-			window.opener.location = "College-Payment-Summary.html";
-			window.close();
+			window.onunload = function() {
+				window.opener.document.location.reload();
+				setTimeout(window.close(), 100);
+			}
+
+		}
+
+		function getCollegeList() {
 
 		}
 	</script>

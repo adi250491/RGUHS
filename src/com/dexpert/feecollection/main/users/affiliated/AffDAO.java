@@ -156,7 +156,7 @@ public class AffDAO {
 		Session session = factory.openSession();
 
 		Criteria criteria = session.createCriteria(AffBean.class);
-
+		criteria.addOrder(Order.asc("instName"));
 		ArrayList<AffBean> affBeansList = (ArrayList<AffBean>) criteria.list();
 		session.close();
 		return affBeansList;

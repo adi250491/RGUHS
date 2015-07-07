@@ -164,9 +164,10 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-College.html"><i
+							<li><a class="ajax-link" href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
-
+							<li><a class="ajax-link" href="StudentDetail.jsp"><i
+									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
 							<li class="accordion"><a href="#"><i class="fa fa-inr"></i><span>
 										Initiate Payment</span></a>
 								<ul class="nav nav-pills nav-stacked">
@@ -227,8 +228,8 @@
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 									<h1>
 										Welcome
-										<%=loginUser.getAffBean().getInstName()%><br>
-										<small> This is the online fee payment portal</small>
+										<%=loginUser.getAffBean().getInstName()%><br> <small>
+											This is the online fee payment portal</small>
 									</h1>
 									<p>You can use the portal to pay various fees to the
 										governing university in a hasslefree manner. We accept various

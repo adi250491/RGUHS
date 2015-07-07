@@ -104,6 +104,7 @@ public class AffAction extends ActionSupport {
 			}
 
 			affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
+			
 			// -----Code for sending email//--------------------
 			EmailSessionBean email = new EmailSessionBean();
 			email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,

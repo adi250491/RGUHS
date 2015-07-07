@@ -88,6 +88,13 @@ public class SaAction extends ActionSupport {
 
 	}
 
+	// view Super Admin Profile
+	public String viewSaProfile() {
+		String saId = request.getParameter("saId");
+		log.info("Super Admin ID ::" + saId);
+		return SUCCESS;
+	}
+
 	// End of Action Methods
 
 	// ---------------------------------------------------

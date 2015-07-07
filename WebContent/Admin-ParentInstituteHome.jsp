@@ -98,8 +98,8 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span>
-					<span class="caret"></span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span> <span
+						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
@@ -177,7 +177,7 @@
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
-							<li><a class="ajax-link" href="Admin-Reports.html"><i
+							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
 					</div>
@@ -237,41 +237,42 @@
 										</div>
 									</div>
 									<%-- </s:if> --%>
-									<s:else>
-										<!---Content-->
-										<table
-											class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
-											<thead>
+
+									<!---Content-->
+									<table
+										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
+										<thead>
+											<tr>
+												<th width="7%">Sr. No.</th>
+												<!-- <th>ID</th> -->
+												<th>College Name</th>
+												<th>Place</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<s:iterator value="parBeansList">
 												<tr>
-													<th width="7%">Sr. No.</th>
-													<!-- <th>ID</th> -->
-													<th>College Name</th>
-													<th>Place</th>
-													<th>Actions</th>
+													<td><%=i%> <input type="hidden"
+														value="<s:property value="parInstId"/>"
+														name="<s:property value="parInstId"/>"></td>
+													<%-- 	<td><s:property value="instId"/> </td> --%>
+													<td class="center"><s:property value="parInstName" /></td>
+													<td class="center"><s:property value="parInstAddress" /></td>
+													<td class="center"><a class="btn btn-success btn-sm"
+														onclick="showDetails(<s:property value="parInstId"/>)"> <i
+															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+													</a></td>
 												</tr>
-											</thead>
-											<tbody>
-												<s:iterator value="affInstList">
-													<tr>
-														<td><%=i%> <%
- 	i++;
- %> <input type="hidden" value="<s:property value="instId"/>"
-															name="<s:property value="instId"/>"></td>
-														<%-- 	<td><s:property value="instId"/> </td> --%>
-														<td class="center"><s:property value="instName" /></td>
-														<td class="center"><s:property value="place" /></td>
-														<td class="center"><a class="btn btn-success btn-sm"
-															onclick="showDetails(<s:property value="instId"/>)">
-																<i class="glyphicon glyphicon-zoom-in icon-white"></i>
-																View
-														</a></td>
-													</tr>
-												</s:iterator>
+												<%
+													i++;
+												%>
+											</s:iterator>
 
 
-											</tbody>
-										</table>
-									</s:else>
+										</tbody>
+									</table>
+
 								</div>
 
 
@@ -372,7 +373,7 @@
 			
 			
 			
-			window.open("ViewCollegeDetails?instId="+id, "CollegeDetails",
+			window.open("ViewUniversityDetails?parInstId="+id, "CollegeDetails",
 					"width=700,height=900");
 		}
 	</script>

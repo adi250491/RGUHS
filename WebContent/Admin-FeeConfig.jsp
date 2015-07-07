@@ -159,7 +159,7 @@
 									class="fa fa-building"></i><span> My Colleges</span></a></li>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
-							<li><a class="ajax-link" href="Admin-Reports.html"><i
+							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
 					</div>

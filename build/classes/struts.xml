@@ -71,6 +71,24 @@
 
 
 		</action>
+
+		<action name="ShowCollegeReport"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="getCollegeList">
+
+
+			<result name="success">
+				CollegeReport.jsp
+			</result>
+		</action>
+
+		<action name="GenerateCollegeReport"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="getCollegeList">
+
+			<result name="success">GenerateCollegeReport.jsp</result>
+		</action>
+
 	</package>
 
 
@@ -83,7 +101,22 @@
 			<result name="success">/WaitPage.jsp</result>
 			<result name="input">/UniversityForm.jsp</result>
 			<result name="failure">/UniversityForm.jsp</result>
+			<result name="duplicate">/Error.jsp</result>
+
 		</action>
+
+		<action name="UniversityDetailRecord"
+			class="com.dexpert.feecollection.main.users.parent.ParAction" method="getUniversityDetail">
+
+			<result name="success">Admin-ParentInstituteHome.jsp</result>
+		</action>
+
+		<action name="ViewUniversityDetails"
+			class="com.dexpert.feecollection.main.users.parent.ParAction" method="viewUniDetail">
+
+			<result name="success">University-View-Detail.jsp</result>
+		</action>
+
 
 	</package>
 
@@ -98,6 +131,7 @@
 			<result name="superAdmin">index-Admin.jsp</result>
 			<result name="input">Login.jsp</result>
 			<result name="failure">Login.jsp</result>
+			<result name="error">Login.jsp</result>
 
 		</action>
 
@@ -107,6 +141,7 @@
 			<result name="success">WaitPage.jsp</result>
 
 		</action>
+
 
 	</package>
 	<package name="Lookup" extends="struts-default">
@@ -140,6 +175,15 @@
 			<result name="input">/SuperAdminForm.jsp</result>
 			<result name="failure">/SuperAdminForm.jsp</result>
 		</action>
+
+
+		<action name="showSAdminProfile"
+			class="com.dexpert.feecollection.main.users.superadmin.SaAction"
+			method="viewSaProfile">
+
+			<result name="success">ViewSAProfile.jsp</result>
+		</action>
+
 
 	</package>
 
@@ -220,6 +264,32 @@
 
 
 		</action>
+	</package>
+	
+	
+
+	<package name="Student" extends="struts-default">
+		<action name="AddStudentColleges"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="getCollegeList">
+
+			<result name="success">StudentForm.jsp</result>
+		</action>
+
+	</package>
+	
+	
+	
+	
+	<package name="Test" extends="struts-default">
+
+		<action name="TestAtom"
+			class="com.test.mapping.TestAction" method="addFee">
+
+			<result name="success">Test.jsp</result>
+
+		</action>
+		
 	</package>
 
 </struts>

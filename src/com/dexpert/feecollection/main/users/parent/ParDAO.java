@@ -2,6 +2,7 @@ package com.dexpert.feecollection.main.users.parent;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -10,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
 import com.dexpert.feecollection.main.users.affiliated.AffBean;
@@ -93,6 +95,34 @@ public class ParDAO {
 			session.close();
 
 		}
+	}
+
+	public List<ParBean> getUniversityList() {
+		Session session = factory.openSession();
+		try {
+
+			Criteria criteria = session.createCriteria(ParBean.class);
+			List<ParBean> list = criteria.list();
+			return list;
+
+		} finally {
+			session.close();
+			// TODO: handle exception
+		}
+	}
+
+	public ParBean viewUniversity(Integer id) {
+		Session session = factory.openSession();
+		try {
+			Criteria criteria = session.createCriteria(ParBean.class);
+			criteria.add(Restrictions.eq("parInstId", id));
+			ParBean bean = (ParBean) criteria.list().iterator().next();
+			return bean;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

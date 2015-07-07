@@ -6,6 +6,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -27,7 +29,7 @@ public class ParAction extends ActionSupport {
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
-
+	List<ParBean> parBeansList = new ArrayList<ParBean>();
 	public ParBean parBean;
 
 	ParDAO parDAO = new ParDAO();
@@ -105,6 +107,24 @@ public class ParAction extends ActionSupport {
 
 	}
 
+	// to get Universiry Detail
+	public String getUniversityDetail() {
+
+		parBeansList = parDAO.getUniversityList();
+		log.info("Parent List is ::" + parBeansList.size());
+		return SUCCESS;
+
+	}
+
+	// view University Detail
+	public String viewUniDetail() {
+
+		String uniId = request.getParameter("parInstId");
+		Integer id = Integer.parseInt(uniId);
+		parBean = parDAO.viewUniversity(id);
+		return SUCCESS;
+	}
+
 	// End of Action Methods
 
 	// ---------------------------------------------------
@@ -149,6 +169,14 @@ public class ParAction extends ActionSupport {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+
+	public List<ParBean> getParBeansList() {
+		return parBeansList;
+	}
+
+	public void setParBeansList(List<ParBean> parBeansList) {
+		this.parBeansList = parBeansList;
 	}
 
 }
