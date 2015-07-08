@@ -4,11 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Error Page</title>
+<title>Lock Page</title>
 </head>
 <body>
+
 	<div
-		style="color: red; font-size: x-large; font-weight: bold; text-align: center;">Multiple
-		Universities Not Allowed</div>
+		style="font-weight: bold; text-align: center; font-size: x-large; font-family: monospace;">Feature
+		Is Locked</div>
+
+
 </body>
 </html>

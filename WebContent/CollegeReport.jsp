@@ -223,7 +223,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<button class="btn btn-sm btn-info pull-right"
-												onclick='window.open("GenerateCollegeReport", "CollegeForm", "width=500,height=900")'>
+												onclick='window.open("GenerateCollegeReport", "CollegeForm", "width=1500,height=1080")'>
 												<i class="fa fa-plus"></i> Print Report
 											</button>
 										</div>
@@ -249,14 +249,19 @@
 											%>
 											<s:iterator value="affInstList">
 												<tr>
-													<td><%=i%></td>
+													<td><span style="margin-left: 10px;"><%=i%></span></td>
 
-													<td class="center"><s:property value="instName" /></td>
-													<td><s:property value="contactNumber" /></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="instName" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="contactNumber" /></span></td>
 
-													<td><s:property value="email" /></td>
-													<td><s:property value="instAddress" /></td>
-													<td class="center"><s:property value="place" /></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="email" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="instAddress" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="place" /></span></td>
 
 												</tr>
 

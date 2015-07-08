@@ -114,6 +114,7 @@
 
 								</div>
 							</div>
+
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 
@@ -189,15 +190,19 @@
 
 
 							</div>
+
 						</div>
 					</div>
 					<div class="col-md-12">
 						<button class="btn btn-success"
 							onclick="updateCollege(<s:property value="affInstBean.instId" />)">Edit
 							College Info</button>
+
+
 						<button class="btn btn-warning"
-							onclick='window.location="CollegeFeeDetails.html"'>View
+							onclick='window.location="LockFeature.jsp"'>View
 							Associated Fees</button>
+
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
@@ -205,6 +210,7 @@
 					</div>
 
 				</div>
+
 
 				<!--/row-->
 

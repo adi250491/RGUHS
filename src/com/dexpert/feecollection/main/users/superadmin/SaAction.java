@@ -29,6 +29,7 @@ public class SaAction extends ActionSupport {
 	static Logger log = Logger.getLogger(AffDAO.class.getName());
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
+	public SaDAO saDAO = new SaDAO();
 
 	// End of Global Variables
 
@@ -43,7 +44,7 @@ public class SaAction extends ActionSupport {
 
 		try {
 			username = "SA".concat(superAdmin.getFirstName().replaceAll("\\s+", "").substring(0, 4)
-					.concat(SaDAO.getRowCount().toString()));
+					.concat(saDAO.getRowCount().toString()));
 
 		} catch (java.lang.NullPointerException e) {
 
@@ -78,7 +79,7 @@ public class SaAction extends ActionSupport {
 
 		}
 
-		superAdmin = SaDAO.saveOrUpdate(superAdmin);
+		superAdmin = saDAO.saveOrUpdate(superAdmin);
 		// -----Code for sending email//--------------------
 		EmailSessionBean email = new EmailSessionBean();
 		email.sendEmail(superAdmin.getEmailId(), "Welcome To Fee Collection Portal!", username, password,
@@ -91,7 +92,10 @@ public class SaAction extends ActionSupport {
 	// view Super Admin Profile
 	public String viewSaProfile() {
 		String saId = request.getParameter("saId");
+		Integer id=Integer.parseInt(saId);
 		log.info("Super Admin ID ::" + saId);
+		
+		superAdmin=saDAO.getSaDetail(id);
 		return SUCCESS;
 	}
 
@@ -107,5 +111,6 @@ public class SaAction extends ActionSupport {
 	public void setSuperAdmin(SaBean superAdmin) {
 		this.superAdmin = superAdmin;
 	}
+
 	// End of Getter Setter Methods
 }

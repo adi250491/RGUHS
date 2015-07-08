@@ -133,8 +133,8 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td>1</td>
-													<td>Name</td>
+
+													<td><strong>Name</strong></td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="firstName"
 																name="superAdmin.firstName" placeholder="First Name"
@@ -143,10 +143,10 @@
 
 												</tr>
 												<tr>
-													<td>2</td>
-													<td>Middle Name</td>
+
+													<td><strong>Middle Name</strong></td>
 													<td><div id="the-basics" class="has-success">
-															<input required="required" id="MiddleName"
+															<input  id="MiddleName"
 																name="superAdmin.midName" placeholder="Middle Name"
 																type="text" class="form-control">
 
@@ -154,8 +154,8 @@
 
 												</tr>
 												<tr>
-													<td>3</td>
-													<td>Last Name</td>
+
+													<td><strong>Last Name</strong></td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="LastName"
 																name="superAdmin.lstName" placeholder="Last Name"
@@ -166,15 +166,15 @@
 												</tr>
 
 												<tr>
-													<td>4</td>
-													<td>Gender</td>
+
+													<td><strong>Gender</strong></td>
 													<td><div id="the-basics" class="has-success">
 
 
 
 															<input type="radio" required="required"
 																name="superAdmin.gender" id="userPrefixMr" value="Male">Male
-															<input type="radio" required="required"
+															&nbsp;&nbsp;&nbsp;<input type="radio" required="required"
 																name="superAdmin.gender" id="userPrefixMrs"
 																value="Female">Female
 
@@ -190,8 +190,8 @@
 
 												</tr>
 												<tr>
-													<td>5</td>
-													<td>Age</td>
+
+													<td><strong>Age</strong></td>
 													<td><div id="the-basics" class="has-success">
 															<input id="PrinciName" name="superAdmin.age"
 																pattern="[0-9]*" required="required" placeholder="Age"
@@ -201,20 +201,20 @@
 
 												</tr>
 												<tr>
-													<td>6</td>
-													<td>Contact Number</td>
+
+													<td><strong>Mobile Number</strong></td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="Contact"
 																name="superAdmin.mobileNum" maxlength="10"
-																placeholder="Contact Number" pattern="[789][0-9]{9}"
+																placeholder="Mobile Number" pattern="[789][0-9]{9}"
 																type="tel" class="form-control">
 
 														</div></td>
 
 												</tr>
 												<tr>
-													<td>7</td>
-													<td>Email Id</td>
+
+													<td><strong>Email Id</strong></td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="emailId"
 																name="superAdmin.emailId" placeholder="Email ID"
@@ -224,12 +224,12 @@
 
 												</tr>
 												<tr>
-													<td>8</td>
-													<td>Address</td>
+
+													<td><strong>Address</strong></td>
 													<td><div id="the-basics" class="has-success">
-															<input required="required" id="address"
+															<textarea required="required" id="address"
 																name="superAdmin.address" placeholder="Address"
-																type="text" class="form-control">
+																class="form-control"></textarea>
 
 														</div></td>
 
@@ -251,8 +251,8 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-success">Save
-								College</button>
+							<button type="submit" class="btn btn-success">Save Super
+								Admin</button>
 
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>

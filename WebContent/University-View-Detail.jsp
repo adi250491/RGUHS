@@ -104,7 +104,8 @@
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-info-sign"></i> University Details
+									<i class="glyphicon glyphicon-info-sign"></i> University
+									Details
 								</h2>
 
 								<div class="box-icon">
@@ -158,9 +159,9 @@
 												<td><s:property value="parBean.parInstContact" /></td>
 
 											</tr>
-											
 
-											
+
+
 											<%-- <tr>
 
 												<td style="font-weight: bold;">Uploaded FIle</td>
@@ -182,12 +183,10 @@
 						</div>
 					</div>
 					<div class="col-md-12">
-						<%-- <button class="btn btn-success"
-							onclick="updateCollege(<s:property value="affInstBean.instId" />)">Edit
-							College Info</button>
-						<button class="btn btn-warning"
-							onclick='window.location="CollegeFeeDetails.html"'>View
-							Associated Fees</button> --%>
+						<button class="btn btn-success"
+							onclick='window.location="LockFeature.jsp"'>Edit
+							University Info</button>
+						
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
@@ -287,13 +286,10 @@
 			window.close();
 
 		}
-		
-		
-		function updateCollege(instId)
-		{
-			window.location = "editCollegeDetails?instId="+instId;
-			
-			
+
+		function updateCollege(instId) {
+			window.location = "editCollegeDetails?instId=" + instId;
+
 		}
 	</script>
 </body>

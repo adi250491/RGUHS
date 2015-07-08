@@ -99,8 +99,8 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span>
-					<span class="caret"></span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span> <span
+						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
@@ -181,12 +181,7 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				<div>
-					<ul class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Fee Configuration</a></li>
-					</ul>
-				</div>
+				
 
 				<div class="row">
 					<div class="box col-md-12">
@@ -209,7 +204,9 @@
 									<!---Content-->
 
 									<p class="btn-group">
-										<button class="btn btn-default">Fee Templates</button>
+										<button class="btn btn-default"
+											onclick='window.open("LockFeature.jsp", "Feature Lock", "height=500,width=500")'>Fee
+											Templates</button>
 										<button class="btn btn-default"
 											onclick='window.location="FeeConfig-Values.jsp"'>Fee
 											Values</button>

@@ -60,25 +60,32 @@ public class ParDAO {
 		// Open session from session factory
 		Session session = factory.openSession();
 		try {
-
+			byte[] bFile = null;
+			Integer fileSize = null;
 			// file input Stream is use to save file in to DataBase
-			FileInputStream fileInputStream = null;
+			try {
+				FileInputStream fileInputStream = null;
 
-			// to create new file with actual name with extension
-			File dstFile = new File(path, parBean.getFileUploadFileName());
+				// to create new file with actual name with extension
+				File dstFile = new File(path, parBean.getFileUploadFileName());
 
-			// to copy files at specified destination path
-			FileUtils.copyFile(parBean.getFileUpload(), dstFile);
+				// to copy files at specified destination path
+				FileUtils.copyFile(parBean.getFileUpload(), dstFile);
 
-			// convert file into array of bytes
+				// convert file into array of bytes
 
-			byte[] bFile = new byte[(int) dstFile.length()];
-			fileInputStream = new FileInputStream(dstFile);
+				bFile = new byte[(int) dstFile.length()];
+				fileInputStream = new FileInputStream(dstFile);
 
-			int fileSize = fileInputStream.read(bFile);
-			// fileinputStream must be close
-			fileInputStream.close();
+				fileSize = fileInputStream.read(bFile);
+				// fileinputStream must be close
+				fileInputStream.close();
+			} catch (java.lang.NullPointerException e) {
+				// TODO: handle exception
+			}
+
 			parBean.setFilesByteSize(bFile);
+
 			parBean.setFileSize(fileSize);
 			session.beginTransaction();
 			session.saveOrUpdate(parBean);
@@ -88,7 +95,6 @@ public class ParDAO {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			
 			return parBean;
 		} finally {
 

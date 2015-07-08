@@ -21,7 +21,7 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-	if (cookie.getName().equals("user"))
+	if (cookie.getName().equals("loginUser"))
 		usercookie = cookie.getValue();
 	if (cookie.getName().equals("JSESSIONID"))
 		sessionID = cookie.getValue();
@@ -31,7 +31,7 @@
 	}
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal- My Colleges</title>
+<title>Fee Collection Portal - Super Admin Profile</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -77,108 +77,12 @@
 
 <body>
 	<!-- topbar starts -->
-	<div class="navbar navbar-default" role="navigation">
 
-		<div class="navbar-inner">
-			<button type="button" class="navbar-toggle pull-left animated flip">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-
-			<a class="navbar-brand" href="index-College.html"> <img
-				alt="Charisma Logo" src="img/logo20.png" class="hidden-xs" /> <span>Fee
-					Collection Portal</span></a>
-
-			<!-- user dropdown starts -->
-			<div class="btn-group pull-right">
-				<button class="btn btn-default dropdown-toggle"
-					data-toggle="dropdown">
-					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span>
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="#">Profile</a></li>
-					<li class="divider"></li>
-					<li><a href="logOutUser">Logout</a></li>
-				</ul>
-			</div>
-			<!-- user dropdown ends -->
-
-			<!-- theme selector starts -->
-			<div class="btn-group pull-right theme-container">
-				<button class="btn btn-default dropdown-toggle"
-					data-toggle="dropdown">
-					<i class="glyphicon glyphicon-tint"></i><span
-						class="hidden-sm hidden-xs"> </span> <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" id="themes">
-					<li><a data-value="classic" href="#"><i class="whitespace"></i>
-							Classic</a></li>
-					<li><a data-value="cerulean" href="#"><i
-							class="whitespace"></i> Cerulean</a></li>
-					<li><a data-value="cyborg" href="#"><i class="whitespace"></i>
-							Cyborg</a></li>
-					<li><a data-value="simplex" href="#"><i class="whitespace"></i>
-							Simplex</a></li>
-					<li><a data-value="darkly" href="#"><i class="whitespace"></i>
-							Darkly</a></li>
-					<li><a data-value="lumen" href="#"><i class="whitespace"></i>
-							Lumen</a></li>
-					<li><a data-value="slate" href="#"><i class="whitespace"></i>
-							Slate</a></li>
-					<li><a data-value="spacelab" href="#"><i
-							class="whitespace"></i> Spacelab</a></li>
-					<li><a data-value="united" href="#"><i class="whitespace"></i>
-							United</a></li>
-				</ul>
-			</div>
-			<!-- theme selector ends -->
-			<!-- cart button starts -->
-			<div class="btn-group pull-right">
-				<button class="btn btn-default dropdown-toggle"
-					data-toggle="dropdown">
-					<i class=" glyphicon glyphicon-shopping-cart"></i><span
-						class="hidden-sm hidden-xs"> Cart</span> <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="College-Payment-Summary.html">Proceed To
-							Checkout</a></li>
-					<li class="divider"></li>
-					<li><a href="#"
-						onclick='window.open("Cart.html", "MyCart", "width=500,height=900")'>View
-							Cart</a></li>
-				</ul>
-			</div>
-			<!-- cart button ends -->
-		</div>
-	</div>
 	<!-- topbar ends -->
 	<div class="ch-container">
 		<div class="row">
 
-			<!-- left menu starts -->
-			<div class="col-sm-2 col-lg-2">
-				<div class="sidebar-nav">
-					<div class="nav-canvas">
-						<div class="nav-sm nav nav-stacked"></div>
-						<ul class="nav nav-pills nav-stacked main-menu">
-							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-Admin.jsp"><i
-									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
-							<li><a class="ajax-link" href="getCollegeList"><i
-									class="fa fa-building"></i><span> My Colleges</span></a></li>
-							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
-									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
-							<li><a class="ajax-link" href="Admin-Reports.html"><i
-									class="fa fa-list-alt"></i><span> Reports</span></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!--/span-->
-			<!-- left menu ends -->
+
 			<noscript>
 				<div class="alert alert-block col-md-12">
 					<h4 class="alert-heading">Warning!</h4>
@@ -192,86 +96,111 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				<!-- <div>
-					<ul class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Dashboard</a></li>
-					</ul>
-				</div> -->
+				<div></div>
 
 
 
-
-				<!--/row-->
 				<div class="row">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-list-alt"></i> All Colleges
+									<i class="glyphicon glyphicon-info-sign"></i> Super Admin
+									Profile
 								</h2>
 
 								<div class="box-icon">
 
 									<a href="#" class="btn btn-minimize btn-round btn-default"><i
-										class="glyphicon glyphicon-chevron-up"></i></a>
+										class="glyphicon glyphicon-chevron-down"></i></a>
 
 								</div>
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
-									<div class="row">
-										<div class="col-md-12">
-											<button class="btn btn-sm btn-info pull-right"
-												onclick='window.open("CollegeForm.jsp", "CollegeForm", "width=500,height=900")'>
-												<i class="fa fa-plus"></i> Add College
-											</button>
-										</div>
-									</div>
-									<!---Content-->
-									<table
-										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
-										<thead>
-											<tr>
-												<th width="7%">Sr. No.</th>
 
-												<th>College Name</th>
-												<th>Place</th>
-												<th>Actions</th>
-											</tr>
+									<table class="table table-condensed">
+										<thead>
+
+
 										</thead>
 										<tbody>
-											<%
-												int i = 1;
-											%>
-											<s:iterator value="affInstList">
-												<tr>
-													<td><%=i%> </td>
+											<tr>
 
-													<td class="center"><s:property value="instName" /></td>
-													<td class="center"><s:property value="place" /></td>
-													<td class="center"><a class="btn btn-success btn-sm"
-														onclick="showDetails(<s:property value="instId"/>)"> <i
-															class="glyphicon glyphicon-zoom-in icon-white"></i> View
-													</a></td>
-												</tr>
+												<td>Name</td>
+												<td><div id="the-basics" class="has-success">
+														<s:property value="superAdmin.firstName" />
+														<s:property value="superAdmin.midName" />
+														<s:property value="superAdmin.lstName" />
+													</div></td>
 
-												<%
-													i++;
-												%>
-											</s:iterator>
+											</tr>
+											<tr>
+
+												<td>Gender</td>
+												<td><div id="the-basics" class="has-success">
+														<s:property value="superAdmin.gender" />
+
+													</div></td>
+
+											</tr>
+
+											<tr>
+
+												<td>Contact Number</td>
+												<td><div id="the-basics" class="has-success">
+
+														<s:property value="superAdmin.mobileNum" />
+													</div></td>
+
+											</tr>
+											<tr>
+
+												<td>Email</td>
+												<td><div id="the-basics" class="has-success">
+														<s:property value="superAdmin.emailId" />
+
+													</div></td>
+
+											</tr>
+											<tr>
+
+												<td>Address</td>
+												<td><div id="the-basics" class="has-success">
+														<s:property value="superAdmin.address" />
+
+													</div></td>
+
+											</tr>
+
+
+
+
+
 
 
 										</tbody>
 									</table>
-
 								</div>
 
 
 							</div>
 						</div>
 					</div>
+					<div class="col-md-12">
+						<button type="button" class="btn btn-success"
+							onclick='window.open("LockFeature.jsp","Feature Lock","width=400 height=500")'>Edit
+							Profile</button>
+
+						<button onclick="window.close()" class="btn btn-info">Close
+						</button>
+
+					</div>
+
 				</div>
+
+				<!--/row-->
+
 				<!--/row-->
 				<!-- content ends -->
 			</div>
@@ -304,7 +233,7 @@
 			</div>
 		</div>
 
-		<!-- <footer>
+		<!-- <footer class="row">
 			<p class="col-md-9 col-sm-9 col-xs-12 copyright">
 				&copy; <a href="http://dexpertsystems.com" target="_blank">Dexpert
 					Systems Pvt. Ltd</a>
@@ -354,62 +283,13 @@
 	<script src="js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
-	<!-- TypeAhead Script -->
-	<script src="js/typeahead.bundle.js"></script>
-	<script>
-		function showSearchResults() {
-			document.getElementById("SearchResultBox").style.display = "block";
-			document.getElementById("CollegeDetailBox").style.display = "none";
-		}
-		function showDetails(id) {
-			
-			
-			
-			window.open("ViewCollegeDetails?instId="+id, "CollegeDetails",
-					"width=700,height=900");
-		}
-	</script>
 
 	<script>
-		var substringMatcher = function(strs) {
-			return function findMatches(q, cb) {
-				var matches, substrRegex;
+		function OpenSummaryInParent() {
+			window.opener.location.reload(true);
+			window.close();
 
-				// an array that will be populated with substring matches
-				matches = [];
-
-				// regex used to determine if a string contains the substring `q`
-				substrRegex = new RegExp(q, 'i');
-
-				// iterate through the pool of strings and for any string that
-				// contains the substring `q`, add it to the `matches` array
-				$.each(strs, function(i, str) {
-					if (substrRegex.test(str)) {
-						// the typeahead jQuery plugin expects suggestions to a
-						// JavaScript object, refer to typeahead docs for more info
-						matches.push({
-							value : str
-						});
-					}
-				});
-
-				cb(matches);
-			};
-		};
-
-		var states = [ 'Bangalore', 'Mysore', 'Tumkur', 'Belgaum', 'BG Nagar',
-				'Hubli', 'Bijapur', 'Gulbarga', 'Bellary', 'Kolar' ];
-
-		$('#the-basics .typeahead').typeahead({
-			hint : true,
-			highlight : true,
-			minLength : 1
-		}, {
-			name : 'states',
-			displayKey : 'value',
-			source : substringMatcher(states)
-		});
+		}
 	</script>
-
 </body>
 </html>

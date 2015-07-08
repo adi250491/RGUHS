@@ -106,7 +106,7 @@ try{
 						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a id="saveProfileTagId" onclick="openNewPage()"<%-- href="showSAdminProfile?saId=<%=loginUser.getSaBean().getSaId()%>" --%>>Profile</a></li>
+					<li><a id="saveProfileTagId" onclick="viewProfile()" href="#">Profile</a></li>
 					<li class="divider"></li>
 					<li><a href="logOutUser">Logout</a></li>
 				</ul>
@@ -187,12 +187,7 @@ try{
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				<div>
-					<ul class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Dashboard</a></li>
-					</ul>
-				</div>
+
 
 
 				<div class="row">
@@ -230,14 +225,18 @@ try{
 							</div>
 						</div>
 					</div>
+
+
 				</div>
+
+
 				<!--/row-->
 				<div class=" row">
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<a data-toggle="tooltip"
 							title="600 new student requests. Click here to view"
 							class="well top-block" href="#"
-							onclick='window.open("UniversityReportStudent.html", "Dail Report", "width=1920,height=1080");'>
+							onclick='window.open("LockFeature.jsp", "Dail Report", "width=1920,height=1080");'>
 							<i class="glyphicon glyphicon-user blue"></i>
 
 							<div>Total Student Requests</div>
@@ -249,7 +248,7 @@ try{
 						<a data-toggle="tooltip"
 							title="4 new payments by colleges. Click here to view"
 							class="well top-block" href="#"
-							onclick='window.open("University-Report.html", "University Report", "height=1080,width=1920")'>
+							onclick='window.open("LockFeature.jsp", "University Report", "height=1080,width=1920")'>
 							<i class="fa fa-inr green"></i>
 
 							<div>Total Payments Made This Month</div>
@@ -343,27 +342,14 @@ try{
 	<script src="js/charisma.js"></script>
 
 	<script type="text/javascript">
-		/* var ajaxvar;
-		if (window.XMLHttpRequest) {
+		function viewProfile() {
+			var id =
+	<%=loginUser.getSaBean().getSaId()%>
+		var query = "?saId=" + id;
 
-			ajaxvar = new XMLHttpRequest();
-
-		} else {
-
-			ajaxvar = new ActiveXObject("Microsoft.XMLHttp");
+			window.open("showSAdminProfile" + query);
 
 		}
-		ajaxvar.onreadystatechange = function() {
-
-			if (ajaxvar.readyState == 4 && ajaxvar.status == 200) {
-
-				document.getElementById("ShowListDiv").innerHTML = ajaxvar.responseText;
-				resetForm();
-			}
-		}
-
-		ajaxvar.open("GET", "showSAdminProfile" +query, true);
-		ajaxvar.send();	 */
 	</script>
 </body>
 </html>

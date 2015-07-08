@@ -200,7 +200,7 @@
 
 													<td style="font-weight: bold;">Update Document</td>
 													<td><input type="button" value="Update File"
-														class="btn btn-success"
+														title="button to Update File" class="btn btn-success"
 														onclick="editCollegeDoc(<s:property value="affInstBean.instId" />)"></td>
 
 												</tr>
@@ -219,12 +219,13 @@
 						<div class="col-md-12">
 
 							<input type="submit" class="btn btn-success"
+								title="button To Update College Detail"
 								onclick="OpenSummaryInParent()" value="Update College Info">
 
-							<button class="btn btn-warning"
+							<!-- <button class="btn btn-warning" disabled="disabled"
 								onclick='window.location="CollegeFeeDetails.html"'>View
 								Associated Fees</button>
-
+ -->
 							<button onclick="window.close()" class="btn btn-info">Close</button>
 
 						</div>

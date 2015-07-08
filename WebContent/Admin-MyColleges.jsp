@@ -95,8 +95,8 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span>
-					<span class="caret"></span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span> <span
+						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
@@ -165,7 +165,8 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href='<%=session.getAttribute("dashLink").toString()%>'><i
+							<li><a class="ajax-link"
+								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> My Colleges</span></a></li>
@@ -246,13 +247,15 @@
 											%>
 											<s:iterator value="affInstList">
 												<tr>
-													<td><%=i%> </td>
+													<td><%=i%></td>
 
 													<td class="center"><s:property value="instName" /></td>
 													<td class="center"><s:property value="place" /></td>
 													<td class="center"><a class="btn btn-success btn-sm"
+														title="Button To Display College Detail"
 														onclick="showDetails(<s:property value="instId"/>)"> <i
-															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+															class="glyphicon glyphicon-zoom-in icon-white"></i>
+															View
 													</a></td>
 												</tr>
 

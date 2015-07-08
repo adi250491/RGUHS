@@ -10,40 +10,40 @@
 <body onload="window.print()">
 
 	<div>
-		<table border="1" style="border-collapse: collapse;">
-			<tr>
+		<table border="1" style="border-collapse: collapse;" cellpadding="3.5px">
+			<tr style="font-size: 13px;">
 				<th>Sr.No.</th>
-				<th>Institute Name</th>
-				<th>Contact Number</th>
-				<th>College Email</th>
-				<th>Contact Person</th>
-				<th>Mobile Number</th>
-				<th>Institute Address</th>
-				<th>District</th>
+				<th>Inst. Name</th>
+				<th>Cnt.No.</th>
+				<th>Clg. Email</th>
+				<th>Cnt. Person</th>
+				<th>Mob.No.</th>
+				<th>Inst. Add.</th>
+				<th>Dist.</th>
 
 			</tr>
 			<%
 				int i = 1;
 			%>
 			<s:iterator value="affInstList">
-				<tr>
-					<td style="margin-left: 20px; font-size: small;"><%=i%></td>
-					<td style="margin-left: 10px; font-size: small;"><s:property
-							value="instName" /></td>
+				<tr style="c">
+					<td><span style="margin-left: 2px;font-size:10px;"><%=i%></span></td>
+					<td><span style="margin-left: 2px;font-size:10px;"><s:property
+								value="instName" /></span></td>
 
-					<td style="margin-left: 10px; font-size: small;"><s:property
-							value="contactNumber" /></td>
+					<td><span style="margin-left:2px;font-size:10px;"><s:property
+								value="contactNumber" /></span></td>
 
-					<td style="margin-left: 10px; font-size: small;"><s:property
-							value="email" /></td>
-					<td style="margin-left: 10px; font-size: small;"><s:property
-							value="contactPerson" /></td>
-					<td style="margin-left: 10px; font-size: small;"><s:property
-							value="mobileNum" /></td>
-					<td style="margin-left: 10px; font-size: small;"><s:property
-							value="instAddress" /></td>
-					<td style="margin-left: 10px; font-size: small;"><s:property
-							value="place" /></td>
+					<td><span style="margin-left: 2px;font-size:10px;"><s:property
+								value="email" /></span></td>
+					<td><span style="margin-left: 2px;font-size:10px;"><s:property
+								value="contactPerson" /></span></td>
+					<td><span style="margin-left: 2px;font-size:10px;"><s:property
+								value="mobileNum" /></span></td>
+					<td><span style="margin-left: 2px;font-size:10px;"><s:property
+								value="instAddress" /></span></td>
+					<td><span style="margin-left: 2px;font-size:10px;"><s:property
+								value="place" /></span></td>
 
 				</tr>
 				<%

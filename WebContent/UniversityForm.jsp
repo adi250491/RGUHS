@@ -146,10 +146,10 @@
 
 													<td>Address</td>
 													<td><div id="the-basics" class="has-success">
-															<input required="required" id="instAddress"
+															<textarea required="required" id="instAddress"
 																name="parBean.parInstAddress"
-																placeholder="University Address" type="text"
-																class="form-control">
+																placeholder="University Address" 
+																class="form-control"></textarea>
 
 														</div></td>
 
@@ -159,9 +159,9 @@
 
 													<td>Contact Person</td>
 													<td><div id="the-basics" class="has-success">
-															<textarea required="required" id="instContactPerson"
-																name="parBean.parInstContPerson"
-																placeholder="Contact Person" class="form-control"></textarea>
+															<input type="text" required="required"
+																id="instContactPerson" name="parBean.parInstContPerson"
+																placeholder="Contact Person" class="form-control">
 
 														</div></td>
 

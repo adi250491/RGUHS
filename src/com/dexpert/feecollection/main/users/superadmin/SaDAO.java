@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
 import com.dexpert.feecollection.main.users.affiliated.AffDAO;
@@ -16,7 +17,7 @@ public class SaDAO {
 	static Logger log = Logger.getLogger(AffDAO.class.getName());
 
 	// End of Global Variables
-	public static Object getRowCount() {
+	public Object getRowCount() {
 		// Declarations
 
 		// Open session from session factory
@@ -35,7 +36,7 @@ public class SaDAO {
 		}
 	}
 
-	public static SaBean saveOrUpdate(SaBean superAdmin) {
+	public SaBean saveOrUpdate(SaBean superAdmin) {
 		Session session = factory.openSession();
 		try {
 			session.beginTransaction();
@@ -55,4 +56,21 @@ public class SaDAO {
 		}
 	}
 
+	public SaBean getSaDetail(Integer id) {
+		Session session = factory.openSession();
+		try {
+			Criteria criteria = session.createCriteria(SaBean.class);
+			criteria.add(Restrictions.eq("saId", id));
+
+			SaBean bean = (SaBean) criteria.list().iterator().next();
+			return bean;
+
+		} finally {
+
+			// close session
+			session.close();
+
+		}
+
+	}
 }

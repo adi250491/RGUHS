@@ -181,7 +181,7 @@
                     <button class="btn btn-default" onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Payments This Month</button>
                     <button class="btn btn-default">Other Relevant Quick Links</button>
                    -->
-										<button class="btn btn-default" onclick="window.open('ShowCollegeReport','College Report','width=1500 height=800')">College
+										<button class="btn btn-default" onclick="window.location='ShowCollegeReport'">College
 											Report</button>
 									</p>
 

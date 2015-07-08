@@ -245,7 +245,7 @@
 											<tr>
 												<th width="7%">Sr. No.</th>
 												<!-- <th>ID</th> -->
-												<th>College Name</th>
+												<th>University Name</th>
 												<th>Place</th>
 												<th>Actions</th>
 											</tr>
@@ -260,8 +260,9 @@
 													<td class="center"><s:property value="parInstName" /></td>
 													<td class="center"><s:property value="parInstAddress" /></td>
 													<td class="center"><a class="btn btn-success btn-sm"
-														onclick="showDetails(<s:property value="parInstId"/>)"> <i
-															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+														onclick="showDetails(<s:property value="parInstId"/>)">
+															<i class="glyphicon glyphicon-zoom-in icon-white"></i>
+															View
 													</a></td>
 												</tr>
 												<%
@@ -418,6 +419,6 @@
 			source : substringMatcher(states)
 		});
 	</script>
-
+	
 </body>
 </html>

@@ -9,7 +9,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>Fee Collection Portal- Reports</title>
+<title>Fee Collection Portal- Fee Config</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -99,8 +99,8 @@
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span>
-					<span class="caret"></span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%></span> <span
+						class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
@@ -181,12 +181,6 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				<div>
-					<ul class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Fee Configuration</a></li>
-					</ul>
-				</div>
 
 				<div class="row">
 					<div class="box col-md-12">
@@ -209,7 +203,9 @@
 									<!---Content-->
 
 									<p class="btn-group">
-										<button class="btn btn-default">Fee Templates</button>
+										<button class="btn btn-default"
+											onclick='window.open("LockFeature.jsp","Feature Lock","width=500 height=500")'>Fee
+											Templates</button>
 										<button class="btn btn-default"
 											onclick='window.location="FeeConfig-Values.jsp"'>Fee
 											Values</button>
@@ -250,7 +246,7 @@
 
 
 									<p class="btn-group">
-									<div class="btn-group">
+										<div class="btn-group">
 										<button
 											onclick='window.open("ParamForm.jsp", "Admin Report", "height=1080,width=1000")'
 											class="btn btn-default ">Add New Parameter</button>
@@ -341,7 +337,7 @@
 
 									</p>
 
-									<table
+								<!-- 	<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
 											<tr>
@@ -471,7 +467,7 @@
 												</a></td>
 											</tr>
 										</tbody>
-									</table>
+									</table> -->
 								</div>
 
 
@@ -522,6 +518,7 @@
 				Powered by: <a href="http://dexpertsystems.com">Dexpert</a>
 			</p>
 		</footer> -->
+	
 	</div>
 	<!--/.fluid-container-->
 
@@ -752,6 +749,6 @@
 			document.getElementById("FeeParametersBox").style.display = "block";
 
 		}
-	</script>
-</body>
+	</script></
+									body>
 </html>
