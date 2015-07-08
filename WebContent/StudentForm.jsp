@@ -103,7 +103,7 @@
 			<%
 				if (msg != null)
 
-																											{
+																																			{
 			%>
 
 			<div
@@ -123,8 +123,7 @@
 
 
 				<div class="row">
-					<form action="registerInstitute" enctype="multipart/form-data"
-						method="post">
+					<form action="registerStudent">
 						<div class="box col-md-12">
 							<div class="box-inner">
 								<div class="box-header well">
@@ -159,9 +158,9 @@
 													<td>Student Enrollment Number</td>
 													<td colspan="2"><div id="the-basics"
 															class="has-success">
-															<input required="required" id="District/Area"
-																name="studentBean.enrollmentNumber"
-																value='<s:property value="affInstBean.place"/>'
+															<input required="required"
+																name="appBean1.enrollmentNumber"
+																value='<s:property value="appBean1.enrollmentNumber"/>'
 																placeholder="Enrollment Number" type="text"
 																class="form-control">
 														</div></td>
@@ -172,17 +171,33 @@
 													<td>Student Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="District/Area"
-																name="studentBean.studentName"
-																value='<s:property value="affInstBean.place"/>'
+																name="appBean1.aplFirstName"
+																value='<s:property value="appBean1.aplFirstName"/>'
 																placeholder="First Name" type="text"
 																class="form-control">
 														</div></td>
 
 													<td><div id="the-basics" class="has-success">
-															<input required="required" id="District/Area"
-																name="studentBean.studetnLstName"
-																value='<s:property value="affInstBean.place"/>'
+															<input required="required" name="appBean1.aplLstName"
+																value='<s:property value="appBean1.aplLstName"/>'
 																placeholder="Last Name" type="text" class="form-control">
+														</div></td>
+
+												</tr>
+
+												<tr>
+
+													<td><strong>Gender</strong></td>
+													<td><div id="the-basics" class="has-success">
+
+
+
+															<input type="radio" required="required"
+																name="appBean1.gender" id="userPrefixMr" value="Male">Male
+															&nbsp;&nbsp;&nbsp;<input type="radio" required="required"
+																name="appBean1.gender" id="userPrefixMrs" value="Female">Female
+
+
 														</div></td>
 
 												</tr>
@@ -195,7 +210,8 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen" required="required">
+																	<select data-rel="chosen" name="appBean1.aplInstId"
+																		required="required">
 																		<option value="">--Select College--</option>
 																		<s:iterator value="affInstList">
 
@@ -221,8 +237,8 @@
 													<td colspan="2"><div id="the-basics"
 															class="has-success">
 															<textarea required="required" id="CollegeName"
-																name="studentBean.address" placeholder="Address"
-																<s:property value="affInstBean.place"/>
+																name="appBean1.aplAddress" placeholder="Address"
+																<s:property value="appBean1.aplAddress"/>
 																class="form-control"></textarea>
 
 														</div></td>
@@ -235,8 +251,8 @@
 													<td colspan="2"><div id="the-basics"
 															class="has-success">
 															<input required="required" id="Contact"
-																name="studentBean.mobilePri" maxlength="10"
-																value='<s:property value="affInstBean.mobileNum"/>'
+																name="appBean1.aplMobilePri" maxlength="10"
+																value='<s:property value="appBean1.aplMobilePri"/>'
 																placeholder="Mobile Number" pattern="[789][0-9]{9}"
 																type="text" class="form-control">
 
@@ -249,8 +265,8 @@
 													<td colspan="2"><div id="the-basics"
 															class="has-success">
 															<input required="required" id="Contact"
-																name="studentBean.mobileSec" maxlength="10"
-																value='<s:property value="affInstBean.mobileNum"/>'
+																name="appBean1.aplMobileSec" maxlength="10"
+																value='<s:property value="appBean1.aplMobileSec"/>'
 																placeholder="Mobile Number" pattern="[789][0-9]{9}"
 																type="text" class="form-control">
 
@@ -263,8 +279,8 @@
 													<td colspan="2"><div id="the-basics"
 															class="has-success">
 															<input required="required" id="Contact"
-																value='<s:property value="affInstBean.email"/>'
-																name="affInstBean.email" placeholder="Email ID"
+																value='<s:property value="appBean1.aplEmail"/>'
+																name="appBean1.aplEmail" placeholder="Email ID"
 																type="email" class="form-control">
 
 														</div></td>
@@ -283,8 +299,8 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-success"
-								onclick="OpenSummaryInParent()">Save Student Detail</button>
+							<button type="submit" onclick="OpenSummaryInParent()"
+								class="btn btn-success">Add Student Detail</button>
 
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>
@@ -384,10 +400,6 @@
 				window.opener.document.location.reload();
 				setTimeout(window.close(), 100);
 			}
-
-		}
-
-		function getCollegeList() {
 
 		}
 	</script>

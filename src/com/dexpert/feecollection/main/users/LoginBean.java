@@ -31,6 +31,7 @@ public class LoginBean {
 	private String profile;
 
 	// one to one bidirectional relationship with super admin
+	//child
 	@OneToOne(cascade = CascadeType.ALL, targetEntity = SaBean.class)
 	@JoinColumn(name = "super_Admin_Id_Fk", referencedColumnName = "saId")
 	private SaBean saBean;

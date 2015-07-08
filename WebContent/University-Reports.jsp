@@ -121,7 +121,7 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-University.jsp"><i
+							<li><a class="ajax-link" href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<li><a class="ajax-link" href="University-MyColleges.html"><i
 									class="fa fa-building"></i><span> My Colleges</span></a></li>

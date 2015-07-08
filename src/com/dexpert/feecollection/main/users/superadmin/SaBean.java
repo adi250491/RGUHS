@@ -23,6 +23,8 @@ public class SaBean {
 	private Integer age;
 
 	// one to one bidirectional relationship with login
+	
+	//parent
 	@OneToOne(cascade = CascadeType.ALL)
 	LoginBean loginBean;
 

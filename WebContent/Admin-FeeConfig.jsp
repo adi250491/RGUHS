@@ -153,7 +153,8 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-Admin.jsp"><i
+							<li><a class="ajax-link"
+								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> My Colleges</span></a></li>
@@ -246,7 +247,7 @@
 
 
 									<p class="btn-group">
-										<div class="btn-group">
+									<div class="btn-group">
 										<button
 											onclick='window.open("ParamForm.jsp", "Admin Report", "height=1080,width=1000")'
 											class="btn btn-default ">Add New Parameter</button>
@@ -337,7 +338,7 @@
 
 									</p>
 
-								<!-- 	<table
+									<!-- 	<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
 											<tr>
@@ -518,7 +519,6 @@
 				Powered by: <a href="http://dexpertsystems.com">Dexpert</a>
 			</p>
 		</footer> -->
-	
 	</div>
 	<!--/.fluid-container-->
 
@@ -749,6 +749,6 @@
 			document.getElementById("FeeParametersBox").style.display = "block";
 
 		}
-	</script></
-									body>
+	</script>
+	</ body>
 </html>

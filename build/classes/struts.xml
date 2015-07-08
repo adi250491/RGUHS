@@ -278,16 +278,16 @@
 
 		</action>
 	</package>
-	
+
 	<package name="Test" extends="struts-default">
 
-		<action name="TestAtom"
-			class="com.test.mapping.TestAction" method="addFee">
+		<action name="TestAtom" class="com.test.mapping.TestAction"
+			method="addFee">
 
 			<result name="success">Test.jsp</result>
 
 		</action>
-		
+
 	</package>
 
 	<package name="Student" extends="struts-default">
@@ -298,21 +298,46 @@
 			<result name="success">StudentForm.jsp</result>
 		</action>
 
+		<action name="registerStudent"
+			class="com.dexpert.feecollection.main.users.applicant.AppAction"
+			method="registerStudent">
+
+			<result name="success">Success.jsp</result>
+
+		</action>
+		<action name="StudentTotalRecord"
+			class="com.dexpert.feecollection.main.users.applicant.AppAction"
+			method="getStudentList">
+
+			<result name="success">StudentDetail.jsp</result>
+		</action>
+
+		<action name="ViewApplicantDetail"
+			class="com.dexpert.feecollection.main.users.applicant.AppAction"
+			method="viewApplicant">
+
+			<result name="success">View-Applicant.jsp</result>
+		</action>
+
+
+
+
+
 	</package>
-	
-	
-	
-	
+
+
+
+
 
 	<package name="Test" extends="struts-default">
 
-		<action name="TestAtom"
-			class="com.test.mapping.TestAction" method="addFee">
+		<action name="TestAtom" class="com.test.mapping.TestAction"
+			method="addFee">
 
 			<result name="success">Test.jsp</result>
 
 		</action>
-		
+
 	</package>
 
 </struts>

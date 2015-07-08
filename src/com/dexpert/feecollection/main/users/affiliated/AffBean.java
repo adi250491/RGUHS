@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -24,9 +25,8 @@ import com.dexpert.feecollection.main.users.applicant.AppBean;
 @Table(name = "affiliated_institute_details")
 public class AffBean {
 
-	@GenericGenerator(name = "g4", strategy = "increment")
 	@Id
-	@GeneratedValue(generator = "g4")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer instId;
 	private String instName, contactPerson, place, email, contactNumber, mobileNum;
 	private String instAddress;
@@ -45,24 +45,21 @@ public class AffBean {
 	// ------------------------------------
 
 	// one to one bidirectional relationship with login
-
+	// its parent
 	@OneToOne(cascade = CascadeType.ALL)
 	LoginBean loginBean;
 
-	/*
-	 * // one to many Bidirectional Relationship with LoginBean
-	 * 
-	 * @OneToMany(cascade = CascadeType.ALL, mappedBy = "affBean") private
-	 * Set<LoginBean> loginBeanSet;
-	 */
 	// one to many relationship with Applicants (Students)
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = AppBean.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "InstituteId_Fk", referencedColumnName = "instId")
+	@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
 	Set<AppBean> aplBeanSet;
 
 	// one to one bidirectional relationship with student and college
-	@OneToOne(cascade = CascadeType.ALL, targetEntity = AppBean.class)
-	@JoinColumn(name = "instituteId_Fk", referencedColumnName = "instId")
+	// child
+
+	@OneToOne(cascade = CascadeType.ALL,mappedBy="affBean")
+	private AppBean appBean;
+
 	public Set<AppBean> getAplBeanSet() {
 		return aplBeanSet;
 	}
@@ -180,6 +177,14 @@ public class AffBean {
 
 	public void setMobileNum(String mobileNum) {
 		this.mobileNum = mobileNum;
+	}
+
+	public AppBean getAppBean() {
+		return appBean;
+	}
+
+	public void setAppBean(AppBean appBean) {
+		this.appBean = appBean;
 	}
 
 }

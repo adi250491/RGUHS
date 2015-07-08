@@ -4,7 +4,9 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -21,15 +23,12 @@ import com.dexpert.feecollection.main.users.affiliated.AffBean;
 @Table(name = "applicant_details")
 public class AppBean {
 
-	@GenericGenerator(name = "g3", strategy = "increment")
 	@Id
-	@GeneratedValue(generator = "g3")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer aplId;
-	private String aplName;
-	private String aplMidName;
-	private String aplLstName;
-	private String aplAddress;
-	private Integer aplAge;
+	private String aplFirstName, aplLstName, aplEmail, aplAddress, aplMobilePri, aplMobileSec, enrollmentNumber,
+			gender;
+	private Integer aplInstId;
 
 	// one to one bidirectional relationship with login
 	@OneToOne(cascade = CascadeType.ALL)
@@ -40,8 +39,11 @@ public class AppBean {
 	@JoinColumn(name = "aplicantId_Fk", referencedColumnName = "aplId")
 	private Set<PayBean> payBeansSet;
 
-	// one to one bidirectional  relationship with student and college
-	@OneToOne(cascade = CascadeType.ALL)
+	// one to one bidirectional relationship with student and college
+
+	// parent
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "affInst_Fk")
 	AffBean affBean;
 
 	public AffBean getAffBean() {
@@ -76,22 +78,6 @@ public class AppBean {
 		this.aplId = aplId;
 	}
 
-	public String getAplName() {
-		return aplName;
-	}
-
-	public void setAplName(String aplName) {
-		this.aplName = aplName;
-	}
-
-	public String getAplMidName() {
-		return aplMidName;
-	}
-
-	public void setAplMidName(String aplMidName) {
-		this.aplMidName = aplMidName;
-	}
-
 	public String getAplLstName() {
 		return aplLstName;
 	}
@@ -108,12 +94,60 @@ public class AppBean {
 		this.aplAddress = aplAddress;
 	}
 
-	public Integer getAplAge() {
-		return aplAge;
+	public String getAplFirstName() {
+		return aplFirstName;
 	}
 
-	public void setAplAge(Integer aplAge) {
-		this.aplAge = aplAge;
+	public void setAplFirstName(String aplFirstName) {
+		this.aplFirstName = aplFirstName;
+	}
+
+	public String getAplEmail() {
+		return aplEmail;
+	}
+
+	public void setAplEmail(String aplEmail) {
+		this.aplEmail = aplEmail;
+	}
+
+	public String getAplMobilePri() {
+		return aplMobilePri;
+	}
+
+	public void setAplMobilePri(String aplMobilePri) {
+		this.aplMobilePri = aplMobilePri;
+	}
+
+	public String getAplMobileSec() {
+		return aplMobileSec;
+	}
+
+	public void setAplMobileSec(String aplMobileSec) {
+		this.aplMobileSec = aplMobileSec;
+	}
+
+	public String getEnrollmentNumber() {
+		return enrollmentNumber;
+	}
+
+	public void setEnrollmentNumber(String enrollmentNumber) {
+		this.enrollmentNumber = enrollmentNumber;
+	}
+
+	public Integer getAplInstId() {
+		return aplInstId;
+	}
+
+	public void setAplInstId(Integer aplInstId) {
+		this.aplInstId = aplInstId;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 }

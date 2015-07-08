@@ -165,9 +165,10 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-College.jsp"><i
+							<li><a class="ajax-link"
+								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
-							<li><a class="ajax-link" href="StudentDetail.jsp"><i
+							<li><a class="ajax-link" href="StudentTotalRecord"><i
 									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
 							<li class="accordion"><a href="#"><i class="fa fa-inr"></i><span>
 										Initiate Payment</span></a>
@@ -238,7 +239,7 @@
 
 											<button class="btn btn-sm btn-info"
 												style="margin-right: 3%; float: right;"
-												onclick='window.open("CollegeForm.jsp", "CollegeForm", "width=500,height=900")'>
+												onclick='window.open("AddBulkStudent.jsp", "CollegeForm", "width=500,height=900")'>
 												<i class="fa fa-plus"></i> Add Bulk Student
 											</button>
 										</div>
@@ -251,7 +252,9 @@
 												<th width="7%">Sr. No.</th>
 
 												<th>Student Name</th>
+												<th>Mobile Number</th>
 												<th>Place</th>
+
 												<th>Actions</th>
 											</tr>
 										</thead>
@@ -259,15 +262,19 @@
 											<%
 												int i = 1;
 											%>
-											<s:iterator value="affInstList">
+											<s:iterator value="appBeansList">
 												<tr>
 													<td><%=i%></td>
 
-													<td class="center"><s:property value="instName" /></td>
-													<td class="center"><s:property value="place" /></td>
+													<td class="center"><s:property value="aplFirstName" />&nbsp;<s:property
+															value="aplLstName" /></td>
+													<td class="center"><s:property value="aplMobilePri" /></td>
+													<td class="center"><s:property value="aplAddress" /></td>
+
 													<td class="center"><a class="btn btn-success btn-sm"
-														onclick="showDetails(<s:property value="instId"/>)"> <i
-															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+														onclick="window.open('ViewApplicantDetail?applicantId=<s:property value="aplId"  />','Applicant Detail','width=500 height=700')">
+															<i class="glyphicon glyphicon-zoom-in icon-white"></i>
+															View
 													</a></td>
 												</tr>
 

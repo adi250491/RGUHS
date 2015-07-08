@@ -48,13 +48,16 @@ public class LoginAction extends ActionSupport {
 		List<LoginBean> loginUserList = loginDAO.getLoginDetails(loginBean);
 		Iterator<LoginBean> loginIterator = loginUserList.iterator();
 		while (loginIterator.hasNext()) {
+			log.info("1");
 			lgbean = (LoginBean) loginIterator.next();
 
 			encryptedPwd = lgbean.getPassword();
-
+			log.info("2");
 			PasswordEncryption.decrypt(encryptedPwd);
 			decrypedText = PasswordEncryption.plainStr;
-
+			log.info("3");
+			log.info("password frm Database is ::" + decrypedText);
+			log.info("4");
 		}
 		try {
 			if (loginBean.getUserName().equals(loginBean.getUserName()) && loginBean.getPassword().equals(decrypedText)) {
@@ -67,7 +70,7 @@ public class LoginAction extends ActionSupport {
 
 				if (lgbean.getAffBean() != null) {
 					log.info("Valid College");
-					
+
 					httpSession.setAttribute("dashLink", "index-College.jsp");
 					return "college";
 				} else if (lgbean.getParBean() != null) {

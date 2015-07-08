@@ -166,8 +166,7 @@
 							<li class="nav-header">Main</li>
 							<li><a class="ajax-link" href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
-							<li><a class="ajax-link" href="StudentDetail.jsp"><i
-									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
+							
 							<li class="accordion"><a href="#"><i class="fa fa-inr"></i><span>
 										Initiate Payment</span></a>
 								<ul class="nav nav-pills nav-stacked">
