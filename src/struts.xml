@@ -163,6 +163,12 @@
 			<result name="success">/FeeConfig-Parameters.jsp</result>
 
 		</action>
+		<action name="deleteParam"
+			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
+			method="deleteRecord">
+			<result name="success">/FeeConfig-Parameters.jsp</result>
+
+		</action>
 	</package>
 
 	<package name="SuperAdmin" extends="struts-default">
@@ -259,6 +265,13 @@
 		</action>
 		<action name="GenerateCombination"
 			class="com.dexpert.feecollection.main.fee.config.FcAction" method="GenerateCombination">
+
+			<result name="success">FeeForm2.jsp</result>
+
+
+		</action>
+		<action name="saveFee"
+			class="com.dexpert.feecollection.main.fee.config.FcAction" method="SaveFee">
 
 			<result name="success">FeeForm2.jsp</result>
 

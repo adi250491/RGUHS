@@ -22,11 +22,10 @@ import com.opensymphony.xwork2.ActionSupport;
 public class FcAction extends ActionSupport {
 	// Global Declarations Start
 
-	public class ComboObject {
-		private Integer comboId;
-
-	}
-
+	private ArrayList<FcBean> uids = new ArrayList<FcBean>();
+	private FeeDetailsBean feedetails;
+	private String feePayee, cal_mode;
+	private FcBean fcbean1;
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	static Logger log = Logger.getLogger(FcAction.class.getName());
@@ -45,6 +44,7 @@ public class FcAction extends ActionSupport {
 
 	LookupDAO lpDao = new LookupDAO();
 	FvDAO fvdao = new FvDAO();
+	FcDAO configdao=new FcDAO(); 
 
 	// Global Declarations End
 	// ----------------------
@@ -106,6 +106,8 @@ public class FcAction extends ActionSupport {
 	}
 
 	public String GenerateCombination() {
+
+		// Local Declarations
 		ArrayList<String> SelCouParVal1 = new ArrayList<String>();
 		ArrayList<String> SelCouParVal2 = new ArrayList<String>();
 		ArrayList<String> SelCouParVal3 = new ArrayList<String>();
@@ -128,6 +130,77 @@ public class FcAction extends ActionSupport {
 
 		ArrayList<Integer[]> Combos = new ArrayList<Integer[]>();
 
+		String paramString = " ";
+
+		// ---
+
+		// Set Fee Payee
+		if (feePayee.contentEquals("1")) {
+			feedetails.setForInstitute(true);
+		} else if (feePayee.contentEquals("2")) {
+			feedetails.setForApplicant(true);
+		} else {
+			return ERROR;
+		}
+
+		if (cal_mode.contentEquals("1")) {
+			feedetails.setCal_mode(true);
+			;
+		} else if (cal_mode.contentEquals("0")) {
+			feedetails.setCal_mode(false);
+		} else {
+			return ERROR;
+		}
+		// --
+
+		// Set Fee Parameters
+		if (SelectedCourseParam.size() > 0) {
+			paramString = " ";
+			for (int i = 0; i < SelectedCourseParam.size(); i++) {
+				paramString = paramString.concat(SelectedCourseParam.get(i));
+			}
+			paramString = paramString.trim();
+			feedetails.setCou_param(paramString);
+		} else {
+			feedetails.setCou_param("0");
+		}
+		if (SelectedInstParam.size() > 0) {
+			paramString = " ";
+			for (int i = 0; i < SelectedInstParam.size(); i++) {
+				paramString = paramString.concat(SelectedInstParam.get(i));
+			}
+			paramString = paramString.trim();
+			feedetails.setIns_param(paramString);
+		} else {
+			feedetails.setIns_param("0");
+		}
+		if (SelectedAppParam.size() > 0) {
+			paramString = " ";
+			for (int i = 0; i < SelectedAppParam.size(); i++) {
+				paramString = paramString.concat(SelectedAppParam.get(i));
+			}
+			paramString = paramString.trim();
+			feedetails.setApp_param(paramString);
+		} else {
+			feedetails.setApp_param("0");
+		}
+		if (SelectedSerParam.size() > 0) {
+			paramString = " ";
+			for (int i = 0; i < SelectedSerParam.size(); i++) {
+				paramString = paramString.concat(SelectedSerParam.get(i));
+			}
+			paramString = paramString.trim();
+			feedetails.setSer_param(paramString);
+		} else {
+			feedetails.setSer_param("0");
+		}
+		// --
+
+		// Set Object in Session for future use
+		ses.setAttribute("sesFeeDetails", feedetails);
+		// --
+
+		// Get Selected Parameters
 		switch (SelectedCourseParam.size()) {
 		case 0:
 
@@ -236,10 +309,13 @@ public class FcAction extends ActionSupport {
 			break;
 		}
 
+		// ------
 		// SelInsParVal1 = GetValueList(SelectedInstParam);
 		// SelAppParVal1 = GetValueList(SelectedAppParam);
 		// SelSerParVal1 = GetValueList(SelectedSerParam);
 
+		// Put selected parameters along with their size in Map for use in
+		// generating combos
 		HashMap<String, ArrayList<String>> paramMap = new HashMap<String, ArrayList<String>>();
 		paramMap.put(SelCouParVal1.size() + ":Course 1 Size", SelCouParVal1);
 		paramMap.put(SelInsParVal1.size() + ":Inst 1 Size", SelInsParVal1);
@@ -261,37 +337,78 @@ public class FcAction extends ActionSupport {
 		paramMap.put(SelAppParVal4.size() + ":App 4 Size", SelAppParVal4);
 		paramMap.put(SelSerParVal4.size() + ":Ser 4 Size", SelSerParVal4);
 		ArrayList<String> sortedKeys = new ArrayList<String>(paramMap.keySet());
+		// ------
 
 		// Integer[] lengths = {
 		// SelectedCourseParam.size(),SelectedInstParam.size(),SelectedAppParam.size(),SelectedSerParam.size()};
+
+		// Sort Map in Desc Order
 		Collections.sort(sortedKeys, Collections.reverseOrder());
 		log.info("sorted keys are " + sortedKeys.toString());
+		// ---
+
+		// Get a coount of the all parameters selected
 		int count = 0;
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i <= 16; i++) {
 			if (paramMap.get(sortedKeys.get(i)).size() != 0) {
 				count++;
 			} else {
 				break;
 			}
 		}
+		// ----
 
-		log.info("Coount is " + count);
+		// Limit max parameters to 16 to prevent large number of combos
+		if (count > 16) {
+			return ERROR;
+		}
+		// ----
 
+		log.info("Count is " + count);
+
+		// --Find all the possible combos of selected Parameter values
 		Combos = FindCombinations(count, paramMap.get(sortedKeys.get(0)), paramMap.get(sortedKeys.get(1)),
 				paramMap.get(sortedKeys.get(2)), paramMap.get(sortedKeys.get(3)), paramMap.get(sortedKeys.get(4)),
 				paramMap.get(sortedKeys.get(5)), paramMap.get(sortedKeys.get(6)), paramMap.get(sortedKeys.get(7)),
 				paramMap.get(sortedKeys.get(8)), paramMap.get(sortedKeys.get(9)), paramMap.get(sortedKeys.get(10)),
 				paramMap.get(sortedKeys.get(11)), paramMap.get(sortedKeys.get(12)), paramMap.get(sortedKeys.get(13)),
 				paramMap.get(sortedKeys.get(14)), paramMap.get(sortedKeys.get(15)));
+		// ----------------
 
-		// Populate Header List with Strings of Parameters
-		//HeaderList = GetHeaders(SelectedInstParam, SelectedCourseParam, SelectedAppParam, SelectedSerParam);
 		// Populate the BodyList with Strings of Parameter Values and a unique
 		// id for each Combo
 		BodyList = GetBodyContent(Combos);
+		// Populate Header List with Strings of Parameters
 		HeaderList = GetHeaders(Combos);
 		// End of Commbination Code
 
+		return SUCCESS;
+	}
+
+	public String SaveFee() {
+		FeeDetailsBean fee = (FeeDetailsBean) ses.getAttribute("sesFeeDetails");
+		HashMap<Integer, ArrayList<Integer>> ComboMap = new HashMap<Integer, ArrayList<Integer>>();
+		ArrayList<FcBean> comboList = new ArrayList<FcBean>();
+		ArrayList<Integer> combo = new ArrayList<Integer>();
+		ComboMap = (HashMap<Integer, ArrayList<Integer>>) ses.getAttribute("sesComboMap");
+		FcBean comboBean = new FcBean();
+		log.info("uids are " + uids.toString());
+		for (int i = 0; i < (uids.size()-1); i++) {
+			log.info("uid from jsp is "+uids.get(i).getComboId());
+			comboBean = uids.get(i);
+			log.info("getting combo number " + comboBean.getComboId() + " from comboMap");
+			combo = ComboMap.get(comboBean.getComboId());
+			for (int j = 0; j < combo.size(); j++) {
+				FcBean temp = new FcBean();
+				temp.setComboId(comboBean.getComboId());
+				temp.setValueId(combo.get(j));
+				temp.setAmount(comboBean.getAmount());
+				temp.setFeedetailbean(fee);
+				comboList.add(temp);
+			}
+		}
+		log.info("final combos are "+comboList.toString());
+		configdao.insertFeeBulk(comboList);
 		return SUCCESS;
 	}
 
@@ -831,35 +948,32 @@ public class FcAction extends ActionSupport {
 		return resList;
 	}
 
-	private ArrayList<String> GetHeaders(ArrayList<Integer[]>body)
-	{
-		ArrayList<String> ResultList=new ArrayList<String>();
-		ArrayList<LookupBean> Lookups=lpDao.getLookupData("ALL", null, null, null);
+	private ArrayList<String> GetHeaders(ArrayList<Integer[]> body) {
+		ArrayList<String> ResultList = new ArrayList<String>();
+		ArrayList<LookupBean> Lookups = lpDao.getLookupData("ALL", null, null, null);
 
-		Integer[]bodycontent=body.get(0);
+		Integer[] bodycontent = body.get(0);
 		for (int i = 0; i < bodycontent.length; i++) {
-		
-			Integer id=bodycontent[i];
-			Iterator<LookupBean>lookupIt=Lookups.iterator();
-			while(lookupIt.hasNext())
-			{
-				LookupBean temp=new LookupBean();
-				temp=lookupIt.next();
-				List<FvBean>values=new ArrayList<FvBean>();
-				values= temp.getFvBeansList();
-				Iterator<FvBean> valuesIt=values.iterator();
-				while(valuesIt.hasNext())
-				{
-					Integer valueid=valuesIt.next().getFeeValueId();
-					if(id==valueid)
-					{
+
+			Integer id = bodycontent[i];
+			Iterator<LookupBean> lookupIt = Lookups.iterator();
+			while (lookupIt.hasNext()) {
+				LookupBean temp = new LookupBean();
+				temp = lookupIt.next();
+				List<FvBean> values = new ArrayList<FvBean>();
+				values = temp.getFvBeansList();
+				Iterator<FvBean> valuesIt = values.iterator();
+				while (valuesIt.hasNext()) {
+					Integer valueid = valuesIt.next().getFeeValueId();
+					if (id == valueid) {
 						ResultList.add(temp.getLookupName());
 					}
 				}
-			}	
+			}
 		}
 		return ResultList;
 	}
+
 	private ArrayList<String> GetHeaders2(ArrayList<String> Inst, ArrayList<String> Cour, ArrayList<String> Appl,
 			ArrayList<String> Serv) {
 
@@ -912,15 +1026,17 @@ public class FcAction extends ActionSupport {
 	}
 
 	private ArrayList<ArrayList<String>> GetBodyContent(ArrayList<Integer[]> ComboIds) {
+		// ComboMap for BackEnd Processing and ResultList for Generating View
+		HashMap<Integer, ArrayList<Integer>> ComboMap = new HashMap<Integer, ArrayList<Integer>>();
 		ArrayList<FvBean> FvBeanList = new ArrayList<FvBean>();
-		FvBeanList = fvdao.getValues("ALL", null,null);
-		HashMap<Integer,FvBean>ValueMap=new HashMap<Integer, FvBean>();
-		ValueMap=CreateMap(FvBeanList);
-		log.info("Value Map keyset "+ValueMap.keySet().toString());
+		FvBeanList = fvdao.getValues("ALL", null, null);
+		HashMap<Integer, FvBean> ValueMap = new HashMap<Integer, FvBean>();
+		ValueMap = CreateMap(FvBeanList);
+		log.info("Value Map keyset " + ValueMap.keySet().toString());
 		Integer Uid = 0;
 		ArrayList<ArrayList<String>> ResultList = new ArrayList<ArrayList<String>>();
-		
-		log.info("FvBeanList size is "+FvBeanList.size());
+
+		log.info("FvBeanList size is " + FvBeanList.size());
 		Iterator<Integer[]> comboIt = ComboIds.iterator();
 		while (comboIt.hasNext()) {
 			ArrayList<String> comboList = new ArrayList<String>();
@@ -931,24 +1047,25 @@ public class FcAction extends ActionSupport {
 			for (int i = 0; i < tempArr.length; i++) {
 				tempids.add(tempArr[i]);
 			}
-			
+
 			log.info("Temp Array of combo ids is " + tempids);
-			ArrayList<FvBean>tempList=new ArrayList<FvBean>();
-	
-			for(int j=0;j<tempids.size();j++)
-			{
-				
+			ArrayList<FvBean> tempList = new ArrayList<FvBean>();
+
+			for (int j = 0; j < tempids.size(); j++) {
+
 				tempList.add(ValueMap.get(tempids.get(j)));
 			}
 			Iterator<FvBean> beanIt = tempList.iterator();
-		
+
 			while (beanIt.hasNext()) {
-				
+
 				comboList.add(beanIt.next().getValue());
 
 			}
 			log.info("Temp Array of combolist ids is " + comboList);
 			ResultList.add(comboList);
+			ComboMap.put(Uid, tempids);
+			ses.setAttribute("sesComboMap", ComboMap);
 			Uid++;
 		}
 		return ResultList;
@@ -965,18 +1082,15 @@ public class FcAction extends ActionSupport {
 		}
 		return IdList;
 	}
-	
-	private HashMap<Integer,FvBean> CreateMap(ArrayList<FvBean>AllValues)
-	{
-		HashMap<Integer,FvBean> resultMap=new HashMap<Integer, FvBean>();
-		if(AllValues.size()>0)
-		{
-			Iterator<FvBean>it=AllValues.iterator();
-			while(it.hasNext())
-			{
-				FvBean tempbean=new FvBean();
-				tempbean=it.next();
-				log.info("Putting bean no "+tempbean.getFeeValueId());
+
+	private HashMap<Integer, FvBean> CreateMap(ArrayList<FvBean> AllValues) {
+		HashMap<Integer, FvBean> resultMap = new HashMap<Integer, FvBean>();
+		if (AllValues.size() > 0) {
+			Iterator<FvBean> it = AllValues.iterator();
+			while (it.hasNext()) {
+				FvBean tempbean = new FvBean();
+				tempbean = it.next();
+				log.info("Putting bean no " + tempbean.getFeeValueId());
 				resultMap.put(tempbean.getFeeValueId(), tempbean);
 			}
 		}
@@ -1054,6 +1168,46 @@ public class FcAction extends ActionSupport {
 
 	public void setHeaderList(ArrayList<String> headerList) {
 		HeaderList = headerList;
+	}
+
+	public FeeDetailsBean getFeedetails() {
+		return feedetails;
+	}
+
+	public void setFeedetails(FeeDetailsBean feedetails) {
+		this.feedetails = feedetails;
+	}
+
+	public FcBean getFcbean1() {
+		return fcbean1;
+	}
+
+	public void setFcbean1(FcBean fcbean1) {
+		this.fcbean1 = fcbean1;
+	}
+
+	public String getFeePayee() {
+		return feePayee;
+	}
+
+	public void setFeePayee(String feePayee) {
+		this.feePayee = feePayee;
+	}
+
+	public String getCal_mode() {
+		return cal_mode;
+	}
+
+	public void setCal_mode(String cal_mode) {
+		this.cal_mode = cal_mode;
+	}
+
+	public ArrayList<FcBean> getUids() {
+		return uids;
+	}
+
+	public void setUids(ArrayList<FcBean> uids) {
+		this.uids = uids;
 	}
 
 	// Getter Setters End

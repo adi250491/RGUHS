@@ -157,9 +157,9 @@ Integer count=0;%>
 
 															<div class="controls">
 																<select required="required" id="selectError1" multiple class="form-control"
-																	data-rel="chosen">
-																	<option>College</option>
-																	<option>Student</option>
+																	data-rel="chosen" name="feePayee">
+																	<option value="1">College</option>
+																	<option value="2">Student</option>
 																</select>
 															</div>
 														</div></td>
@@ -171,7 +171,7 @@ Integer count=0;%>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="District/Area"
 																placeholder="Give a Unique Name" type="text"
-																class="form-control">
+																class="form-control" name="feedetails.feeName">
 														</div></td>
 
 												</tr>
@@ -253,10 +253,10 @@ Integer count=0;%>
 													<td><div class="control-group">
 															<div class="controls">
 																<select required="required" id="selectError1" multiple class="form-control"
-																	data-rel="chosen">
-																	<option>Per Student</option>
-																	<option>Per College</option>
-																	<option>Fixed</option>
+																	data-rel="chosen" name="cal_mode">
+																	<option value="1">Per Student</option>
+																	<option value="1">Per College</option>
+																	<option value="0">Fixed</option>
 
 																</select>
 															</div>

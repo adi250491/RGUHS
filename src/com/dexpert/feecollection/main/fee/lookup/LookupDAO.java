@@ -39,6 +39,26 @@ public class LookupDAO {
 			session.close();
 		}
 	}
+	
+	public LookupBean removeLookupData(LookupBean deleteData) {
+		// Declarations
+
+		// Open session from session factory
+		Session session = factory.openSession();
+		try {
+			session.beginTransaction();
+			session.delete(deleteData);;
+			session.getTransaction().commit();
+			return deleteData;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return deleteData;
+		} finally {
+
+			// close session
+			session.close();
+		}
+	}
 
 	public ArrayList<LookupBean> getLookupData(String filterKey,String filterValue,Integer id,ArrayList<Integer>Ids) {
 		// Declarations

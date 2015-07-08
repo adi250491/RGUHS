@@ -75,6 +75,13 @@ public class LookupAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String deleteRecord()
+	{	
+		LookupBean tempBean=new LookupBean();
+		tempBean.setLookupId(Integer.parseInt(request.getParameter("paramid").trim()));
+		lookupdao.removeLookupData(tempBean);
+		return SUCCESS;
+	}
 	// End of Action Methods
 
 	// ---------------------------------------------------

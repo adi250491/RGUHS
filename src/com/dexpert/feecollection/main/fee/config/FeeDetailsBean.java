@@ -25,33 +25,33 @@ public class FeeDetailsBean {
 	@Id
 	@GeneratedValue(generator = "g11")
 	private Integer feeId;
-	private String feeName,ins_param,cou_param,app_para,ser_param;
-	private Boolean forApplicant,forInstitute,cal_mode;
+	private String feeName,ins_param,cou_param,app_param,ser_param;
+	private Boolean forApplicant=false,forInstitute=false,cal_mode=false;
 	
 
 	
 	// one to many relationship with FeeDetails (Students)
-		@OneToMany(cascade = CascadeType.ALL, targetEntity = FcBean.class, fetch = FetchType.EAGER, mappedBy="feeId" )
+		@OneToMany(cascade = CascadeType.ALL, targetEntity = FcBean.class, fetch = FetchType.EAGER )
 		@JoinColumn(name = "feeId_fk", referencedColumnName = "feeId")
 		private List<FcBean>configs;
 		
 	
-	//one to many Unidirectional relationship
+	/*//one to many Unidirectional relationship
 	
 	@OneToMany(cascade=CascadeType.ALL,targetEntity=LookupBean.class)
 	@JoinColumn(name="lookupId",referencedColumnName="feeId")
 	private List<LookupBean> lookupBeanList;
-	
+	*/
 	//you can use Set also in place of List
 	
 	
-	public List<LookupBean> getLookupBeanList() {
+	/*public List<LookupBean> getLookupBeanList() {
 		return lookupBeanList;
 	}
 
 	public void setLookupBeanList(List<LookupBean> lookupBeanList) {
 		this.lookupBeanList = lookupBeanList;
-	}
+	}*/
 
 	public Integer getFeeId() {
 		return feeId;
@@ -77,12 +77,12 @@ public class FeeDetailsBean {
 		this.cou_param = cou_param;
 	}
 
-	public String getApp_para() {
-		return app_para;
+	public String getApp_param() {
+		return app_param;
 	}
 
-	public void setApp_para(String app_para) {
-		this.app_para = app_para;
+	public void setApp_param(String app_param) {
+		this.app_param = app_param;
 	}
 
 	public String getSer_param() {

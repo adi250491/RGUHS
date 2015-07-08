@@ -1,5 +1,6 @@
 package com.dexpert.feecollection.main.fee.lookup;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 
 @Entity
 @Table(name = "fee_lookup_master")
-public class LookupBean {
+public class LookupBean implements Serializable {
 
 	@GenericGenerator(name = "g10", strategy = "increment")
 	@Id

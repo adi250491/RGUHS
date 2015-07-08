@@ -29,6 +29,7 @@
 		sessionID = session.getId();
 	}
 	int i=1;
+	int j=0;
 %>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <meta charset="utf-8">
@@ -102,6 +103,7 @@
 
 
 				<div class="row">
+				<form action="saveFee" method="post">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
@@ -120,7 +122,7 @@
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 
-
+									
 									<table class="table table-condensed">
 
 										<thead>
@@ -138,212 +140,38 @@
 										<tbody>
 											<s:iterator value="BodyList">
 												<tr>
-												<td><%=i %></td>
+												<td><%=i %> <s:property value="%{#ind.index}"/></td>
 													<s:iterator status="incr">
 													
 													
 														<td><s:if test="%{#incr.index==0}">
-																<input value='<s:property />' name="id" hidden="hidden">
+																<input value='<s:property />'  name="uids[<%=j%>].comboId" hidden="hidden">
 															</s:if> <s:else>
 																<s:property />
 															</s:else></td>
 
 
 													</s:iterator>
-													<%i++; %>
-													<td><input class="form-control" type="text" placeholder="Enter Fee Value">
+													<%i++;
+													  j++;%>
+													<td><input name="uids[<%=j%>].amount"  class="form-control" type="text" placeholder="Enter Fee Value">
 														<button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></td>
 												</tr>
 											</s:iterator>
 										</tbody>
 									</table>
-
-
-									<!-- <table class="table table-condensed">
-										<thead>
-
-											<tr>
-												<th>Case</th>
-												<th>Faculty</th>
-												<th>Course Type</th>
-												<th>Course Duration</th>
-												<th>Student Nationality</th>
-												<th>Student Category</th>
-												<th>Amount/College</th>
-												<th>Amount/Student</th>
-												<th>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Engineering</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>Open</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Engineering</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>SC</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Engineering</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>ST</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Engineering</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>NT</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>Engineering</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>Open</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>Engineering</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>NRI</td>
-												<td>NA</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>Medical</td>
-												<td>Non Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>Open</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>7</td>
-												<td>Medical</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>Open</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>Medical</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>SC</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-											<tr>
-												<td>9</td>
-												<td>Medical</td>
-												<td>Professional</td>
-												<td>4</td>
-												<td>Indian</td>
-												<td>ST</td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><input type="number" placeholder="Enter Amount"></td>
-												<td><a class="btn btn-danger btn-sm"
-													 href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Remove Case
-												</a></td>
-
-											</tr>
-
-
-										</tbody>
-									</table>
- -->
 								</div>
-
-
 							</div>
 						</div>
 					</div>
 					<div class="col-md-12">
-						<button class="btn btn-success">Save Fee Details</button>
+						<button type="submit" class="btn btn-success">Save Fee Details</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
-
+					
 					</div>
-
+</form>
 				</div>
 
 				<!--/row-->

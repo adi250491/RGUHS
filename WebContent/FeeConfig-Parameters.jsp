@@ -181,7 +181,7 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				
+
 
 				<div class="row">
 					<div class="box col-md-12">
@@ -285,10 +285,10 @@
 																class="glyphicon glyphicon-zoom-in icon-white"></i> View
 														</a> <a class="btn btn-info btn-sm" href="#"> <i
 																class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-														</a> <a class="btn btn-danger btn-sm" href="#"> <i
-																class="glyphicon glyphicon-zoom-in icon-white"></i>
-																Delete
-														</a></td>
+														</a> <a class="btn btn-danger btn-sm" href="#"
+															onclick='confirmDelete("<s:property value='lookupId' />")' >
+															 <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+															Delete </a></td>
 													</tr>
 
 													<%
@@ -748,6 +748,20 @@
 			document.getElementById("FeeParametersBox").style.display = "block";
 
 		}
+		function confirmDelete(x)
+		{
+			var cnf=confirm("Do You Really Want To Delete This Parameter Along with all the values associated with it? "+x)
+			if(cnf)
+				{
+				window.open("deleteParam?paramid="+x, "DeleteBox", "height=400,width=800");
+				}
+			else
+				{
+				alert("Record Not changed");
+				}
+		}
 	</script>
+	
+	
 </body>
 </html>
