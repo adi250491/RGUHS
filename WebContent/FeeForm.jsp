@@ -156,7 +156,7 @@ Integer count=0;%>
 
 
 															<div class="controls">
-																<select id="selectError1" multiple class="form-control"
+																<select required="required" id="selectError1" multiple class="form-control"
 																	data-rel="chosen">
 																	<option>College</option>
 																	<option>Student</option>
@@ -169,7 +169,7 @@ Integer count=0;%>
 													<td>1</td>
 													<td>Fee Name</td>
 													<td><div id="the-basics" class="has-success">
-															<input id="District/Area"
+															<input required="required" id="District/Area"
 																placeholder="Give a Unique Name" type="text"
 																class="form-control">
 														</div></td>
@@ -184,7 +184,7 @@ Integer count=0;%>
 
 
 															<div class="controls">
-																<s:select theme="simple" list="CourseParamList"
+																<s:select  theme="simple" list="CourseParamList"
 																	listValue="lookupName" listKey="lookupId"
 																	multiple="CourseParamList" data-rel="chosen"
 																	cssStyle="width:60%" cssClass="form-control"
@@ -252,7 +252,7 @@ Integer count=0;%>
 													<td>Select Fee Calculation Parameter</td>
 													<td><div class="control-group">
 															<div class="controls">
-																<select id="selectError1" multiple class="form-control"
+																<select required="required" id="selectError1" multiple class="form-control"
 																	data-rel="chosen">
 																	<option>Per Student</option>
 																	<option>Per College</option>
@@ -273,8 +273,7 @@ Integer count=0;%>
 
 
 									<div class="col-md-12">
-										<button class="btn btn-success"
-											onclick='window.location="FeeForm2.html"'>Next</button>
+										<button class="btn btn-success">Next</button>
 
 										<button onclick="window.close()" class="btn btn-info">Close
 										</button>

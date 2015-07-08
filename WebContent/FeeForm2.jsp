@@ -28,6 +28,7 @@
 	} else {
 		sessionID = session.getId();
 	}
+	int i=1;
 %>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <meta charset="utf-8">
@@ -124,8 +125,9 @@
 
 										<thead>
 											<tr>
+											<th>Sr. No.</th>
 												<th></th>
-												<s:iterator value="HeaderList">
+												<s:iterator value="HeaderList" status="ind">
 
 													<th><s:property /></th>
 
@@ -136,7 +138,10 @@
 										<tbody>
 											<s:iterator value="BodyList">
 												<tr>
+												<td><%=i %></td>
 													<s:iterator status="incr">
+													
+													
 														<td><s:if test="%{#incr.index==0}">
 																<input value='<s:property />' name="id" hidden="hidden">
 															</s:if> <s:else>
@@ -145,7 +150,8 @@
 
 
 													</s:iterator>
-													<td><input type="text" placeholder="Enter Fee Value">
+													<%i++; %>
+													<td><input class="form-control" type="text" placeholder="Enter Fee Value">
 														<button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></td>
 												</tr>
 											</s:iterator>

@@ -47,6 +47,10 @@ public class LookupDAO {
 		Session session = factory.openSession();
 		try {
 			Criteria lookupCr = session.createCriteria(LookupBean.class);
+			if(filterKey.contentEquals("ALL"))
+			{
+				
+			}
 			if(filterKey.contentEquals("ID"))
 			{
 			lookupCr.add(Restrictions.eq("lookupId", id));

@@ -285,11 +285,11 @@ public class FcAction extends ActionSupport {
 				paramMap.get(sortedKeys.get(14)), paramMap.get(sortedKeys.get(15)));
 
 		// Populate Header List with Strings of Parameters
-		HeaderList = GetHeaders(SelectedInstParam, SelectedCourseParam, SelectedAppParam, SelectedSerParam);
+		//HeaderList = GetHeaders(SelectedInstParam, SelectedCourseParam, SelectedAppParam, SelectedSerParam);
 		// Populate the BodyList with Strings of Parameter Values and a unique
 		// id for each Combo
 		BodyList = GetBodyContent(Combos);
-
+		HeaderList = GetHeaders(Combos);
 		// End of Commbination Code
 
 		return SUCCESS;
@@ -831,7 +831,36 @@ public class FcAction extends ActionSupport {
 		return resList;
 	}
 
-	private ArrayList<String> GetHeaders(ArrayList<String> Inst, ArrayList<String> Cour, ArrayList<String> Appl,
+	private ArrayList<String> GetHeaders(ArrayList<Integer[]>body)
+	{
+		ArrayList<String> ResultList=new ArrayList<String>();
+		ArrayList<LookupBean> Lookups=lpDao.getLookupData("ALL", null, null, null);
+
+		Integer[]bodycontent=body.get(0);
+		for (int i = 0; i < bodycontent.length; i++) {
+		
+			Integer id=bodycontent[i];
+			Iterator<LookupBean>lookupIt=Lookups.iterator();
+			while(lookupIt.hasNext())
+			{
+				LookupBean temp=new LookupBean();
+				temp=lookupIt.next();
+				List<FvBean>values=new ArrayList<FvBean>();
+				values= temp.getFvBeansList();
+				Iterator<FvBean> valuesIt=values.iterator();
+				while(valuesIt.hasNext())
+				{
+					Integer valueid=valuesIt.next().getFeeValueId();
+					if(id==valueid)
+					{
+						ResultList.add(temp.getLookupName());
+					}
+				}
+			}	
+		}
+		return ResultList;
+	}
+	private ArrayList<String> GetHeaders2(ArrayList<String> Inst, ArrayList<String> Cour, ArrayList<String> Appl,
 			ArrayList<String> Serv) {
 
 		ArrayList<String> ResultList = new ArrayList<String>();
