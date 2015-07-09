@@ -33,11 +33,17 @@ public class AppAction extends ActionSupport {
 	public String registerStudent() {
 
 		log.info("Applicant Name  ::" + appBean1.getAplFirstName());
+		List<String> existEnrollmentList = aplDAO.existingEnrollNum();
+		if (existEnrollmentList.isEmpty()) {
 
-		appBean1 = aplDAO.saveOrUpdate(appBean1);
-		
+			appBean1 = aplDAO.saveOrUpdate(appBean1);
+			return SUCCESS;
+		} else {
+			request.setAttribute("msg", "Enrollment Number Already Registered");
 
-		return SUCCESS;
+			return "failure";
+		}
+
 	}
 
 	// to get list of All Students
@@ -57,7 +63,7 @@ public class AppAction extends ActionSupport {
 		Integer appId = Integer.parseInt(apId);
 
 		appBean1 = aplDAO.viewApplicantDetail(appId);
-		//log.info("College Name ::" + appBean1.getAffBean().getInstName());
+		// log.info("College Name ::" + appBean1.getAffBean().getInstName());
 		return SUCCESS;
 	}
 

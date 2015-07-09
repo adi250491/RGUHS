@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
@@ -80,4 +81,21 @@ public class AppDAO {
 		}
 
 	}
+
+	public List<String> existingEnrollNum() {
+		Session session = factory.openSession();
+		try {
+			Criteria criteria = session.createCriteria(AppBean.class);
+			criteria.setProjection(Projections.property("enrollmentNUmber"));
+
+			List<String> list = criteria.list();
+			return list;
+
+		} finally {
+			session.close();
+			// TODO: handle exception
+		}
+
+	}
+
 }

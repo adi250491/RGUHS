@@ -345,5 +345,22 @@
 		</action>
 
 	</package>
+	
+	<package name="download_excelTemplate" extends="struts-default">
+
+		<action name="DownloadExcelTemplateFile"
+			class="com.dexpert.feecollection.main.users.applicant.template.ExcelTemplateAction"
+			method="downloadExcelFileTemplateForStudent">
+			<result name="success" type="stream">
+				<param name="contentDisposition">attachment;filename="${downloadFile}"</param>
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">1024</param>
+			</result>
+
+
+		</action>
+
+	</package>
 
 </struts>

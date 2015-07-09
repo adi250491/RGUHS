@@ -230,6 +230,27 @@
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
+
+									<%
+										String msg = (String) request.getAttribute("msg");
+									%>
+
+									<%
+										if (msg != null)
+
+										{
+									%>
+
+									<div
+										style="color: red; text-align: center; font-weight: bold; font-size: medium;">
+
+
+										<%=msg%>
+									</div>
+									<%
+										}
+									%>
+
 									<div class="row">
 										<div class="col-md-12">
 											<button class="btn btn-sm btn-info" style="float: right;"

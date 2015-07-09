@@ -173,10 +173,8 @@
 
 
 												<tr>
-
-													<td colspan="2"><input type="button"
-														onclik="DownloadTemplate()" class="btn btn-default"
-														value="Download Template"></td>
+													<td colspan="2"><a style="text-align: center;" href="DownloadExcelTemplateFile">Download
+															Template</a></td>
 
 
 												</tr>
@@ -294,15 +292,5 @@
 	<script src="js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
-
-	<script>
-	function DownloadTemplate()
-	
-	{
-		
-		
-	}
-		
-	</script>
 </body>
 </html>
