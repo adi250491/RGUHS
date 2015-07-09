@@ -346,7 +346,7 @@
 
 		function RemoveFromValues(value) {
 			delete values[value];
-			//alert(JSON.stringify(values));
+			
 		}
 
 		function saveValues() {
