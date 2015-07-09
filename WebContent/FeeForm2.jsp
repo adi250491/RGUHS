@@ -123,7 +123,7 @@
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 
 									
-									<table class="table table-condensed">
+									<table class="table table-condensed table-striped">
 
 										<thead>
 											<tr>

@@ -156,7 +156,7 @@ Integer count=0;%>
 
 
 															<div class="controls">
-																<select required="required" id="selectError1" multiple class="form-control"
+																<select required="required" id="selectError1" class="form-control"
 																	data-rel="chosen" name="feePayee">
 																	<option value="1">College</option>
 																	<option value="2">Student</option>
@@ -252,7 +252,7 @@ Integer count=0;%>
 													<td>Select Fee Calculation Parameter</td>
 													<td><div class="control-group">
 															<div class="controls">
-																<select required="required" id="selectError1" multiple class="form-control"
+																<select required="required" id="selectError1" class="form-control"
 																	data-rel="chosen" name="cal_mode">
 																	<option value="1">Per Student</option>
 																	<option value="1">Per College</option>

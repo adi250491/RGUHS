@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +15,8 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.dexpert.feecollection.main.communication.email.EmailSessionBean;
+import com.dexpert.feecollection.main.fee.config.FcDAO;
+import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
@@ -28,12 +29,13 @@ public class AffAction extends ActionSupport {
 	HttpServletResponse response = ServletActionContext.getResponse();
 	public AffBean affInstBean;
 	AffDAO affDao = new AffDAO();
+	FcDAO feeDAO=new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
 	String fileFileName;
 	FileInputStream inputStream;
 	private File fileUpload;
-
+	private ArrayList<FeeDetailsBean>feeList=new ArrayList<FeeDetailsBean>();
 	private String fileUploadFileName;
 	private Integer fileSize;
 	private String contentType;
@@ -293,6 +295,13 @@ public class AffAction extends ActionSupport {
 		}
 
 	}
+	
+	public String GetFees()
+	{
+		feeList=feeDAO.GetFees("payee", "applicant", null, null);
+		
+		return SUCCESS;
+	}
 
 	// deleteInstitute()
 	// getAssociatedFees()
@@ -368,5 +377,14 @@ public class AffAction extends ActionSupport {
 		this.inputStream = inputStream;
 	}
 
+	public ArrayList<FeeDetailsBean> getFeeList() {
+		return feeList;
+	}
+
+	public void setFeeList(ArrayList<FeeDetailsBean> feeList) {
+		this.feeList = feeList;
+	}
+
+	
 	// End of Getter Setter Methods
 }

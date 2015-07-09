@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <meta charset="utf-8">
-<title>Fee Collection Portal - Fee Form</title>
+<title>Fee Collection Portal - College Fee Details</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -76,7 +76,8 @@
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-info-sign"></i> New Fee Form
+									<i class="glyphicon glyphicon-info-sign"></i> College Fee
+									Details
 								</h2>
 
 								<div class="box-icon">
@@ -93,141 +94,35 @@
 										<thead>
 
 											<tr>
-												<th></th>
-												<th></th>
+												<th>Sr. No.</th>
+												<th>Fee ID</th>
+												<th>Fee Title</th>
 												<th></th>
 
 											</tr>
 										</thead>
 										<tbody>
+										<s:iterator value="feeList">
+										
 										<tr>
-												<td>0</td>
-												<td>Fee Payable By</td>
-												<td><div class="control-group">
-
-
-														<div class="controls">
-															<select id="selectError1" multiple class="form-control"
-																data-rel="chosen">
-																<option>College</option>
-																<option>Student</option>
-															</select>
-														</div>
-													</div></td>
-
-											</tr>
-											<tr>
 												<td>1</td>
-												<td>Fee Name</td>
-												<td><div id="the-basics" class="has-success">
-														<input id="District/Area" placeholder="Give a Unique Name"
-															type="text" class="form-control">
-													</div></td>
+												<td><s:property value="feeId"/></td>
+												<td><s:property value="feeName"/></td>
+												<td><button class="btn btn-success btn-sm">Add</button></td>
 
 											</tr>
-											
-											
-											<tr>
-												<td>2</td>
-												<td>Select Course Parameters</td>
-												<td><div class="control-group">
-
-
-														<div class="controls">
-															<select id="selectError1" multiple class="form-control"
-																data-rel="chosen">
-																<option>Course Type</option>
-																<option>Course Name</option>
-																<option>Stream</option>
-																<option>Faculty</option>
-																<option>Duration</option>
-															</select>
-														</div>
-													</div></td>
-
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Select College Parameters</td>
-												<td><div class="control-group">
-
-
-														<div class="controls">
-															<select id="selectError1" multiple class="form-control"
-																data-rel="chosen">
-																<option>Aided?</option>
-																<option>Autonomous?</option>
-																<option>Late Fee</option>
-																<option>Late fee Amount</option>
-
-															</select>
-														</div>
-													</div></td>
-
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>Select Student Parameters</td>
-												<td><div class="control-group">
-
-														<div class="controls">
-															<select  title="Student Parameters" id="selectError1" multiple class="form-control"
-																data-rel="chosen">
-																<option>Student Category</option>
-																<option>Student Nationality</option>
-																<option>Priority Request?</option>
-																<option>Passout?</option>
-																<option>Late Fee?</option>
-																<option>Late fee Amount</option>
-															</select>
-														</div>
-													</div></td>
-
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>Select Service Parameters</td>
-												<td><div class="control-group">
-														<div class="controls">
-															<select id="selectError1" multiple class="form-control"
-																data-rel="chosen">
-																<option>Service Type</option>
-																<option>Document Year</option>
-																<option>Late Fee?</option>
-																<option>Late fee Amount</option>
-															</select>
-														</div>
-													</div></td>
-
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>Select Fee Calculation Parameter</td>
-												<td><div class="control-group">
-														<div class="controls">
-															<select id="selectError1" multiple class="form-control"
-																data-rel="chosen">
-																<option>Per Student</option>
-																<option>Per College</option>
-																<option>Fixed</option>
-																
-															</select>
-														</div>
-													</div></td>
-
-											</tr>
-
+										</s:iterator>
 										</tbody>
 									</table>
 									
 								</div>
 
-
 							</div>
 						</div>
 					</div>
 					<div class="col-md-12">
-						<button class="btn btn-success" onclick='window.location="FeeForm2.html"'>Next</button>
+						<button onclick="showDetails()" class="btn btn-success">Back</button>
+						<button class="btn btn-warning" onclick='window.location="GetAffFees"'>Save</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
@@ -326,6 +221,9 @@
 			window.opener.location = "College-Payment-Summary.html";
 			window.close();
 
+		}
+		function showDetails() {
+			window.open("CollegeDetails.html", "CollegeDetails", "width=700,height=900");
 		}
 	</script>
 </body>

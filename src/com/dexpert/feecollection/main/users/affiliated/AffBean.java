@@ -1,6 +1,7 @@
 package com.dexpert.feecollection.main.users.affiliated;
 
 import java.io.File;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,8 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-
+import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.applicant.AppBean;
 
@@ -53,7 +53,11 @@ public class AffBean {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = AppBean.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
 	Set<AppBean> aplBeanSet;
-
+	
+	// one to many relationship with FeeDetails)
+		@OneToMany(cascade = CascadeType.ALL, targetEntity = FeeDetailsBean.class, fetch = FetchType.EAGER)
+		@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
+		Set<AffBean> affBeanSet;
 	// one to one bidirectional relationship with student and college
 	// child
 
@@ -186,5 +190,18 @@ public class AffBean {
 	public void setAppBean(AppBean appBean) {
 		this.appBean = appBean;
 	}
+
+	public Set<AffBean> getAffBeanSet() {
+		return affBeanSet;
+	}
+
+	public void setAffBeanSet(Set<AffBean> affBeanSet) {
+		this.affBeanSet = affBeanSet;
+	}
+
+	
+
+	
+	
 
 }

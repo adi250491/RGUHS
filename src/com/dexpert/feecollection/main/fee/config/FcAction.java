@@ -136,18 +136,18 @@ public class FcAction extends ActionSupport {
 
 		// Set Fee Payee
 		if (feePayee.contentEquals("1")) {
-			feedetails.setForInstitute(true);
+			feedetails.setForInstitute(1);
 		} else if (feePayee.contentEquals("2")) {
-			feedetails.setForApplicant(true);
+			feedetails.setForApplicant(1);
 		} else {
 			return ERROR;
 		}
 
 		if (cal_mode.contentEquals("1")) {
-			feedetails.setCal_mode(true);
+			feedetails.setCal_mode(1);
 			;
 		} else if (cal_mode.contentEquals("0")) {
-			feedetails.setCal_mode(false);
+			feedetails.setCal_mode(0);
 		} else {
 			return ERROR;
 		}

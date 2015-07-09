@@ -237,7 +237,13 @@
 
 		</action>
 
+		<action name="GetAffFees"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="GetFees">
 
+			<result name="success">CollegeAddFee.jsp</result>
+
+		</action>
 
 
 

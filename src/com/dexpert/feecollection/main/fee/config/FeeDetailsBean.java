@@ -26,8 +26,8 @@ public class FeeDetailsBean {
 	@GeneratedValue(generator = "g11")
 	private Integer feeId;
 	private String feeName,ins_param,cou_param,app_param,ser_param;
-	private Boolean forApplicant=false,forInstitute=false,cal_mode=false;
-	
+	//private Boolean forApplicant=false,forInstitute=false,cal_mode=false;
+	private Integer forApplicant,forInstitute,cal_mode;
 
 	
 	// one to many relationship with FeeDetails (Students)
@@ -93,27 +93,29 @@ public class FeeDetailsBean {
 		this.ser_param = ser_param;
 	}
 
-	public Boolean getForApplicant() {
+	
+
+	public Integer getForApplicant() {
 		return forApplicant;
 	}
 
-	public void setForApplicant(Boolean forApplicant) {
+	public void setForApplicant(Integer forApplicant) {
 		this.forApplicant = forApplicant;
 	}
 
-	public Boolean getForInstitute() {
+	public Integer getForInstitute() {
 		return forInstitute;
 	}
 
-	public void setForInstitute(Boolean forInstitute) {
+	public void setForInstitute(Integer forInstitute) {
 		this.forInstitute = forInstitute;
 	}
 
-	public Boolean getCal_mode() {
+	public Integer getCal_mode() {
 		return cal_mode;
 	}
 
-	public void setCal_mode(Boolean cal_mode) {
+	public void setCal_mode(Integer cal_mode) {
 		this.cal_mode = cal_mode;
 	}
 

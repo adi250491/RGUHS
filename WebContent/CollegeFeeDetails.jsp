@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <meta charset="utf-8">
 <title>Fee Collection Portal - College Fee Details</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -144,7 +144,7 @@
 					</div>
 					<div class="col-md-12">
 						<button onclick="showDetails()" class="btn btn-success">Back</button>
-						<button class="btn btn-warning">Add/Remove Associated Fees</button>
+						<button class="btn btn-warning" onclick='window.location="GetAffFees"'>Add Associated Fees</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>

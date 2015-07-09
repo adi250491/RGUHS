@@ -46,8 +46,6 @@ public class LookupBean implements Serializable {
 		this.lookupId = lookupId;
 	}
 
-	
-
 	public String getLookupScope() {
 		return lookupScope;
 	}
