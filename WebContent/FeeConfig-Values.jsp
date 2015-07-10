@@ -5,7 +5,7 @@
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
-	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
 
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
@@ -148,13 +148,16 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-Admin.jsp"><i
+							<li><a class="ajax-link"
+								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
+							<li><a class="ajax-link" href="UniversityDetailRecord"><i
+									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<li><a class="ajax-link" href="getCollegeList"><i
-									class="fa fa-building"></i><span> My Colleges</span></a></li>
+									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
-							<li><a class="ajax-link" href="Admin-Reports.html"><i
+							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
 					</div>

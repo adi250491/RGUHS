@@ -23,8 +23,9 @@ import com.dexpert.feecollection.main.users.affiliated.AffBean;
 @Table(name = "applicant_details")
 public class AppBean {
 
+	@GenericGenerator(name = "g1", strategy = "increment")
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "g1")
 	private Integer aplId;
 	private String aplFirstName, aplLstName, aplEmail, aplAddress, aplMobilePri, aplMobileSec, enrollmentNumber,
 			gender;

@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.applicant.AppBean;
@@ -25,8 +27,9 @@ import com.dexpert.feecollection.main.users.applicant.AppBean;
 @Table(name = "affiliated_institute_details")
 public class AffBean {
 
+	@GenericGenerator(name = "g1", strategy = "increment")
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "g1")
 	private Integer instId;
 	private String instName, contactPerson, place, email, contactNumber, mobileNum;
 	private String instAddress;
@@ -57,7 +60,7 @@ public class AffBean {
 	// one to many relationship with FeeDetails)
 		@OneToMany(cascade = CascadeType.ALL, targetEntity = FeeDetailsBean.class, fetch = FetchType.EAGER)
 		@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
-		Set<AffBean> affBeanSet;
+		Set<FeeDetailsBean> FeeSet;
 	// one to one bidirectional relationship with student and college
 	// child
 
@@ -191,14 +194,15 @@ public class AffBean {
 		this.appBean = appBean;
 	}
 
-	public Set<AffBean> getAffBeanSet() {
-		return affBeanSet;
+	public Set<FeeDetailsBean> getFeeSet() {
+		return FeeSet;
 	}
 
-	public void setAffBeanSet(Set<AffBean> affBeanSet) {
-		this.affBeanSet = affBeanSet;
+	public void setFeeSet(Set<FeeDetailsBean> feeSet) {
+		FeeSet = feeSet;
 	}
 
+	
 	
 
 	

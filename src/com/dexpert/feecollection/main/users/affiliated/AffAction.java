@@ -121,7 +121,7 @@ public class AffAction extends ActionSupport {
 		// else forward error message on input page
 
 		else {
-			log.info("College NaME ALREADY AVAILABLE");
+			log.info("College NAME ALREADY AVAILABLE");
 
 			request.setAttribute("msg", "Institute Name is Already Registered");
 			return "failure";
@@ -298,9 +298,24 @@ public class AffAction extends ActionSupport {
 	
 	public String GetFees()
 	{
-		feeList=feeDAO.GetFees("payee", "applicant", null, null);
+		feeList=feeDAO.GetFees("payee", "institute", null, null);
 		
 		return SUCCESS;
+	}
+	
+	public String AddFees()
+	{
+		AffBean collegedata=new AffBean();
+		//Get College id from request
+		Integer id=Integer.parseInt(request.getParameter("collId").trim());
+		//Get Fee ids from request
+		String feeids=null;
+		//Get College Data
+		collegedata=affDao.getOneCollegeRecord(id);
+		//Add Fees to College Beans' FeeSet
+		
+		//Save College Bean
+		return null;
 	}
 
 	// deleteInstitute()

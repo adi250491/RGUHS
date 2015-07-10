@@ -6,7 +6,8 @@
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
-	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+
+	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
 
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
@@ -168,10 +169,32 @@
 							<li><a class="ajax-link"
 								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
+							<%
+								if (profile.contentEquals("SU")){
+							%><li><a class="ajax-link" href="UniversityDetailRecord"><i
+									class="fa fa-building"></i><span> Parent Institute</span></a></li>
+							<%
+								}
+							%>
 							<li><a class="ajax-link" href="getCollegeList"><i
-									class="fa fa-building"></i><span> My Colleges</span></a></li>
+									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
+							<%
+								if (!profile.contentEquals("Affiliated")){
+							%><li><a class="ajax-link" href="StudentTotalRecord"><i
+									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
+							<%
+								}
+							%>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
+							<%
+								if (profile.contentEquals("Affiliated")){
+							%><li><a class="ajax-link" href="#"
+								onclick='window.open("LockFeature.jsp", "University Report", "height=1080,width=1920")'><i
+									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
+							<%
+								}
+							%>
 							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
@@ -223,12 +246,14 @@
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 									<div class="row">
 										<div class="col-md-12">
-											<button class="btn btn-sm btn-info pull-right" style="float: right;"
+											<button class="btn btn-sm btn-info pull-right"
+												style="float: right;"
 												onclick='window.open("AddBulkInstitutes.jsp", "Bulk College Add", "width=500,height=600")'>
 												<i class="fa fa-plus"></i> Add Bulk Colleges
 											</button>
-											
-											<button class="btn btn-sm btn-info pull-right" style="margin-right: 3%; float: right;"
+
+											<button class="btn btn-sm btn-info pull-right"
+												style="margin-right: 3%; float: right;"
 												onclick='window.open("CollegeForm.jsp", "CollegeForm", "width=500,height=700")'>
 												<i class="fa fa-plus"></i> Add College
 											</button>
@@ -259,8 +284,7 @@
 													<td class="center"><a class="btn btn-success btn-sm"
 														title="Button To Display College Detail"
 														onclick="showDetails(<s:property value="instId"/>)"> <i
-															class="glyphicon glyphicon-zoom-in icon-white"></i>
-															View
+															class="glyphicon glyphicon-zoom-in icon-white"></i> View
 													</a></td>
 												</tr>
 

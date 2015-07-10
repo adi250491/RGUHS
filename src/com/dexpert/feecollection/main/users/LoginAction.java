@@ -70,15 +70,17 @@ public class LoginAction extends ActionSupport {
 
 				if (lgbean.getAffBean() != null) {
 					log.info("Valid College");
-
+					httpSession.setAttribute("sesProfile", "Affiliated");
 					httpSession.setAttribute("dashLink", "index-College.jsp");
 					return "college";
 				} else if (lgbean.getParBean() != null) {
 					log.info("Valid University");
+					httpSession.setAttribute("sesProfile", "Parent");
 					httpSession.setAttribute("dashLink", "index-University.jsp");
 					return "university";
 				} else if (lgbean.getSaBean() != null) {
 					log.info("Valid Super Admin");
+					httpSession.setAttribute("sesProfile", "SU");
 					httpSession.setAttribute("dashLink", "index-Admin.jsp");
 					return "superAdmin";
 				} else {

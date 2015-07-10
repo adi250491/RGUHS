@@ -1,7 +1,44 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <html lang="en">
 <head>
+<%
+	//checking session
+	LoginBean loginUser = new LoginBean();
+String profile=null;
+try{
+	profile=(String)session.getAttribute("sesProfile");
+	
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+	
+	if (loginUser == null) {
+		response.sendRedirect("Login.jsp");
 
+		return;
+
+	}
+}catch(java.lang.NullPointerException e)
+{response.sendRedirect("Login.jsp");
+	return ;
+}
+
+	
+	String usercookie = null;
+	String sessionID = null;
+	String dispchar = "display:none";
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie cookie : cookies) {
+
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
+		}
+	} else {
+		sessionID = session.getId();
+	}
+%>
 <meta charset="utf-8">
 <title>Fee Collection Portal- Reports</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,12 +158,35 @@
 						<div class="nav-sm nav nav-stacked"></div>
 						<ul class="nav nav-pills nav-stacked main-menu">
 							<li class="nav-header">Main</li>
-							<li><a class="ajax-link" href="index-Admin.jsp"><i
+							<li><a class="ajax-link"
+								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
+							<%
+								if (profile.contentEquals("SU")){
+							%><li><a class="ajax-link" href="UniversityDetailRecord"><i
+									class="fa fa-building"></i><span> Parent Institute</span></a></li>
+							<%
+								}
+							%>
 							<li><a class="ajax-link" href="getCollegeList"><i
-									class="fa fa-building"></i><span> My Colleges</span></a></li>
+									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
+							<%
+								if (!profile.contentEquals("Affiliated")){
+							%><li><a class="ajax-link" href="StudentTotalRecord"><i
+									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
+							<%
+								}
+							%>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
+							<%
+								if (profile.contentEquals("Affiliated")){
+							%><li><a class="ajax-link" href="#"
+								onclick='window.open("LockFeature.jsp", "University Report", "height=1080,width=1920")'><i
+									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
+							<%
+								}
+							%>
 							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
