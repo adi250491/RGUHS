@@ -200,7 +200,7 @@
 
 
 						<button class="btn btn-warning"
-							onclick='window.location="LockFeature.jsp"'>View
+							onclick='window.location="CollegeFeeDetails.jsp"'>View
 							Associated Fees</button>
 
 

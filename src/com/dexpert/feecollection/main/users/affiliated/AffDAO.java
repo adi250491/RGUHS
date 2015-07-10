@@ -79,24 +79,27 @@ public class AffDAO {
 
 				// fileinputStream must be close
 				fileInputStream.close();
+				saveData.setFilesByteSize(bFile);
+
+				saveData.setFileSize(fileSize);
 
 			} catch (java.lang.NullPointerException e) {
 
 			}
 
-			saveData.setFilesByteSize(bFile);
-
-			saveData.setFileSize(fileSize);
+			
 			session.beginTransaction();
 			session.saveOrUpdate(saveData);
 			session.getTransaction().commit();
 			return saveData;
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 
 			e.printStackTrace();
 			return saveData;
-		} finally {
+		}
+		finally {
 
 			// close session
 			session.close();

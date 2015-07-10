@@ -102,38 +102,18 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+										<s:iterator value="affInstBean.feeSet">
+										<tr>
 												<td>1</td>
-												<td>F12</td>
-												<td>Admission Fees UG Department Engineering</td>
+												<td><s:property value="feeId"/></td>
+												<td><s:property value="feeName"/></td>
 												<td><button class="btn btn-success btn-sm">View
 														Details</button></td>
 
 											</tr>
-											<tr>
-												<td>2</td>
-												<td>F42</td>
-												<td>Admission Fees PG Department Health Sciences Dental</td>
-												<td><button class="btn btn-success btn-sm">View
-														Details</button></td>
-
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>F32</td>
-												<td>Admission Fees UG Department Health Sciences Dental</td>
-												<td><button class="btn btn-success btn-sm">View
-														Details</button></td>
-
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>F72</td>
-												<td>Affiliation Fees UG Department Engineering</td>
-												<td><button class="btn btn-success btn-sm">View
-														Details</button></td>
-
-											</tr>
+										</s:iterator>
+											
+											
 										</tbody>
 									</table>
 									

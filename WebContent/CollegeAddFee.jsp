@@ -97,7 +97,8 @@
 												<th>Sr. No.</th>
 												<th>Fee ID</th>
 												<th>Fee Title</th>
-												<th></th>
+												<th><input id="collID" hidden="hidden" readonly="readonly"
+													value='<%=request.getParameter("collId")%>'></th>
 
 											</tr>
 										</thead>
@@ -108,7 +109,9 @@
 												<td>1</td>
 												<td><s:property value="feeId"/></td>
 												<td><s:property value="feeName"/></td>
-												<td><button class="btn btn-success btn-sm">Add</button></td>
+												<td><button id='<s:property value="feeId"/>' onclick='AddToArray(<s:property value="feeId"/>)' class="btn btn-success btn-sm">Add</button>
+												<button id='<s:property value="feeId"/>' onclick='RemoveFromValues(<s:property value="feeId"/>)' class="btn btn-warning btn-sm">Remove</button>
+												</td>
 
 											</tr>
 										</s:iterator>
@@ -122,7 +125,7 @@
 					</div>
 					<div class="col-md-12">
 						<button onclick="showDetails()" class="btn btn-success">Back</button>
-						<button class="btn btn-warning" onclick='window.location="GetAffFees"'>Save</button>
+						<button class="btn btn-warning" onclick='saveValues()'>Save</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
@@ -217,6 +220,7 @@
 	<script src="js/charisma.js"></script>
 
 	<script>
+	var values = {};
 		function OpenSummaryInParent() {
 			window.opener.location = "College-Payment-Summary.html";
 			window.close();
@@ -224,6 +228,28 @@
 		}
 		function showDetails() {
 			window.open("CollegeDetails.html", "CollegeDetails", "width=700,height=900");
+		}
+		
+		function AddToArray(value) {
+			/* alert("value received from jquery function "+value); */
+			values[value] = value;
+			/* alert(JSON.stringify(values)); */
+
+		}
+
+		function RemoveFromValues(value) {
+			delete values[value];
+			
+		}
+
+		function saveValues() {
+			var id = document.getElementById("collID").value;
+			var dataArray = new Array;
+			for ( var value in values) {
+				dataArray.push(values[value]);
+			}
+			window.location = "updateCollegeFees?reqFeeIds=" + dataArray
+					+ "&collId=" + id;
 		}
 	</script>
 </body>

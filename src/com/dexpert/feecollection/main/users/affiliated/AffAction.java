@@ -5,11 +5,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
@@ -22,11 +26,14 @@ import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
 import com.opensymphony.xwork2.ActionSupport;
 
+
 public class AffAction extends ActionSupport {
 
 	// Declare Global Variables Here
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
+	HttpSession ses=request.getSession();
+			
 	public AffBean affInstBean;
 	AffDAO affDao = new AffDAO();
 	FcDAO feeDAO=new FcDAO();
@@ -168,6 +175,7 @@ public class AffAction extends ActionSupport {
 		String instituteId = request.getParameter("instId");
 		Integer instId = Integer.parseInt(instituteId);
 		affInstBean = affDao.viewInstDetail(instId);
+		ses.setAttribute("sesAffBean", affInstBean);
 
 		return SUCCESS;
 	}
@@ -305,15 +313,29 @@ public class AffAction extends ActionSupport {
 	
 	public String AddFees()
 	{
+		ArrayList<FeeDetailsBean>feelist=new ArrayList<FeeDetailsBean>();
+		
 		AffBean collegedata=new AffBean();
 		//Get College id from request
 		Integer id=Integer.parseInt(request.getParameter("collId").trim());
 		//Get Fee ids from request
-		String feeids=null;
+		String feeidstr=request.getParameter("reqFeeIds").trim();
+		List<String> FeeIds = Arrays.asList(feeidstr.split(","));
+		ArrayList<Integer>FeeIdsInt=new ArrayList<Integer>();
+		Iterator<String>idIt=FeeIds.iterator();
+		while(idIt.hasNext())
+		{
+			FeeIdsInt.add(Integer.parseInt(idIt.next()));
+		}
 		//Get College Data
 		collegedata=affDao.getOneCollegeRecord(id);
+		//Get Fees in Set
+		feelist=feeDAO.GetFees("ids", null, null, FeeIdsInt);
+		Set<FeeDetailsBean>feeset=collegedata.getFeeSet();
+		feeset.addAll(feelist);
 		//Add Fees to College Beans' FeeSet
-		
+		collegedata.setFeeSet(feeset);
+		affDao.saveOrUpdate(collegedata, null);
 		//Save College Bean
 		return null;
 	}

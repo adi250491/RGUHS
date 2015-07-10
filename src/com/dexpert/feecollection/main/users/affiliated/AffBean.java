@@ -60,7 +60,7 @@ public class AffBean {
 	// one to many relationship with FeeDetails)
 		@OneToMany(cascade = CascadeType.ALL, targetEntity = FeeDetailsBean.class, fetch = FetchType.EAGER)
 		@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
-		Set<FeeDetailsBean> FeeSet;
+		Set<FeeDetailsBean> feeSet;
 	// one to one bidirectional relationship with student and college
 	// child
 
@@ -195,11 +195,11 @@ public class AffBean {
 	}
 
 	public Set<FeeDetailsBean> getFeeSet() {
-		return FeeSet;
+		return feeSet;
 	}
 
 	public void setFeeSet(Set<FeeDetailsBean> feeSet) {
-		FeeSet = feeSet;
+		feeSet = feeSet;
 	}
 
 	
