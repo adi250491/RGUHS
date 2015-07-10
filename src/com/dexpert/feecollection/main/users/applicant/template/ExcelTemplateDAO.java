@@ -32,8 +32,8 @@ public class ExcelTemplateDAO {
 
 			}
 			for (int i = 0; i < paramStr.size(); i++) {
-				Cell monthCell = header.createCell(i);
-				monthCell.setCellValue(paramStr.get(i));
+				Cell paramCell = header.createCell(i);
+				paramCell.setCellValue(paramStr.get(i));
 				xssfSheet.setColumnWidth(i, 6000);
 
 			}
