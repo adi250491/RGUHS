@@ -19,6 +19,10 @@ import com.opensymphony.xwork2.ActionSupport;
 public class ExcelTemplateAction extends ActionSupport {
 	// Declare Global Variables Here
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
