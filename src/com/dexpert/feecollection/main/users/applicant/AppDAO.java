@@ -86,7 +86,7 @@ public class AppDAO {
 		Session session = factory.openSession();
 		try {
 			Criteria criteria = session.createCriteria(AppBean.class);
-			criteria.setProjection(Projections.property("enrollmentNUmber"));
+			criteria.setProjection(Projections.property("enrollmentNumber"));
 
 			List<String> list = criteria.list();
 			return list;

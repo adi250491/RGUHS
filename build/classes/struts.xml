@@ -309,6 +309,7 @@
 			method="registerStudent">
 
 			<result name="success">Success.jsp</result>
+			<result name="failure">StudentForm.jsp</result>
 
 		</action>
 		<action name="StudentTotalRecord"
