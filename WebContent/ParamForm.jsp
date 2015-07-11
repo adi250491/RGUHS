@@ -5,6 +5,7 @@
 <head>
 <%
 	//checking session
+	boolean alertflag=false;
 	LoginBean loginUser = new LoginBean();
 	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
 
@@ -29,6 +30,14 @@
 	} else {
 		sessionID = session.getId();
 	}
+	try{
+		alertflag=(boolean)request.getAttribute("reqAlertFlag");
+	}
+	catch(Exception e)
+	{
+		
+	}
+	
 %>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Parameter Form</title>
@@ -75,7 +84,7 @@
 
 </head>
 
-<body>
+<body onload="showAlert(<%=alertflag%>)">
 	<!-- topbar starts -->
 
 	<!-- topbar ends -->
@@ -299,6 +308,13 @@
 			window.opener.location = "College-Payment-Summary.html";
 			window.close();
 
+		}
+		function showAlert(x)
+		{
+			if(x)
+				{
+				alert("Successfully Saved");
+				}
 		}
 	</script>
 </body>

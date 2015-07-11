@@ -161,13 +161,30 @@
 			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
 			method="GetParameterListAll">
 			<result name="success">/FeeConfig-Parameters.jsp</result>
+		
+		</action>
+		<action name="GetAllInsParameters"
+			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
+			method="GetParameterListInstitute">
+			<result name="success">/CollegeForm.jsp</result>
 
 		</action>
 		<action name="deleteParam"
 			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
 			method="deleteRecord">
 			<result name="success">/FeeConfig-Parameters.jsp</result>
-
+		
+		</action>
+		<action name="viewParam"
+			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
+			method="GetParamDetails">
+			
+			<result name="String">/ParamValForm.jsp</result>
+			<result name="Numeric">/ParamValFormNumeric.jsp</result>
+			<result name="Boolean">/ParamValFormBoolean.jsp</result>
+			<result name="error">/Error.jsp</result>
+			<result name="input">/ParamValForm.jsp</result>
+			
 		</action>
 	</package>
 

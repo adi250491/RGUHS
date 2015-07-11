@@ -21,7 +21,7 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-	if (cookie.getName().equals("user"))
+	if (cookie.getName().equals("loginUser"))
 		usercookie = cookie.getValue();
 	if (cookie.getName().equals("JSESSIONID"))
 		sessionID = cookie.getValue();
@@ -29,10 +29,9 @@
 	} else {
 		sessionID = session.getId();
 	}
-	int i=0;
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal - College Form</title>
+<title>Fee Collection Portal - Parameter Values</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -74,6 +73,46 @@
 <!-- The fav icon -->
 <link rel="shortcut icon" href="img/favicon.ico">
 
+<style type="text/css">
+#tags {
+	float: left;
+	border: 1px solid #ccc;
+	padding: 5px;
+	font-family: Arial;
+}
+
+#tags span.tag {
+	cursor: pointer;
+	display: block;
+	float: left;
+	color: #fff;
+	background: #689;
+	padding: 5px;
+	padding-right: 25px;
+	margin: 4px;
+}
+
+#tags span.tag:hover {
+	opacity: 0.7;
+}
+
+#tags span.tag:after {
+	position: absolute;
+	content: "x";
+	border: 1px solid;
+	padding: 0 4px;
+	margin: 3px 0 10px 5px;
+	font-size: 10px;
+}
+
+#tags input {
+	background: #eee;
+	border: 0;
+	margin: 4px;
+	padding: 7px;
+	width: auto;
+}
+</style>
 </head>
 
 <body>
@@ -95,202 +134,107 @@
 				</div>
 			</noscript>
 
-
-
-			<%
-				String msg = (String) request.getAttribute("msg");
-			%>
-
-			<%
-				if (msg != null)
-
-						{
-			%>
-
-			<div
-				style="color: red; text-align: center; font-weight: bold; font-size: medium;">
-
-
-				<%=msg%>
-			</div>
-			<%
-				}
-			%>
-
-
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
 				<div></div>
 
 
 				<div class="row">
-					<form action="registerInstitute" enctype="multipart/form-data"
-						method="post">
-						<div class="box col-md-12">
-							<div class="box-inner">
-								<div class="box-header well">
-									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> New College Form
-									</h2>
 
-									<div class="box-icon">
+					<div class="box col-md-12">
+						<div class="box-inner">
+							<div class="box-header well">
+								<h2>
+									<i class="glyphicon glyphicon-info-sign"></i> Indicate All
+									Possible Parameter Values
+								</h2>
 
-										<a href="#" class="btn btn-minimize btn-round btn-default"><i
-											class="glyphicon glyphicon-chevron-down"></i></a>
+								<div class="box-icon">
 
-									</div>
-								</div>
-								<div class="box-content row">
-									<div class="col-lg-12 col-md-12 animated fadeIn">
-
-
-										<table class="table table-condensed">
-											<thead>
-
-												<tr>
-													<th><input type="hidden"
-														name="affInstBean.loginBean.profile" value="Admin">
-													</th>
-													<th></th>
-													<th></th>
-
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-
-													<td>District Name</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="District/Area"
-																name="affInstBean.place"
-																value='<s:property value="affInstBean.place"/>'
-																placeholder="District/Area Name" type="text"
-																class="form-control">
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>College Name</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="CollegeName"
-																pattern="[a-zA-Z0-9\s]*.{6}" name="affInstBean.instName"
-																placeholder="College Name (min 6 Character)" type="text"
-																class="form-control">
-
-														</div></td>
-
-												</tr>
-
-												<tr>
-
-													<td>Address</td>
-													<td><div id="the-basics" class="has-success">
-															<textarea required="required" id="CollegeName"
-																name="affInstBean.instAddress" placeholder="Address"
-																<s:property value="affInstBean.place"/>
-																class="form-control"></textarea>
-
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>Principal's Name</td>
-													<td><div id="the-basics" class="has-success">
-															<input id="PrinciName" name="affInstBean.contactPerson"
-																required="required" placeholder="Principal's Name"
-																value='<s:property value="affInstBean.contactPerson"/>'
-																type="text" class="form-control">
-
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>Telephone Number</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="Contact"
-																name="affInstBean.contactNumber" maxlength="12"
-																placeholder="Telephone Number" pattern="[0-9]*"
-																value='<s:property value="affInstBean.contactNumber"/>'
-																type="tele" class="form-control">
-
-														</div></td>
-
-												</tr>
-
-												<tr>
-
-													<td>Mobile Number</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="Contact"
-																name="affInstBean.mobileNum" maxlength="10"
-																value='<s:property value="affInstBean.mobileNum"/>'
-																placeholder="Mobile Number" pattern="[789][0-9]{9}"
-																type="tele" class="form-control">
-
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>Email Id</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="Contact"
-																value='<s:property value="affInstBean.email"/>'
-																name="affInstBean.email" placeholder="Email ID"
-																type="email" class="form-control">
-
-														</div></td>
-
-												</tr>
-
-												<tr>
-
-													<td>Upload Document</td>
-													<td><div id="the-basics" class="has-success">
-															<input name="fileUpload" type="file" class="form-control"
-																value='<s:property value="affInstBean.fileUploadFileName"/>'>
-
-
-
-
-														</div></td>
-
-												</tr>
-												<tr><td colspan="2"><strong>Custom Parameters</strong></td></tr>
-												<s:if test="%{!(getParamList().isEmpty())}">
-													<s:iterator value="paramList" status="ind">
-														<tr>
-															<td><s:property value="lookupName" /></td>
-															<td><s:select theme="simple"  name='affInstBean.paramset[%{#ind.index}].valuebean'
-																	cssStyle="width:200px" list="fvBeansList" cssClass="form-control" data-rel="chosen" 
-																	listValue="value"></s:select></td>
-														</tr>
-														<%i++; %>
-													</s:iterator>
-												</s:if>
-
-											</tbody>
-										</table>
-
-
-									</div>
-
+									<a href="#" class="btn btn-minimize btn-round btn-default"><i
+										class="glyphicon glyphicon-chevron-down"></i></a>
 
 								</div>
 							</div>
-						</div>
-						<div class="col-md-12">
-							<button type="submit" class="btn btn-success"
-								onclick="OpenSummaryInParent()">Save College</button>
+							<div class="box-content row">
+								<div class="col-lg-12 col-md-12 animated fadeIn">
 
-							<button onclick="window.close()" class="btn btn-info">Close
-							</button>
 
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+
+												<td>1</td>
+												<td>Parameter Scope</td>
+												<input hidden="hidden" id="paramID"
+													value='<s:property value="lookupdata.lookupId"/>'>
+												<td><s:property value="lookupdata.lookupScope" /></td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>Parameter Name</td>
+												<td><s:property value="lookupdata.lookupName" /></td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>Parameter type</td>
+												<td><s:property value="lookupdata.lookupType" /></td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>Description</td>
+												<td><s:property value="lookupdata.lookupDesc" /></td>
+											</tr>
+											<tr>
+											<td colspan="3">
+											<table>
+											<tbody>
+											<s:iterator value="lookupdata.fvBeansList">
+											<tr><td>1</td>
+											<td> <s:property value="value"/> </td>
+											<td><button class="btn btn-sm">x</button></td>
+											</tr>
+											</s:iterator>
+											</tbody>
+											</table>
+											</td>
+											
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>Possible Values</td>
+												<td><div id="tags">
+														<input type="text" value=""
+															placeholder="Enter a possible value" />
+													</div></td>
+											</tr>
+										</tbody>
+									</table>
+
+
+								</div>
+
+
+							</div>
 						</div>
-					</form>
+					</div>
+					<div class="col-md-12">
+						<button type="button" onclick="saveValues()"
+							class="btn btn-success">Save Parameter</button>
+
+						<button onclick="window.close()" class="btn btn-info">Close
+						</button>
+						<button onclick="window.history.back();" class="btn btn-default">Back</button>
+
+					</div>
+
 				</div>
 
 				<!--/row-->
@@ -380,11 +324,54 @@
 
 	<script>
 		function OpenSummaryInParent() {
-			window.onunload = function() {
-				window.opener.document.location.reload();
-				setTimeout(window.close(), 100);
-			}
+			window.opener.location = "College-Payment-Summary.html";
+			window.close();
 
+		}
+		var values = {};
+
+		$(function() {
+
+			$('#tags input').on('keyup', function(e) {
+				if (/(188|13)/.test(e.which)) {
+
+					var txt = this.value.replace(/[^a-zA-Z]/g, '');
+					AddToArray(txt);
+					if (txt) {
+						$(this).before('<span class="tag">' + txt + '</span>');
+					}
+					this.value = "";
+				}
+			})
+
+			$('#tags').on('click', '.tag', function() {
+
+				RemoveFromValues($(this).text());
+				$(this).remove();
+			});
+
+		});
+
+		function AddToArray(value) {
+			/* alert("value received from jquery function "+value); */
+			values[value] = value;
+			/* alert(JSON.stringify(values)); */
+
+		}
+
+		function RemoveFromValues(value) {
+			delete values[value];
+			
+		}
+
+		function saveValues() {
+			var id = document.getElementById("paramID").value;
+			var dataArray = new Array;
+			for ( var value in values) {
+				dataArray.push(values[value]);
+			}
+			window.location = "saveParamValues?values=" + dataArray
+					+ "&paramId=" + id;
 		}
 	</script>
 </body>

@@ -72,6 +72,11 @@ public class AffBean {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "affBean")
 	private AppBean appBean;
 
+	// one to many relationship with Custom Params)
+		@OneToMany(cascade = CascadeType.ALL, targetEntity = AffParams.class, fetch = FetchType.EAGER)
+		@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
+		Set<AffParams> paramset;
+		
 	public Set<AppBean> getAplBeanSet() {
 		return aplBeanSet;
 	}
@@ -204,7 +209,17 @@ public class AffBean {
 	}
 
 	public void setFeeSet(Set<FeeDetailsBean> feeSet) {
-		feeSet = feeSet;
+		this.feeSet = feeSet;
 	}
+
+	public Set<AffParams> getParamset() {
+		return paramset;
+	}
+
+	public void setParamset(Set<AffParams> paramset) {
+		this.paramset = paramset;
+	}
+
+	
 
 }

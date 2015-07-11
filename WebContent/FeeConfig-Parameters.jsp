@@ -211,8 +211,7 @@
 											onclick='window.open("LockFeature.jsp", "Feature Lock", "height=500,width=500")'>Fee
 											Templates</button>
 										<button class="btn btn-default"
-											onclick='window.location="GetFeesAll"'>Fee
-											Values</button>
+											onclick='window.location="GetFeesAll"'>Fee Values</button>
 										<button class="btn btn-default"
 											onclick='window.location="GetAllParameters"'>Fee
 											Parameters</button>
@@ -284,14 +283,17 @@
 														<td><%=i%></td>
 														<td><s:property value="lookupScope" /></td>
 														<td><s:property value="lookupName" /></td>
-														<td><a class="btn btn-success btn-sm" href="#"> <i
-																class="glyphicon glyphicon-zoom-in icon-white"></i> View
+														<td><a onclick='window.open("viewParam?reqParamId=<s:property value='lookupId' />", "Admin Report", "height=1080,width=1000")' class="btn btn-success btn-sm" href="#">
+																<i class="glyphicon glyphicon-zoom-in icon-white"
+																></i>
+																View
 														</a> <a class="btn btn-info btn-sm" href="#"> <i
 																class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
 														</a> <a class="btn btn-danger btn-sm" href="#"
-															onclick='confirmDelete("<s:property value='lookupId' />")' >
-															 <i class="glyphicon glyphicon-zoom-in icon-white"></i>
-															Delete </a></td>
+															onclick='confirmDelete("<s:property value='lookupId' />")'>
+																<i class="glyphicon glyphicon-zoom-in icon-white"></i>
+																Delete
+														</a></td>
 													</tr>
 
 													<%
@@ -311,7 +313,7 @@
 				<!--/row-->
 
 				<!--/row-->
-				
+
 				<!--/row-->
 				<!-- content ends -->
 			</div>
@@ -395,7 +397,7 @@
 	<script src="js/charisma.js"></script>
 	<!-- TypeAhead Script -->
 	<script src="js/typeahead.bundle.js"></script>
-	
+
 	<script type="text/javascript">
 		function ShowFeeValues() {
 			document.getElementById("FeeValuesBox").style.display = "block";
@@ -407,20 +409,18 @@
 			document.getElementById("FeeParametersBox").style.display = "block";
 
 		}
-		function confirmDelete(x)
-		{
-			var cnf=confirm("Do You Really Want To Delete This Parameter Along with all the values associated with it? "+x)
-			if(cnf)
-				{
-				window.open("deleteParam?paramid="+x, "DeleteBox", "height=400,width=800");
-				}
-			else
-				{
+		function confirmDelete(x) {
+			var cnf = confirm("Do You Really Want To Delete This Parameter Along with all the values associated with it? "
+					+ x)
+			if (cnf) {
+				window.open("deleteParam?paramid=" + x, "DeleteBox",
+						"height=400,width=800");
+			} else {
 				alert("Record Not changed");
-				}
+			}
 		}
 	</script>
-	
-	
+
+
 </body>
 </html>

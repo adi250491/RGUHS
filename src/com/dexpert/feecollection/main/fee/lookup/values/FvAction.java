@@ -24,6 +24,7 @@ public class FvAction extends ActionSupport {
 	
 	public String updateValues()
 	{
+		
 		ArrayList<LookupBean>paramList=new ArrayList<LookupBean>();
 		LookupBean paramBean=new LookupBean();
 		Integer id=Integer.parseInt(request.getParameter("paramId"));
@@ -46,6 +47,8 @@ public class FvAction extends ActionSupport {
 			log.info("Values are missing");
 		}
 		List<FvBean> valuesList=new ArrayList<FvBean>();
+		valuesList=paramBean.getFvBeansList();
+		
 		Iterator<String> valuesIt=ParamValList.iterator();
 		while(valuesIt.hasNext())
 		{
@@ -56,6 +59,7 @@ public class FvAction extends ActionSupport {
 		}
 		paramBean.setFvBeansList(valuesList);
 		paramBean=lpDao.saveLookupData(paramBean);
+		request.setAttribute("reqAlertFlag", true);
 		return SUCCESS;
 	}
 }

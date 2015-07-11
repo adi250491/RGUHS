@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 <%
+	Boolean alertflag=false;
 	//checking session
 	LoginBean loginUser = new LoginBean();
 	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
@@ -29,6 +30,7 @@
 	} else {
 		sessionID = session.getId();
 	}
+	int i=1;
 %>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Parameter Values</title>
@@ -192,8 +194,35 @@
 												<td>Description</td>
 												<td><s:property value="lookupdata.lookupDesc" /></td>
 											</tr>
+											<s:if test="%{!(lookupdata.getFvBeansList().isEmpty())}">
+												<tr>
+													<td colspan="3">
+														<table class="table table-condensed">
+															<thead>
+																<tr>
+																	<th>5</th>
+																	<th colspan="2">Existing Values</th>
+																</tr>
+															</thead>
+
+															<s:iterator value="lookupdata.fvBeansList">
+																<tr>
+																	<td><%=i%>
+																		<%
+																			i++;
+																		%></td>
+																	<td><s:property value="value" /></td>
+																	<td><button data-toggle="popover" data-content=""
+																			title="Feature Locked"
+																			class="btn btn-sm btn-default btn-round"><i class="fa fa-trash"></i></button></td>
+																</tr>
+															</s:iterator>
+														</table>
+													</td>
+												</tr>
+											</s:if>
 											<tr>
-												<td>4</td>
+												<td>6</td>
 												<td>Possible Values</td>
 												<td><div id="tags">
 														<input type="text" value=""
@@ -346,7 +375,7 @@
 
 		function RemoveFromValues(value) {
 			delete values[value];
-			
+
 		}
 
 		function saveValues() {

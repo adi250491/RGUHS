@@ -265,7 +265,7 @@
 											<tr>
 												<th>Sr. No.</th>
 												<th>Parameter Scope</th>
-												<th>Paramter Name</th>
+												<th>Parameter Name</th>
 
 												<th>Actions</th>
 											</tr>

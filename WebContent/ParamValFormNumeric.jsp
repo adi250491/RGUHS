@@ -21,14 +21,15 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-			if (cookie.getName().equals("loginUser"))
-				usercookie = cookie.getValue();
-			if (cookie.getName().equals("JSESSIONID"))
-				sessionID = cookie.getValue();
+	if (cookie.getName().equals("loginUser"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
 		}
 	} else {
 		sessionID = session.getId();
 	}
+	int i=1;
 %>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Parameter Values</title>
@@ -140,83 +141,111 @@
 
 
 				<div class="row">
-					
-						<div class="box col-md-12">
-							<div class="box-inner">
-								<div class="box-header well">
-									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> Indicate All
-										Possible Parameter Values
-									</h2>
 
-									<div class="box-icon">
+					<div class="box col-md-12">
+						<div class="box-inner">
+							<div class="box-header well">
+								<h2>
+									<i class="glyphicon glyphicon-info-sign"></i> Indicate All
+									Possible Parameter Values
+								</h2>
 
-										<a href="#" class="btn btn-minimize btn-round btn-default"><i
-											class="glyphicon glyphicon-chevron-down"></i></a>
+								<div class="box-icon">
 
-									</div>
-								</div>
-								<div class="box-content row">
-									<div class="col-lg-12 col-md-12 animated fadeIn">
-
-
-										<table class="table table-condensed">
-											<thead>
-												<tr>
-													<th></th>
-													<th></th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-												
-													<td>1</td>
-													<td>Parameter Scope</td>
-													<input hidden="hidden" id="paramID" value='<s:property value="lookupdata.lookupId"/>'>
-													<td><s:property value="lookupdata.lookupScope" /> </td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Parameter Name</td>
-													<td><s:property value="lookupdata.lookupName" /></td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>Parameter type</td>
-													<td><s:property value="lookupdata.lookupType" /></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Description</td>
-													<td><s:property value="lookupdata.lookupDesc" /></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Possible Values</td>
-													<td><div id="tags">
-															<input type="text" pattern="{0-9}*" value="" placeholder="Enter a possible numeric value" />
-														</div></td>
-												</tr>
-											</tbody>
-										</table>
-
-
-									</div>
-
+									<a href="#" class="btn btn-minimize btn-round btn-default"><i
+										class="glyphicon glyphicon-chevron-down"></i></a>
 
 								</div>
 							</div>
-						</div>
-						<div class="col-md-12">
-							<button type="button" onclick="saveValues()" class="btn btn-success">Save
-								Parameter</button>
+							<div class="box-content row">
+								<div class="col-lg-12 col-md-12 animated fadeIn">
 
-							<button onclick="window.close()" class="btn btn-info">Close
-							</button>
 
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+
+												<td>1</td>
+												<td>Parameter Scope</td>
+												<input hidden="hidden" id="paramID"
+													value='<s:property value="lookupdata.lookupId"/>'>
+												<td><s:property value="lookupdata.lookupScope" /></td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>Parameter Name</td>
+												<td><s:property value="lookupdata.lookupName" /></td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>Parameter type</td>
+												<td><s:property value="lookupdata.lookupType" /></td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>Description</td>
+												<td><s:property value="lookupdata.lookupDesc" /></td>
+											</tr>
+											<s:if test="%{!(lookupdata.getFvBeansList().isEmpty())}">
+												<tr>
+													<td colspan="3">
+														<table class="table table-condensed">
+															<thead>
+																<tr>
+																	<th>5</th>
+																	<th colspan="2">Existing Values</th>
+																</tr>
+															</thead>
+
+															<s:iterator value="lookupdata.fvBeansList">
+																<tr>
+																	<td><%=i%> <%i++; %></td>
+																	<td><s:property value="value" /></td>
+																	<td><button data-toggle="popover" data-content=""
+																			title="Feature Locked"
+																			class="btn btn-sm btn-default btn-round">
+																			<i class="fa fa-trash"></i>
+																		</button></td>
+																</tr>
+															</s:iterator>
+														</table>
+													</td>
+												</tr>
+											</s:if>
+											<tr>
+												<td>6</td>
+												<td>Possible Values</td>
+												<td><div id="tags">
+														<input type="text" pattern="{0-9}*" value=""
+															placeholder="Enter a possible numeric value" />
+													</div></td>
+											</tr>
+										</tbody>
+									</table>
+
+
+								</div>
+
+
+							</div>
 						</div>
-					
+					</div>
+					<div class="col-md-12">
+						<button type="button" onclick="saveValues()"
+							class="btn btn-success">Save Parameter</button>
+
+						<button onclick="window.close()" class="btn btn-info">Close
+						</button>
+
+					</div>
+
 				</div>
 
 				<!--/row-->
@@ -310,50 +339,52 @@
 			window.close();
 
 		}
-		var values={};
+		var values = {};
 
 		$(function() {
 
-			$('#tags input').on('keyup', function(e){
-				if (/(188|13)/.test(e.which)){
-						var txt = this.value.replace(/[^0-9\-\.]/g,
-								'');
-						AddToArray(txt);
-						if (txt) {
-							$(this).before(
-									'<span class="tag">' + txt.toLowerCase()
-											+ '</span>');
+			$('#tags input').on(
+					'keyup',
+					function(e) {
+						if (/(188|13)/.test(e.which)) {
+							var txt = this.value.replace(/[^0-9\-\.]/g, '');
+							AddToArray(txt);
+							if (txt) {
+								$(this)
+										.before(
+												'<span class="tag">'
+														+ txt.toLowerCase()
+														+ '</span>');
+							}
+							this.value = "";
 						}
-						this.value = "";}
 					})
 
 			$('#tags').on('click', '.tag', function() {
-				
-					RemoveFromValues($(this).text());
-					$(this).remove();
+
+				RemoveFromValues($(this).text());
+				$(this).remove();
 			});
 
 		});
-		
-		function AddToArray(value)
-		{
-			values[value]=value;	
+
+		function AddToArray(value) {
+			values[value] = value;
 		}
-		
-		function RemoveFromValues(value)
-		{
+
+		function RemoveFromValues(value) {
 			delete values[value];
 			alert(JSON.stringify(values));
 		}
-		
-		function saveValues()
-		{
-			var id=document.getElementById("paramID").value;
+
+		function saveValues() {
+			var id = document.getElementById("paramID").value;
 			var dataArray = new Array;
-			for(var value in values) {
-			    dataArray.push(values[value]);
+			for ( var value in values) {
+				dataArray.push(values[value]);
 			}
-			window.location="saveParamValues?values="+dataArray+"&paramId="+id;
+			window.location = "saveParamValues?values=" + dataArray
+					+ "&paramId=" + id;
 		}
 	</script>
 </body>

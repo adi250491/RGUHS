@@ -69,10 +69,49 @@ public class LookupAction extends ActionSupport {
 			return ERROR;
 		}
 	}
+	
+	public String GetParameterListInstitute() {
+		try {
+			paramList = lookupdao.getLookupData("Scope", "Institute", null,null);
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
 
 	public String parameterValList() {
 		lookupBeansList = lookupdao.getListOfLookUpValues();
 		return SUCCESS;
+	}
+	public String GetParamDetails()
+	{
+		//Get ParamId 
+		Integer id=Integer.parseInt(request.getParameter("reqParamId").trim());
+		//Get ParamBean from dao
+		ArrayList<LookupBean>templist=new ArrayList<LookupBean>();
+		templist=lookupdao.getLookupData("ID", null, id, null);
+		if(templist.size()>0)
+		{
+			lookupdata=templist.get(0);
+			if(lookupdata.getLookupType().contentEquals("String"))
+			{
+				return "String";
+			}
+			if(lookupdata.getLookupType().contentEquals("Integer"))
+			{
+				return "Numeric";
+			}
+			else
+			{
+				return "Boolean";
+			}
+		}
+		else
+		{
+			return ERROR;
+		}
+		//return Success
 	}
 
 	public String deleteRecord()
