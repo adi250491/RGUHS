@@ -41,7 +41,7 @@ public class FcAction extends ActionSupport {
 	private ArrayList<ArrayList<String>> ComboList = new ArrayList<ArrayList<String>>();
 	private ArrayList<ArrayList<String>> BodyList = new ArrayList<ArrayList<String>>();
 	private ArrayList<String> HeaderList = new ArrayList<String>();
-
+	private ArrayList<FeeDetailsBean>fDfeeList=new ArrayList<FeeDetailsBean>();
 	LookupDAO lpDao = new LookupDAO();
 	FvDAO fvdao = new FvDAO();
 	FcDAO configdao=new FcDAO(); 
@@ -409,6 +409,13 @@ public class FcAction extends ActionSupport {
 		}
 		log.info("final combos are "+comboList.toString());
 		configdao.insertFeeBulk(comboList);
+		return SUCCESS;
+	}
+	
+	public String GetFeesAll()
+	{
+		fDfeeList=configdao.GetFees("ALL", null, null, null);
+		
 		return SUCCESS;
 	}
 
@@ -1209,6 +1216,15 @@ public class FcAction extends ActionSupport {
 	public void setUids(ArrayList<FcBean> uids) {
 		this.uids = uids;
 	}
+
+	public ArrayList<FeeDetailsBean> getFDfeeList() {
+		return fDfeeList;
+	}
+
+	public void setFDfeeList(ArrayList<FeeDetailsBean> fDfeeList) {
+		fDfeeList = fDfeeList;
+	}
+	
 
 	// Getter Setters End
 

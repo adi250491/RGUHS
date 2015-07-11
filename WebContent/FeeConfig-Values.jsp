@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
 <%
@@ -204,7 +205,7 @@
 										<button class="btn btn-default"
 											onclick='window.open("LockFeature.jsp", "Feature Lock", "height=500,width=500")'>Fee
 											Templates</button>
-										<button class="btn btn-default">Fee
+										<button class="btn btn-default" onclick='window.location="GetFeesAll"'>Fee
 											Values</button>
 										<button class="btn btn-default"
 											onclick='window.location="GetAllParameters"'>Fee
@@ -255,204 +256,7 @@
 
 									</p>
 
-									<table
-										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
-										<thead>
-											<tr>
-												<th>Sr. No.</th>
-												<th>Parameter Type</th>
-												<th>Paramter Name</th>
-
-												<th>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Course</td>
-												<td class="center">Course Type</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Course</td>
-												<td class="center">Course Duration</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Course</td>
-												<td class="center">Course Name</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>Course</td>
-												<td class="center">Faculty</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>Student</td>
-												<td class="center">Category</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>Student</td>
-												<td class="center">Physically Challenged</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>7</td>
-												<td>Student</td>
-												<td class="center">Nationality</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>College</td>
-												<td class="center">Autonomous?</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td>College</td>
-												<td class="center">Aided?</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td>Service</td>
-												<td class="center">Document Type</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>10</td>
-												<td>Service</td>
-												<td class="center">Document Year</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>11</td>
-												<td>Service</td>
-												<td class="center">Late Fee</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>12</td>
-												<td>Service</td>
-												<td class="center">Priority Request?</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>13</td>
-												<td>Course</td>
-												<td class="center">Sanctioned Seats</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-
-
-										</tbody>
-									</table>
+									
 								</div>
 
 
@@ -492,21 +296,28 @@
 
 									</p>
 
-									<!-- <table
+									 <table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
 											<tr>
 												<th>Sr. No.</th>
+												<th>Fee ID</th>
 												<th>Fee Name</th>
 												<th>Paid By</th>
 												<th>Actions</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+										<s:iterator value="fDfeeList">
+										<tr>
 												<td>1</td>
-												<td>Admission Fee</td>
-												<td>College</td>
+												<td><s:property value="feeId"/> </td>
+												<td><s:property value="feeName"/> </td>
+												<td>
+												<s:set var="app" ><s:property value="forApplicant"/></s:set>
+												<s:set var="ins" ><s:property value="forInstitute"/></s:set>
+												<s:if test="%{#app==1}">Student</s:if>
+													<s:if test="%{#ins==1}">College</s:if> </td>
 												<td class="center"><a class="btn btn-success btn-sm"
 													href="#"> <i
 														class="glyphicon glyphicon-zoom-in icon-white"></i> View
@@ -516,113 +327,11 @@
 														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
 												</a></td>
 											</tr>
-											<tr>
-												<td>2</td>
-												<td>Affiliation Fee</td>
-												<td>College</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Examination Fee</td>
-												<td>College</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-
-											<tr>
-												<td>4</td>
-												<td>Renewal Fee</td>
-												<td>College</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>Rechecking Fee</td>
-												<td>Student</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>Verification Fee</td>
-												<td>Student</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>7</td>
-												<td>Convocation Fee</td>
-												<td>Student</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>Duplicate Marksheet Fee</td>
-												<td>Student</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td>Duplicate Certificate Fee</td>
-												<td>Student</td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
+										</s:iterator>
+											
+											
 										</tbody>
-									</table> -->
+									</table>
 								</div>
 
 
@@ -663,16 +372,8 @@
 			</div>
 		</div>
 
-		<footer>
-			<!-- 	<p class="col-md-9 col-sm-9 col-xs-12 copyright">
-				&copy; <a href="http://dexpertsystems.com" target="_blank">Dexpert
-					Systems Pvt. Ltd</a>
-			</p>
-
-			<p class="col-md-3 col-sm-3 col-xs-12 powered-by">
-				Powered by: <a href="http://dexpertsystems.com">Dexpert</a>
-			</p>
-		</footer> -->
+		
+			
 	</div>
 	<!--/.fluid-container-->
 
@@ -714,195 +415,6 @@
 	<script src="js/charisma.js"></script>
 	<!-- TypeAhead Script -->
 	<script src="js/typeahead.bundle.js"></script>
-	<script>
-		var reportType = null;
-		var feeType = null;
-
-		//1
-		function showFeeTypeBox(x) {
-			reportType = x;
-			if (x == "college") {
-				document.getElementById("FeeTypeBoxCollege").style.display = "block";
-				document.getElementById("FeeTypeBoxStudent").style.display = "none";
-				$("#selectFeeTypeCollege").chosen({
-					disable_search_threshold : 10
-				})
-			} else if (x == "student") {
-				document.getElementById("FeeTypeBoxStudent").style.display = "block";
-				document.getElementById("FeeTypeBoxCollege").style.display = "none";
-				$("#selectFeeTypeStudent").chosen({
-					disable_search_threshold : 10
-				})
-			}
-			document.getElementById("AreaBox").style.display = "none";
-			document.getElementById("MonthBox").style.display = "none";
-			document.getElementById("DeptBox").style.display = "none";
-			document.getElementById("StreamBox").style.display = "none";
-			document.getElementById("FacultyBox").style.display = "none";
-			document.getElementById("CollegeBox").style.display = "none";
-
-		}
-
-		//2
-		function showArea() {
-			document.getElementById("MonthBox").style.display = "none";
-			document.getElementById("DeptBox").style.display = "none";
-			document.getElementById("StreamBox").style.display = "none";
-			document.getElementById("FacultyBox").style.display = "none";
-			document.getElementById("CollegeBox").style.display = "none";
-			document.getElementById("AreaBox").style.display = "block";
-			$("#selectAreaType").chosen({
-				disable_search_threshold : 10
-			})
-		}
-
-		//3
-		function showCollegeBox() {
-
-			document.getElementById("MonthBox").style.display = "none";
-			document.getElementById("DeptBox").style.display = "none";
-			document.getElementById("StreamBox").style.display = "none";
-			document.getElementById("FacultyBox").style.display = "none";
-			document.getElementById("CollegeBox").style.display = "block";
-
-			$("#selectCollege").chosen({
-				disable_search_threshold : 10
-			})
-		}
-
-		//4
-		function showDepartmentBox() {
-
-			document.getElementById("StreamBox").style.display = "none";
-			document.getElementById("FacultyBox").style.display = "none";
-			document.getElementById("DeptBox").style.display = "block";
-			document.getElementById("MonthBox").style.display = "none";
-
-			$("#selectDept").chosen({
-				disable_search_threshold : 10
-			})
-		}
-
-		//5
-
-		function showFacultyBox() {
-
-			document.getElementById("MonthBox").style.display = "none";
-			document.getElementById("StreamBox").style.display = "none";
-			document.getElementById("FacultyBox").style.display = "block";
-
-			$("#selectFacultyType").chosen({
-				disable_search_threshold : 10
-			})
-		}
-
-		//6
-		function showStreamBox() {
-
-			document.getElementById("MonthBox").style.display = "none";
-			document.getElementById("StreamBox").style.display = "block";
-
-			$("#selectStreamType").chosen({
-				disable_search_threshold : 10
-			})
-		}
-
-		//7
-		function showMonthBox() {
-
-			document.getElementById("MonthBox").style.display = "block";
-			$("#selectMonth").chosen({
-				disable_search_threshold : 10
-			})
-		}
-
-		function showDailyRequests() {
-			window.open("AdminReportStudent.html", "Dail Report",
-					"width=1920,height=1080");
-		}
-	</script>
-
-	<script>
-		var substringMatcher = function(strs) {
-			return function findMatches(q, cb) {
-				var matches, substrRegex;
-
-				// an array that will be populated with substring matches
-				matches = [];
-
-				// regex used to determine if a string contains the substring `q`
-				substrRegex = new RegExp(q, 'i');
-
-				// iterate through the pool of strings and for any string that
-				// contains the substring `q`, add it to the `matches` array
-				$.each(strs, function(i, str) {
-					if (substrRegex.test(str)) {
-						// the typeahead jQuery plugin expects suggestions to a
-						// JavaScript object, refer to typeahead docs for more info
-						matches.push({
-							value : str
-						});
-					}
-				});
-
-				cb(matches);
-			};
-		};
-
-		var states = [ 'Bangalore', 'Mysore', 'Tumkur', 'Belgaum', 'BG Nagar',
-				'Hubli', 'Bijapur', 'Gulbarga', 'Bellary', 'Kolar' ];
-
-		var colleges = [
-				'M001 Bangalore Medical College',
-				'M002 Dr. B.R Ambedkar Medical College',
-				'M003 Institute of Aerospace Medicine',
-				'M004 St. Johns Medical College',
-				'M005 Kempegowda Institute Of Medical Sciences',
-				'M006 Government Medical College',
-				'M007 Siddartha Medical College',
-				'M008 J.N Medical College',
-				'M009 Adichunchanagiri Institute of Medical Sciences',
-				'M010 MS Ramaiah Medical College',
-				'M011 Sri Jayadeva Institute of Cardiovascular Sciences & Research',
-				'M012 Kidwai Institute of Oncolgy',
-				'M013 Al-Ameen Medical College', 'M014 M.R.Medical College',
-				'M015 Vijayanagar Institute Of Medical Sciences',
-				'M016 Command Hospital', 'M017 JSS Medical College',
-				'M018 Devaraj Urs Medical College' ];
-
-		$('#the-basics .typeahead').typeahead({
-			hint : true,
-			highlight : true,
-			minLength : 1
-		}, {
-			name : 'states',
-			displayKey : 'value',
-			source : substringMatcher(states)
-		});
-		$('#the-college .typeahead').typeahead({
-			hint : true,
-			highlight : true,
-			minLength : 1
-		}, {
-			name : 'states',
-			displayKey : 'value',
-			source : substringMatcher(colleges)
-		});
-		$("#selectReportType").chosen({
-			disable_search_threshold : 10
-		})
-	</script>
-	<script type="text/javascript">
-		function ShowFeeValues() {
-			document.getElementById("FeeValuesBox").style.display = "block";
-			document.getElementById("FeeParametersBox").style.display = "none";
-
-		}
-		function ShowFeeParameters() {
-			document.getElementById("FeeValuesBox").style.display = "none";
-			document.getElementById("FeeParametersBox").style.display = "block";
-
-		}
-	</script>
+	
 </body>
 </html>

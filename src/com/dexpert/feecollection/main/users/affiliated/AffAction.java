@@ -329,7 +329,7 @@ public class AffAction extends ActionSupport {
 		}
 		//Get College Data
 		collegedata=affDao.getOneCollegeRecord(id);
-		//Get Fees in Set
+		//Get Fees in Set 
 		feelist=feeDAO.GetFees("ids", null, null, FeeIdsInt);
 		Set<FeeDetailsBean>feeset=collegedata.getFeeSet();
 		feeset.addAll(feelist);

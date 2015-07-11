@@ -286,7 +286,14 @@
 			class="com.dexpert.feecollection.main.fee.config.FcAction" method="SaveFee">
 
 			<result name="success">FeeForm2.jsp</result>
+	
 
+		</action>
+		<action name="GetFeesAll"
+			class="com.dexpert.feecollection.main.fee.config.FcAction"
+			method="GetFeesAll">
+
+			<result name="success">FeeConfig-Values.jsp</result>
 
 		</action>
 	</package>

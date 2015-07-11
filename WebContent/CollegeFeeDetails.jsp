@@ -124,7 +124,7 @@
 					</div>
 					<div class="col-md-12">
 						<button onclick="showDetails()" class="btn btn-success">Back</button>
-						<button class="btn btn-warning" onclick='window.location="GetAffFees"'>Add Associated Fees</button>
+						<button class="btn btn-warning" onclick='window.location="GetAffFees?collId=<s:property value='affInstBean.instId' />"'>Add Associated Fees</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
