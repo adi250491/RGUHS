@@ -190,12 +190,30 @@
 													<td><strong>Gender</strong></td>
 													<td><div id="the-basics" class="has-success">
 
-
-
-															<input type="radio" required="required"
+															<s:set var="gender"><s:property value="appBean1.gender"/></s:set>
+															<s:if test='%{#gender=="Male"}'>
+																														<input type="radio" required="required"
+																name="appBean1.gender" checked="checked" id="userPrefixMr" value="Male">Male
+															&nbsp;&nbsp;&nbsp;<input type="radio" required="required"
+																name="appBean1.gender" id="userPrefixMrs" value="Female">Female
+															
+															</s:if>
+															<s:elseif test='%{#gender=="Female"}'>
+																														<input type="radio" required="required"
+																name="appBean1.gender" id="userPrefixMr" value="Male">Male
+															&nbsp;&nbsp;&nbsp;<input checked="checked" type="radio" required="required"
+																name="appBean1.gender" id="userPrefixMrs" value="Female">Female
+															
+															</s:elseif>
+															
+															<s:else>
+																														<input type="radio" required="required"
 																name="appBean1.gender" id="userPrefixMr" value="Male">Male
 															&nbsp;&nbsp;&nbsp;<input type="radio" required="required"
 																name="appBean1.gender" id="userPrefixMrs" value="Female">Female
+															
+															</s:else>
+															
 
 
 														</div></td>
@@ -237,8 +255,8 @@
 															class="has-success">
 															<textarea required="required" id="CollegeName"
 																name="appBean1.aplAddress" placeholder="Address"
-																<s:property value="appBean1.aplAddress"/>
-																class="form-control"></textarea>
+																
+																class="form-control"><s:property value="appBean1.aplAddress"/></textarea>
 
 														</div></td>
 

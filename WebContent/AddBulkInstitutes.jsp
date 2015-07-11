@@ -170,6 +170,15 @@
 
 												</tr>
 
+												<tr>
+													<td colspan="2"><a style="text-align: center;"
+														href="DownloadExcelTemplateFileForCollege">Download
+															Template</a></td>
+
+
+												</tr>
+
+
 
 											</tbody>
 										</table>

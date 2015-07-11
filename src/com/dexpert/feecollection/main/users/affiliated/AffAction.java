@@ -26,23 +26,27 @@ import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
 import com.opensymphony.xwork2.ActionSupport;
 
-
 public class AffAction extends ActionSupport {
 
 	// Declare Global Variables Here
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
-	HttpSession ses=request.getSession();
-			
+	HttpSession ses = request.getSession();
+
+	Boolean saved = true;
+
 	public AffBean affInstBean;
 	AffDAO affDao = new AffDAO();
-	FcDAO feeDAO=new FcDAO();
+	FcDAO feeDAO = new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
+
+	ArrayList<AffBean> failureAffBeanList = new ArrayList<AffBean>();
+	ArrayList<AffBean> existingInstitureRecordList = new ArrayList<AffBean>();
 	String fileFileName;
 	FileInputStream inputStream;
 	private File fileUpload;
-	private ArrayList<FeeDetailsBean>feeList=new ArrayList<FeeDetailsBean>();
+	private ArrayList<FeeDetailsBean> feeList = new ArrayList<FeeDetailsBean>();
 	private String fileUploadFileName;
 	private Integer fileSize;
 	private String contentType;
@@ -113,7 +117,7 @@ public class AffAction extends ActionSupport {
 			}
 
 			affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
-			
+
 			// -----Code for sending email//--------------------
 			EmailSessionBean email = new EmailSessionBean();
 			email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
@@ -271,72 +275,107 @@ public class AffAction extends ActionSupport {
 	public String bulkCollegesAdd() throws Exception {
 		log.info("file Name ::" + fileUploadFileName);
 		log.info("file IS  ::" + fileUpload);
+		ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
 
-		try {
-			if (fileUploadFileName.endsWith(".xlsx")) {
-				String path = request.getServletContext().getRealPath("/");
-				path = path + File.separator;
-				File f = new File(path + "/RGUHS/");
-				f.mkdir();
-				affInstBean = affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+		// if loop to check format of file
+		if (fileUploadFileName.endsWith(".xlsx")) {
 
-				// checking for college name is Already Registered or New
-				if (AffDAO.isExist == true) {
-					log.info("Already Registered College");
-					String msg = "College Name is Already Registered";
-					// affInstList = AffDAO.existingCollegeList;
-					request.setAttribute("msg", msg);
-					return "failure";
+			String path = request.getServletContext().getRealPath("/");
+			path = path + File.separator;
+			File f = new File(path + "/RGUHS/");
+			f.mkdir();
 
-				} else {
-					return SUCCESS;
+			affBeansList = affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+			Iterator<AffBean> iterator = affBeansList.iterator();
+			log.info("COllege List  from Action is   ::" + affBeansList.size());
+			// if to check file is empty or not
+			if (iterator.hasNext()) {
+				int counter = 1;
+				while (iterator.hasNext()) {
+					log.info("Counterrrrrrrrrrrrrrrrrrrrrrrrrr ::" + counter);
+					counter++;
+
+					AffBean affBean = (AffBean) iterator.next();
+
+					// to get college name list from database
+					existingInstitureRecordList = affDao.getCollegesListByInstName(affBean);
+					log.info("COllege List  from Database is   ::" + affBeansList.size());
+
+					// check if existing college name and newly added
+					// college name is same, if not same then ok it will
+					// added to DB else it will
+					// addded to failure list
+
+					if (existingInstitureRecordList.isEmpty()) {
+
+						affBean = affDao.addBulkData(affBean);
+						return SUCCESS;
+
+					} else {
+
+						log.info("Not Added list of institute");
+						log.info("rejected COllege name is ::" + affBean.getInstName());
+						failureAffBeanList.add(affBean);
+						log.info("failure List Size is ::" + failureAffBeanList.size());
+						//return "failure";
+
+					}
+
 				}
 
 			} else {
 
-				String msg = "Please Select Proper File Format";
+				log.info("Empty File");
+				String msg = "File is Empty";
 				request.setAttribute("msg", msg);
 				return "failure";
+
 			}
-		} catch (Exception e) {
-			return ERROR;
+
+			return SUCCESS;
+
+		}
+
+		else {
+
+			log.info("file Format not Match");
+			String msg = "Please Select Proper File Format";
+			request.setAttribute("msg", msg);
+			return "failure";
 		}
 
 	}
-	
-	public String GetFees()
-	{
-		feeList=feeDAO.GetFees("payee", "institute", null, null);
-		
+
+	public String GetFees() {
+		feeList = feeDAO.GetFees("payee", "institute", null, null);
+
 		return SUCCESS;
 	}
-	
-	public String AddFees()
-	{
-		ArrayList<FeeDetailsBean>feelist=new ArrayList<FeeDetailsBean>();
-		
-		AffBean collegedata=new AffBean();
-		//Get College id from request
-		Integer id=Integer.parseInt(request.getParameter("collId").trim());
-		//Get Fee ids from request
-		String feeidstr=request.getParameter("reqFeeIds").trim();
+
+	public String AddFees() {
+		ArrayList<FeeDetailsBean> feelist = new ArrayList<FeeDetailsBean>();
+
+		AffBean collegedata = new AffBean();
+		// Get College id from request
+		Integer id = Integer.parseInt(request.getParameter("collId").trim());
+		// Get Fee ids from request
+		String feeidstr = request.getParameter("reqFeeIds").trim();
 		List<String> FeeIds = Arrays.asList(feeidstr.split(","));
-		ArrayList<Integer>FeeIdsInt=new ArrayList<Integer>();
-		Iterator<String>idIt=FeeIds.iterator();
-		while(idIt.hasNext())
-		{
+		ArrayList<Integer> FeeIdsInt = new ArrayList<Integer>();
+		Iterator<String> idIt = FeeIds.iterator();
+		while (idIt.hasNext()) {
 			FeeIdsInt.add(Integer.parseInt(idIt.next()));
 		}
-		//Get College Data
-		collegedata=affDao.getOneCollegeRecord(id);
-		//Get Fees in Set 
-		feelist=feeDAO.GetFees("ids", null, null, FeeIdsInt);
-		Set<FeeDetailsBean>feeset=collegedata.getFeeSet();
+		// Get College Data
+		collegedata = affDao.getOneCollegeRecord(id);
+		// Get Fees in Set
+		feelist = feeDAO.GetFees("ids", null, null, FeeIdsInt);
+		Set<FeeDetailsBean> feeset = collegedata.getFeeSet();
 		feeset.addAll(feelist);
-		//Add Fees to College Beans' FeeSet
+		// Add Fees to College Beans' FeeSet
 		collegedata.setFeeSet(feeset);
 		affDao.saveOrUpdate(collegedata, null);
-		//Save College Bean
+		// Save College Bean
 		return null;
 	}
 
@@ -422,6 +461,29 @@ public class AffAction extends ActionSupport {
 		this.feeList = feeList;
 	}
 
-	
+	public Boolean getSaved() {
+		return saved;
+	}
+
+	public void setSaved(Boolean saved) {
+		this.saved = saved;
+	}
+
+	public ArrayList<AffBean> getFailureAffBeanList() {
+		return failureAffBeanList;
+	}
+
+	public void setFailureAffBeanList(ArrayList<AffBean> failureAffBeanList) {
+		this.failureAffBeanList = failureAffBeanList;
+	}
+
+	public ArrayList<AffBean> getExistingInstitureRecordList() {
+		return existingInstitureRecordList;
+	}
+
+	public void setExistingInstitureRecordList(ArrayList<AffBean> existingInstitureRecordList) {
+		this.existingInstitureRecordList = existingInstitureRecordList;
+	}
+
 	// End of Getter Setter Methods
 }

@@ -31,7 +31,12 @@ public class AffBean {
 	@Id
 	@GeneratedValue(generator = "g1")
 	private Integer instId;
-	private String instName, contactPerson, place, email, contactNumber, mobileNum;
+	
+	
+	@Column(unique = true)
+	private String instName;
+
+	private String contactPerson, place, email, contactNumber, mobileNum;
 	private String instAddress;
 
 	// --------------------------------------
@@ -56,15 +61,15 @@ public class AffBean {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = AppBean.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
 	Set<AppBean> aplBeanSet;
-	
+
 	// one to many relationship with FeeDetails)
-		@OneToMany(cascade = CascadeType.ALL, targetEntity = FeeDetailsBean.class, fetch = FetchType.EAGER)
-		@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
-		Set<FeeDetailsBean> feeSet;
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = FeeDetailsBean.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
+	Set<FeeDetailsBean> feeSet;
 	// one to one bidirectional relationship with student and college
 	// child
 
-	@OneToOne(cascade = CascadeType.ALL,mappedBy="affBean")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "affBean")
 	private AppBean appBean;
 
 	public Set<AppBean> getAplBeanSet() {
@@ -201,11 +206,5 @@ public class AffBean {
 	public void setFeeSet(Set<FeeDetailsBean> feeSet) {
 		feeSet = feeSet;
 	}
-
-	
-	
-
-	
-	
 
 }

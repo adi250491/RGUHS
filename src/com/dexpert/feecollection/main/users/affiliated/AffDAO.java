@@ -87,19 +87,16 @@ public class AffDAO {
 
 			}
 
-			
 			session.beginTransaction();
 			session.saveOrUpdate(saveData);
 			session.getTransaction().commit();
 			return saveData;
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 			return saveData;
-		}
-		finally {
+		} finally {
 
 			// close session
 			session.close();
@@ -160,6 +157,18 @@ public class AffDAO {
 
 		Criteria criteria = session.createCriteria(AffBean.class);
 		criteria.addOrder(Order.asc("instName"));
+		ArrayList<AffBean> affBeansList = (ArrayList<AffBean>) criteria.list();
+		session.close();
+		return affBeansList;
+	}
+
+	public ArrayList<AffBean> getCollegesListByInstName(AffBean affBean) {
+
+		Session session = factory.openSession();
+
+		Criteria criteria = session.createCriteria(AffBean.class);
+		criteria.add(Restrictions.eq("instName", affBean.getInstName()));
+
 		ArrayList<AffBean> affBeansList = (ArrayList<AffBean>) criteria.list();
 		session.close();
 		return affBeansList;
@@ -277,11 +286,12 @@ public class AffDAO {
 	// to read excel file
 
 	@SuppressWarnings("resource")
-	public AffBean importExcelFileToDatabase(String fileUploadFileName, File fileUpload, String path) throws Exception {
+	public ArrayList<AffBean> importExcelFileToDatabase(String fileUploadFileName, File fileUpload, String path)
+			throws Exception {
 
 		String instName, email, ContactPerson, instAddress, place;
 		Integer contactNum, mobileNum;
-
+		ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
 		AffBean affBean = new AffBean();
 
 		FileInputStream fileInputStream = new FileInputStream(fileUpload);
@@ -340,98 +350,85 @@ public class AffDAO {
 			affBean.setInstAddress(instAddress);
 			affBean.setPlace(place);
 
-			// List<String> instNameList =
-			// getCollegeNameList(affBean.getInstName());
-
-			// if (instNameList.isEmpty()) {
-			// isExist = false;
-			// log.info("Existing College List is Empty...");
-			addBulkData(affBean);
-			// return affBean;
-
-			// } else {
-			// isExist = true;
-			// existingCollegeList.add(affBean);
-
-			// log.info(" existing college Name inst " +
-			// existingCollegeList.size());
-			// return affBean;
-			// existingCollegeList.add(affBean);
-			// }
+			affBeansList.add(affBean);
+			log.info("AffBean List Size is ::" + affBeansList.size());
+			// addBulkData(affBean);
 
 		}
-		return affBean;
+		return affBeansList;
 
 	}
 
 	// ---------------------------------------------------
 
 	// to save record into Database
-	private void addBulkData(AffBean affBean) throws InvalidKeyException, NoSuchAlgorithmException,
+	public AffBean addBulkData(AffBean affBean) throws InvalidKeyException, NoSuchAlgorithmException,
 			InvalidKeySpecException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
 			IllegalBlockSizeException, BadPaddingException {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		List<String> instNameList = getCollegeNameList(affBean.getInstName());
-		log.info("List Size is ::" + instNameList.size());
+		// List<String> instNameList =
+		// getCollegeNameList(affBean.getInstName());
+		// log.info("List Size is ::" + instNameList.size());
 
-		if (instNameList.isEmpty()) {
-			isExist = false;
-			// log.info("Existing College List is Empty...");
+		// if (instNameList.isEmpty()) {
+		// / isExist = false;
+		// log.info("Existing College List is Empty...");
 
-			String username;
+		String username;
 
-			// generate credentials for admin login
-			try {
-				username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
-						.concat(getRowCount().toString()));
+		// generate credentials for admin login
+		try {
+			username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
+					.concat(getRowCount().toString()));
 
-			} catch (java.lang.NullPointerException e) {
-				username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
-
-			}
-
-			String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
-			PasswordEncryption.encrypt(password);
-			String encryptedPwd = PasswordEncryption.encStr;
-
-			LoginBean creds = new LoginBean();
-			creds.setPassword(encryptedPwd);
-			creds.setUserName(username);
-
-			String profile = "Admin";
-			creds.setProfile(profile);
-			affBean.setLoginBean(creds);
-			creds.setProfile(profile);
-
-			// for bidirectional relationship ,set parent record to child //
-			// record
-			creds.setAffBean(affBean);
-			if (creds.getProfile().equals("Admin")) {
-
-				// for bidirectional relationship ,set child record to Parent
-				// record
-				affBean.setLoginBean(creds);
-			}
-			// -----Code for sending email
-
-			EmailSessionBean email = new EmailSessionBean();
-			email.sendEmail(affBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
-					affBean.getInstName());
-			Session session = factory.openSession();
-			Transaction tx = session.beginTransaction();
-			session.save(affBean);
-			tx.commit();
-			session.close();
-
-		} else {
-			isExist = true;
-
-			// log.info(" existing college Name inst " +
-			// existingCollegeList.size());
-			// log.info("College List is Not Empty...");
+		} catch (java.lang.NullPointerException e) {
+			username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
 
 		}
+
+		String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
+		PasswordEncryption.encrypt(password);
+		String encryptedPwd = PasswordEncryption.encStr;
+
+		LoginBean creds = new LoginBean();
+		creds.setPassword(encryptedPwd);
+		creds.setUserName(username);
+
+		String profile = "Admin";
+		creds.setProfile(profile);
+		affBean.setLoginBean(creds);
+		creds.setProfile(profile);
+
+		// for bidirectional relationship ,set parent record to child //
+		// record
+		creds.setAffBean(affBean);
+		if (creds.getProfile().equals("Admin")) {
+
+			// for bidirectional relationship ,set child record to Parent
+			// record
+			affBean.setLoginBean(creds);
+		}
+		// -----Code for sending email
+
+		EmailSessionBean email = new EmailSessionBean();
+		email.sendEmail(affBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
+				affBean.getInstName());
+		Session session = factory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.save(affBean);
+		tx.commit();
+		session.close();
+
+		// } else {
+		isExist = true;
+
+		// log.info(" existing college Name inst " +
+		// existingCollegeList.size());
+		// log.info("College List is Not Empty...");
+
+		// }
+		return affBean;
 
 	}
 }
