@@ -33,12 +33,25 @@ public class AppAction extends ActionSupport {
 	public String registerStudent() {
 
 		log.info("Applicant Name  ::" + appBean1.getAplFirstName());
-		List<String> existEnrollmentList = aplDAO.existingEnrollNum();
-		if (existEnrollmentList.isEmpty()) {
 
-			appBean1 = aplDAO.saveOrUpdate(appBean1);
+		log.info("College id  ::" + appBean1.getAplInstId());
+
+		List<String> existEnrollmentList = aplDAO.existingEnrollNum(appBean1);
+		log.info("List Size  ::" + existEnrollmentList.size());
+		if (existEnrollmentList.isEmpty()) {
+			log.info("1");
+			if (appBean1.getAplInstId() == null) {
+				log.info("2");
+				request.setAttribute("msg", "Please Select College Name");
+				return "failure";
+
+			}
+			log.info("3");
+			// appBean1 = aplDAO.saveOrUpdate(appBean1);
 			return SUCCESS;
+
 		} else {
+			log.info("4");
 			request.setAttribute("msg", "Enrollment Number Already Registered");
 
 			return "failure";

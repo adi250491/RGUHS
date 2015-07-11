@@ -82,12 +82,12 @@ public class AppDAO {
 
 	}
 
-	public List<String> existingEnrollNum() {
+	public List<String> existingEnrollNum(AppBean appBean) {
 		Session session = factory.openSession();
 		try {
 			Criteria criteria = session.createCriteria(AppBean.class);
 			criteria.setProjection(Projections.property("enrollmentNumber"));
-
+			criteria.add(Restrictions.eq("enrollmentNumber", appBean.getEnrollmentNumber()));
 			List<String> list = criteria.list();
 			return list;
 

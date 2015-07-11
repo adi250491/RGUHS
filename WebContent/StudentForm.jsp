@@ -103,7 +103,7 @@
 			<%
 				if (msg != null)
 
-																																			{
+																																				{
 			%>
 
 			<div
@@ -210,8 +210,7 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen" name="appBean1.aplInstId"
-																		required="required">
+																	<select data-rel="chosen" name="appBean1.aplInstId">
 																		<option value="">--Select College--</option>
 																		<s:iterator value="affInstList">
 
