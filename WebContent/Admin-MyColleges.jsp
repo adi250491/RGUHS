@@ -254,7 +254,7 @@
 
 											<button class="btn btn-sm btn-info pull-right"
 												style="margin-right: 3%; float: right;"
-												onclick='window.open("GetAllInsParameters", "CollegeForm", "width=500,height=700")'>
+												onclick='window.open("CollegeForm.jsp", "CollegeForm", "width=500,height=700")'>
 												<i class="fa fa-plus"></i> Add College
 											</button>
 										</div>
@@ -285,7 +285,15 @@
 														title="Button To Display College Detail"
 														onclick="showDetails(<s:property value="instId"/>)"> <i
 															class="glyphicon glyphicon-zoom-in icon-white"></i> View
-													</a></td>
+													</a> <a class="btn btn-info btn-sm"
+														title="Button To Display College Detail"
+														onclick='window.open("GetAllInsParameters?instId=<s:property value="instId"/>", "CollegeForm", "width=500,height=700")'>
+															<i class="glyphicon glyphicon-cog icon-white"></i>
+															Configure
+													</a>
+														<button class="btn btn-sm btn-warning"
+															onclick='window.open("ViewCollegeFees?instId=<s:property value="instId"/>", "CollegeForm", "width=500,height=700")'>
+															Associated Fees</button></td>
 												</tr>
 
 												<%

@@ -163,12 +163,7 @@
 			<result name="success">/FeeConfig-Parameters.jsp</result>
 		
 		</action>
-		<action name="GetAllInsParameters"
-			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
-			method="GetParameterListInstitute">
-			<result name="success">/CollegeForm.jsp</result>
-
-		</action>
+		
 		<action name="deleteParam"
 			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
 			method="deleteRecord">
@@ -218,7 +213,18 @@
 			method="viewCollegeDetail">
 			<result name="success">CollegeDetails.jsp</result>
 		</action>
+		<action name="ViewCollegeFees"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="viewCollegeDetail">
+			<result name="success">CollegeFeeDetails.jsp</result>
+		</action>
+		
+	<action name="GetAllInsParameters"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="GetParameterListInstitute">
+			<result name="success">/CollegeConfForm.jsp</result>
 
+		</action>
 		<action name="editCollegeDetails"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="editCollegeDetail">
@@ -230,6 +236,15 @@
 		<action name="updateCollegeDetails"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="updateCollegeDetail">
+
+			<result name="success">Success.jsp</result>
+			<result name="failure">UpdateCollegeDetails.jsp</result>
+
+
+		</action>
+		<action name="configureCollege"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="configureCollegeParam">
 
 			<result name="success">Success.jsp</result>
 			<result name="failure">UpdateCollegeDetails.jsp</result>
@@ -261,11 +276,12 @@
 			<result name="success">CollegeAddFee.jsp</result>
 
 		</action>
-		<action name="GetAffFees"
+		<action name="updateCollegeFees"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
-			method="GetFees">
+			method="AddFees">
 
-			<result name="success">CollegeAddFee.jsp</result>
+			<result name="success" type="redirect">ViewCollegeFees</result>
+			<result name="error" type="redirect">ViewCollegeFees</result>
 
 		</action>
 

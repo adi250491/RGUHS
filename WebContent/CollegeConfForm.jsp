@@ -124,13 +124,12 @@
 
 
 				<div class="row">
-					<form action="registerInstitute" enctype="multipart/form-data"
-						method="post">
+					<form action="configureCollege" method="get">
 						<div class="box col-md-12">
 							<div class="box-inner">
 								<div class="box-header well">
 									<h2>
-										<i class="glyphicon glyphicon-info-sign"></i> New College Form
+										<i class="glyphicon glyphicon-info-sign"></i> Configure College
 									</h2>
 
 									<div class="box-icon">
@@ -147,119 +146,22 @@
 										<table class="table table-condensed">
 											<thead>
 
-												<tr>
-													<th><input type="hidden"
-														name="affInstBean.loginBean.profile" value="Admin">
-													</th>
-													<th></th>
-													<th></th>
-
-												</tr>
+												
 											</thead>
 											<tbody>
-												<tr>
-
-													<td>District Name</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="District/Area"
-																name="affInstBean.place"
-																value='<s:property value="affInstBean.place"/>'
-																placeholder="District/Area Name" type="text"
-																class="form-control">
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>College Name</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="CollegeName"
-																pattern="[a-zA-Z0-9\s]*.{6}" name="affInstBean.instName"
-																placeholder="College Name (min 6 Character)" type="text"
-																class="form-control">
-
-														</div></td>
-
-												</tr>
-
-												<tr>
-
-													<td>Address</td>
-													<td><div id="the-basics" class="has-success">
-															<textarea required="required" id="CollegeName"
-																name="affInstBean.instAddress" placeholder="Address"
-																<s:property value="affInstBean.place"/>
-																class="form-control"></textarea>
-
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>Principal's Name</td>
-													<td><div id="the-basics" class="has-success">
-															<input id="PrinciName" name="affInstBean.contactPerson"
-																required="required" placeholder="Principal's Name"
-																value='<s:property value="affInstBean.contactPerson"/>'
-																type="text" class="form-control">
-
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>Telephone Number</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="Contact"
-																name="affInstBean.contactNumber" maxlength="12"
-																placeholder="Telephone Number" pattern="[0-9]*"
-																value='<s:property value="affInstBean.contactNumber"/>'
-																type="tele" class="form-control">
-
-														</div></td>
-
-												</tr>
-
-												<tr>
-
-													<td>Mobile Number</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="Contact"
-																name="affInstBean.mobileNum" maxlength="10"
-																value='<s:property value="affInstBean.mobileNum"/>'
-																placeholder="Mobile Number" pattern="[789][0-9]{9}"
-																type="tele" class="form-control">
-
-														</div></td>
-
-												</tr>
-												<tr>
-
-													<td>Email Id</td>
-													<td><div id="the-basics" class="has-success">
-															<input required="required" id="Contact"
-																value='<s:property value="affInstBean.email"/>'
-																name="affInstBean.email" placeholder="Email ID"
-																type="email" class="form-control">
-
-														</div></td>
-
-												</tr>
-
-												<tr>
-
-													<td>Upload Document</td>
-													<td><div id="the-basics" class="has-success">
-															<input name="fileUpload" type="file" class="form-control"
-																value='<s:property value="affInstBean.fileUploadFileName"/>'>
-
-
-
-
-														</div></td>
-
-												</tr>
 												
+												<tr><td colspan="2"><strong>Custom Parameters</strong></td></tr>
+												<s:if test="%{!(getParamList2().isEmpty())}">
+													<s:iterator value="paramList2" status="ind">
+														<tr>
+															<td><s:property value="lookupName" /></td>
+															<td><s:select theme="simple"  name="paramIds[%{#ind.index}]"
+																	cssStyle="width:200px" headerValue="Please Select Appropriate Option"  list="fvBeansList" cssClass="form-control" data-rel="chosen" 
+																	listValue="value" listKey="feeValueId"  ></s:select></td>
+														</tr>
+														<%i++; %>
+													</s:iterator>
+												</s:if>
 
 											</tbody>
 										</table>

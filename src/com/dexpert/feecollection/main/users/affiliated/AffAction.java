@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +23,9 @@ import org.apache.struts2.ServletActionContext;
 import com.dexpert.feecollection.main.communication.email.EmailSessionBean;
 import com.dexpert.feecollection.main.fee.config.FcDAO;
 import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
+import com.dexpert.feecollection.main.fee.lookup.LookupBean;
+import com.dexpert.feecollection.main.fee.lookup.LookupDAO;
+import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
@@ -34,15 +39,16 @@ public class AffAction extends ActionSupport {
 	HttpSession ses = request.getSession();
 
 	Boolean saved = true;
-
+	private LookupDAO lookupdao = new LookupDAO();
 	public AffBean affInstBean;
 	AffDAO affDao = new AffDAO();
 	FcDAO feeDAO = new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
-
-	ArrayList<AffBean> failureAffBeanList = new ArrayList<AffBean>();
+	private ArrayList<Integer>paramIds=new ArrayList<Integer>();
+;	ArrayList<AffBean> failureAffBeanList = new ArrayList<AffBean>();
 	ArrayList<AffBean> existingInstitureRecordList = new ArrayList<AffBean>();
+	private ArrayList<LookupBean> paramList2 = new ArrayList<LookupBean>();
 	String fileFileName;
 	FileInputStream inputStream;
 	private File fileUpload;
@@ -59,7 +65,7 @@ public class AffAction extends ActionSupport {
 
 	// registerInstitute()
 	public String registerInstitute() throws Exception {
-
+		//log.info("paramset is "+affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("List Size is ::" + instNameList.size());
 
@@ -201,7 +207,7 @@ public class AffAction extends ActionSupport {
 	// update COllege Record
 
 	public String updateCollegeDetail() {
-
+		log.info("paramlist is "+affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("list Size is ::" + instNameList.size());
 		if (instNameList.isEmpty()) {
@@ -219,6 +225,26 @@ public class AffAction extends ActionSupport {
 			return "failure";
 
 		}
+
+	}
+	public String configureCollegeParam() {
+		
+		
+		log.info("parameter ids are "+paramIds.toString());
+		HashMap<Integer,FvBean>valueMap=(HashMap<Integer, FvBean>) ses.getAttribute("sesParamMap");
+		AffBean savedata=(AffBean) ses.getAttribute("sesAffBean");
+		log.info("keys are "+valueMap.keySet().toString());
+		for (int i = 0; i < paramIds.size(); i++) {
+			savedata.getParamvalues().add(valueMap.get(paramIds.get(i)));
+		}
+		
+			affDao.saveOrUpdate(savedata,null);
+			ses.removeAttribute("sesAffBean");
+			ses.removeAttribute("sesParamMap");
+			request.setAttribute("msg", "Institute Updated Successfully");
+
+			return SUCCESS;
+		 
 
 	}
 
@@ -356,13 +382,16 @@ public class AffAction extends ActionSupport {
 		ArrayList<FeeDetailsBean> feelist = new ArrayList<FeeDetailsBean>();
 
 		AffBean collegedata = new AffBean();
+		try{
 		// Get College id from request
 		Integer id = Integer.parseInt(request.getParameter("collId").trim());
 		// Get Fee ids from request
 		String feeidstr = request.getParameter("reqFeeIds").trim();
+		log.info(feeidstr);
 		List<String> FeeIds = Arrays.asList(feeidstr.split(","));
 		ArrayList<Integer> FeeIdsInt = new ArrayList<Integer>();
 		Iterator<String> idIt = FeeIds.iterator();
+		log.info(FeeIds.toString());
 		while (idIt.hasNext()) {
 			FeeIdsInt.add(Integer.parseInt(idIt.next()));
 		}
@@ -376,9 +405,45 @@ public class AffAction extends ActionSupport {
 		collegedata.setFeeSet(feeset);
 		affDao.saveOrUpdate(collegedata, null);
 		// Save College Bean
-		return null;
+		return SUCCESS;
+		}
+		catch(java.lang.NumberFormatException e)
+		{
+			e.printStackTrace();
+			return ERROR;
+		}
 	}
 
+	public String GetParameterListInstitute() {
+		try {
+			
+			paramList2 = lookupdao.getLookupData("Scope", "Institute", null,null);
+			HashMap<Integer,FvBean> paramMap=new HashMap<Integer,FvBean>();
+			Iterator<LookupBean>lIt=paramList2.iterator();
+			while(lIt.hasNext())
+			{
+				LookupBean temp=lIt.next();
+				List<FvBean>valueList=new ArrayList<FvBean>();
+				valueList=temp.getFvBeansList();
+				Iterator<FvBean> pIt=valueList.iterator();
+				while(pIt.hasNext())
+				{
+					FvBean temp2=pIt.next();
+					paramMap.put(temp2.getFeeValueId(), temp2);
+				}
+			}
+			
+			ses.setAttribute("sesParamMap", paramMap);
+			String instituteId = request.getParameter("instId");
+			Integer instId = Integer.parseInt(instituteId);
+			affInstBean = affDao.viewInstDetail(instId);
+			ses.setAttribute("sesAffBean", affInstBean);
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+	}
 	// deleteInstitute()
 	// getAssociatedFees()
 	// getAssociatedApplicants()
@@ -484,6 +549,23 @@ public class AffAction extends ActionSupport {
 	public void setExistingInstitureRecordList(ArrayList<AffBean> existingInstitureRecordList) {
 		this.existingInstitureRecordList = existingInstitureRecordList;
 	}
+
+	public ArrayList<Integer> getParamIds() {
+		return paramIds;
+	}
+
+	public void setParamIds(ArrayList<Integer> paramIds) {
+		this.paramIds = paramIds;
+	}
+
+	public ArrayList<LookupBean> getParamList2() {
+		return paramList2;
+	}
+
+	public void setParamList2(ArrayList<LookupBean> paramList2) {
+		this.paramList2 = paramList2;
+	}
+	
 
 	// End of Getter Setter Methods
 }

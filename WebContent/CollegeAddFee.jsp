@@ -109,8 +109,8 @@
 												<td>1</td>
 												<td><s:property value="feeId"/></td>
 												<td><s:property value="feeName"/></td>
-												<td><button id='<s:property value="feeId"/>' onclick='AddToArray(<s:property value="feeId"/>)' class="btn btn-success btn-sm">Add</button>
-												<button id='<s:property value="feeId"/>' onclick='RemoveFromValues(<s:property value="feeId"/>)' class="btn btn-warning btn-sm">Remove</button>
+												<td><button id='Add[<s:property value="feeId"/>]' onclick='AddToArray(<s:property value="feeId"/>)' class="btn btn-success btn-sm">Add</button>
+												<button style="display:none" id='Remove[<s:property value="feeId"/>]' onclick='RemoveFromValues(<s:property value="feeId"/>)' class="btn btn-warning btn-sm">Remove</button>
 												</td>
 
 											</tr>
@@ -233,12 +233,16 @@
 		function AddToArray(value) {
 			/* alert("value received from jquery function "+value); */
 			values[value] = value;
+			document.getElementById("Add["+value+"]").style.display="none";
+			document.getElementById("Remove["+value+"]").style.display="block";
 			/* alert(JSON.stringify(values)); */
 
 		}
 
 		function RemoveFromValues(value) {
 			delete values[value];
+			document.getElementById("Add["+value+"]").style.display="block";
+			document.getElementById("Remove["+value+"]").style.display="none";
 			
 		}
 

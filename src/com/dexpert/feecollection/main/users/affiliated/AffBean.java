@@ -1,7 +1,6 @@
 package com.dexpert.feecollection.main.users.affiliated;
 
 import java.io.File;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,10 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
+import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.applicant.AppBean;
 
@@ -72,11 +73,14 @@ public class AffBean {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "affBean")
 	private AppBean appBean;
 
-	// one to many relationship with Custom Params)
-		@OneToMany(cascade = CascadeType.ALL, targetEntity = AffParams.class, fetch = FetchType.EAGER)
-		@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
-		Set<AffParams> paramset;
-		
+	@ManyToMany(cascade=CascadeType.ALL)  
+    @JoinTable(name="affiliated_values", joinColumns=@JoinColumn(name="inst_id"), inverseJoinColumns=@JoinColumn(name="value_id"))  
+		Set<FvBean>paramvalues;
+	
+	@OneToMany(cascade=CascadeType.ALL )
+	private Set<AffFeePropBean>feeProps;
+	
+	
 	public Set<AppBean> getAplBeanSet() {
 		return aplBeanSet;
 	}
@@ -212,14 +216,23 @@ public class AffBean {
 		this.feeSet = feeSet;
 	}
 
-	public Set<AffParams> getParamset() {
-		return paramset;
+	public Set<FvBean> getParamvalues() {
+		return paramvalues;
 	}
 
-	public void setParamset(Set<AffParams> paramset) {
-		this.paramset = paramset;
+	public void setParamvalues(Set<FvBean> paramvalues) {
+		this.paramvalues = paramvalues;
 	}
 
+	public Set<AffFeePropBean> getFeeProps() {
+		return feeProps;
+	}
+
+	public void setFeeProps(Set<AffFeePropBean> feeProps) {
+		this.feeProps = feeProps;
+	}
+
+	
 	
 
 }

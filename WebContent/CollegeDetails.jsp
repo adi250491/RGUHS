@@ -199,9 +199,7 @@
 							College Info</button>
 
 
-						<button class="btn btn-warning"
-							onclick='window.location="CollegeFeeDetails.jsp"'>View
-							Associated Fees</button>
+						
 
 
 						<button onclick="window.close()" class="btn btn-info">Close

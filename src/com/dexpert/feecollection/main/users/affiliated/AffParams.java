@@ -21,11 +21,8 @@ public class AffParams {
 	@GeneratedValue(generator = "g1")
 	private Integer id;
 	
-	// one to one  relationship with parameter value
-		
-	@OneToOne(cascade = CascadeType.ALL ,targetEntity = FvBean.class, fetch = FetchType.EAGER)
-	private FvBean valuebean;
-
+	private Integer value_id;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -34,13 +31,15 @@ public class AffParams {
 		this.id = id;
 	}
 
-	public FvBean getValuebean() {
-		return valuebean;
+	public Integer getValue_id() {
+		return value_id;
 	}
 
-	public void setValuebean(FvBean valuebean) {
-		this.valuebean = valuebean;
+	public void setValue_id(Integer value_id) {
+		this.value_id = value_id;
 	}
+
+	
 	
 	
 	

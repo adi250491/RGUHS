@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
+import com.dexpert.feecollection.main.users.affiliated.AffBean;
+import com.dexpert.feecollection.main.users.affiliated.AffDAO;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LookupAction extends ActionSupport {
@@ -21,7 +23,8 @@ public class LookupAction extends ActionSupport {
 	private LookupDAO lookupdao = new LookupDAO();
 	private ArrayList<LookupBean> paramList = new ArrayList<LookupBean>();
 	private List<LookupBean> lookupBeansList = new ArrayList<LookupBean>();
-
+	AffDAO affDao = new AffDAO();
+	public AffBean affInstBean;
 	// End of Global Variables
 
 	// ---------------------------------------------------
@@ -70,15 +73,7 @@ public class LookupAction extends ActionSupport {
 		}
 	}
 	
-	public String GetParameterListInstitute() {
-		try {
-			paramList = lookupdao.getLookupData("Scope", "Institute", null,null);
-			return SUCCESS;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ERROR;
-		}
-	}
+	
 
 	public String parameterValList() {
 		lookupBeansList = lookupdao.getListOfLookUpValues();
@@ -145,5 +140,15 @@ public class LookupAction extends ActionSupport {
 	public void setLookupBeansList(List<LookupBean> lookupBeansList) {
 		this.lookupBeansList = lookupBeansList;
 	}
+
+	public AffBean getAffInstBean() {
+		return affInstBean;
+	}
+
+	public void setAffInstBean(AffBean affInstBean) {
+		this.affInstBean = affInstBean;
+	}
+
+	
 
 }
