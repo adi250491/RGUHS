@@ -97,27 +97,32 @@
 												<th>Sr. No.</th>
 												<th>Fee ID</th>
 												<th>Fee Title</th>
+												<th>Start Date</th>
+												<th>Last Date of Payment</th>
+												<th>Last Date with Late Fee</th>
+												<th>Late Fee</th>
 												<th></th>
-
 											</tr>
 										</thead>
 										<tbody>
-											<s:iterator value="affInstBean.feeSet">
-												<tr>
-													<td>1</td>
-													<td><s:property value="feeId" /></td>
-													<td><s:property value="feeName" /></td>
-													<td><button
-															onclick='window.location="getFeeProps?instId=<s:property value='affInstBean.instId'/>&reqfeeId=<s:property value='feeId'/>"'
-															class="btn btn-success btn-sm">View Details</button></td>
+										<%-- <s:iterator value="affInstBean.feeSet"> --%>
+										<tr>
+												<td>1</td>
+												<td><s:property value="feeId"/></td>
+												<td><s:property value="feeName"/></td>
+												<td><input style="width:170px" class="form-control" type="date"></td>												
+											    <td><input style="width:170px"  class="form-control" type="date"></td>
+												<td><input style="width:170px"  class="form-control" type="date"></td>
+												<td><input style="width:100px" class="form-control" type="number"></td>
+												<td><button class="btn btn-success btn-sm">Save</button></td>
 
-												</tr>
-											</s:iterator>
-
-
+											</tr>
+										<%-- </s:iterator> --%>
+											
+											
 										</tbody>
 									</table>
-
+									
 								</div>
 
 							</div>
@@ -125,9 +130,7 @@
 					</div>
 					<div class="col-md-12">
 						<button onclick="showDetails()" class="btn btn-success">Back</button>
-						<button class="btn btn-warning"
-							onclick='window.location="GetAffFees?collId=<s:property value='affInstBean.instId' />"'>Add
-							Associated Fees</button>
+						<button class="btn btn-warning" onclick='window.location="GetAffFees?collId=<s:property value='affInstBean.instId' />"'>Add Associated Fees</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
@@ -228,8 +231,7 @@
 
 		}
 		function showDetails() {
-			window.open("CollegeDetails.html", "CollegeDetails",
-					"width=700,height=900");
+			window.open("CollegeDetails.html", "CollegeDetails", "width=700,height=900");
 		}
 	</script>
 </body>

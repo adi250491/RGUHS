@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.dexpert.feecollection.main.fee.PaymentDuesBean;
 import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 import com.dexpert.feecollection.main.users.LoginBean;
@@ -32,8 +33,7 @@ public class AffBean {
 	@Id
 	@GeneratedValue(generator = "g1")
 	private Integer instId;
-	
-	
+
 	@Column(unique = true)
 	private String instName;
 
@@ -73,14 +73,17 @@ public class AffBean {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "affBean")
 	private AppBean appBean;
 
-	@ManyToMany(cascade=CascadeType.ALL)  
-    @JoinTable(name="affiliated_values", joinColumns=@JoinColumn(name="inst_id"), inverseJoinColumns=@JoinColumn(name="value_id"))  
-		Set<FvBean>paramvalues;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "affiliated_values", joinColumns = @JoinColumn(name = "inst_id"), inverseJoinColumns = @JoinColumn(name = "value_id"))
+	Set<FvBean> paramvalues;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<AffFeePropBean> feeProps;
 	
-	@OneToMany(cascade=CascadeType.ALL )
-	private Set<AffFeePropBean>feeProps;
-	
-	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<PaymentDuesBean> dueFeesSet;
+
+
 	public Set<AppBean> getAplBeanSet() {
 		return aplBeanSet;
 	}
@@ -232,6 +235,13 @@ public class AffBean {
 		this.feeProps = feeProps;
 	}
 
+	public Set<PaymentDuesBean> getDueFeesSet() {
+		return dueFeesSet;
+	}
+
+	public void setDueFeesSet(Set<PaymentDuesBean> dueFeesSet) {
+		this.dueFeesSet = dueFeesSet;
+	}
 	
 	
 

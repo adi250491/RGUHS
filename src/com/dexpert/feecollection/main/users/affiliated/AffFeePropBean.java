@@ -1,11 +1,17 @@
 package com.dexpert.feecollection.main.users.affiliated;
 
+import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.dexpert.feecollection.main.fee.PaymentDuesBean;
 
 @Entity
 @Table(name = "institute_fee_properties")
@@ -15,9 +21,15 @@ public class AffFeePropBean {
 	@Id
 	@GeneratedValue(generator = "g1")
 	private Integer propId;
-	private Integer feeId;
-	private String timeFactor;
-	private String factorValue;
+	private Integer feeId, collPeriodValue;
+	private Date startDate,endDate,lateDate;
+	private String collPeriodUnit;
+	private Double lateAmount;
+	private String feeName;
+	@OneToOne(cascade = CascadeType.ALL)
+	private PaymentDuesBean dueBean;
+	
+	
 	public Integer getPropId() {
 		return propId;
 	}
@@ -30,18 +42,56 @@ public class AffFeePropBean {
 	public void setFeeId(Integer feeId) {
 		this.feeId = feeId;
 	}
-	public String getTimeFactor() {
-		return timeFactor;
+	public Integer getCollPeriodValue() {
+		return collPeriodValue;
 	}
-	public void setTimeFactor(String timeFactor) {
-		this.timeFactor = timeFactor;
+	public void setCollPeriodValue(Integer collPeriodValue) {
+		this.collPeriodValue = collPeriodValue;
 	}
-	public String getFactorValue() {
-		return factorValue;
+	public Date getStartDate() {
+		return startDate;
 	}
-	public void setFactorValue(String factorValue) {
-		this.factorValue = factorValue;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
+	public String getCollPeriodUnit() {
+		return collPeriodUnit;
+	}
+	public void setCollPeriodUnit(String collPeriodUnit) {
+		this.collPeriodUnit = collPeriodUnit;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public Date getLateDate() {
+		return lateDate;
+	}
+	public void setLateDate(Date lateDate) {
+		this.lateDate = lateDate;
+	}
+	public Double getLateAmount() {
+		return lateAmount;
+	}
+	public void setLateAmount(Double lateAmount) {
+		this.lateAmount = lateAmount;
+	}
+	public String getFeeName() {
+		return feeName;
+	}
+	public void setFeeName(String feeName) {
+		this.feeName = feeName;
+	}
+	public PaymentDuesBean getDueBean() {
+		return dueBean;
+	}
+	public void setDueBean(PaymentDuesBean dueBean) {
+		this.dueBean = dueBean;
+	}
+	
+	
 	
 	
 

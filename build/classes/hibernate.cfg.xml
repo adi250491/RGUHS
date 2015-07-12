@@ -35,6 +35,7 @@
 		<mapping class="com.dexpert.feecollection.main.fee.lookup.LookupBean" />
 		<mapping class="com.dexpert.feecollection.main.fee.lookup.values.FvBean" />
 		<mapping class="com.dexpert.feecollection.main.fee.config.FcBean" />
+		<mapping class="com.dexpert.feecollection.main.fee.PaymentDuesBean" />
 		<mapping class="com.dexpert.feecollection.main.fee.config.FeeDetailsBean" />
 
 

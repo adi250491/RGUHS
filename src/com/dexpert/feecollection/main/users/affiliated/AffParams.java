@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 
 @Entity
-@Table(name = "affiliated_institute_params")
+@Table(name = "institute_feeconfig_params")
 public class AffParams {
 
 	@GenericGenerator(name = "g1", strategy = "increment")

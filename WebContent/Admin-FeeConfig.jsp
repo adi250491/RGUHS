@@ -175,8 +175,7 @@
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
 							<%
 								if (profile.contentEquals("Affiliated")){
-							%><li><a class="ajax-link" href="#"
-								onclick='window.open("LockFeature.jsp", "University Report", "height=1080,width=1920")'><i
+							%><li><a class="ajax-link" href="getInstDues"><i
 									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
 							<%
 								}

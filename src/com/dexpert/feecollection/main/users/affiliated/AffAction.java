@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.dexpert.feecollection.main.communication.email.EmailSessionBean;
+import com.dexpert.feecollection.main.fee.PaymentDuesBean;
 import com.dexpert.feecollection.main.fee.config.FcDAO;
 import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.fee.lookup.LookupBean;
@@ -41,6 +42,9 @@ public class AffAction extends ActionSupport {
 	Boolean saved = true;
 	private LookupDAO lookupdao = new LookupDAO();
 	public AffBean affInstBean;
+	
+	private AffFeePropBean propbean;
+	ArrayList<AffFeePropBean>dueList=new ArrayList<AffFeePropBean>();
 	AffDAO affDao = new AffDAO();
 	FcDAO feeDAO = new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
@@ -186,7 +190,7 @@ public class AffAction extends ActionSupport {
 		Integer instId = Integer.parseInt(instituteId);
 		affInstBean = affDao.viewInstDetail(instId);
 		ses.setAttribute("sesAffBean", affInstBean);
-
+		
 		return SUCCESS;
 	}
 
@@ -400,16 +404,29 @@ public class AffAction extends ActionSupport {
 		// Get Fees in Set
 		feelist = feeDAO.GetFees("ids", null, null, FeeIdsInt);
 		Set<FeeDetailsBean> feeset = collegedata.getFeeSet();
+		Set<AffFeePropBean> propSet=collegedata.getFeeProps();
+		for (int i = 0; i < feelist.size(); i++) {
+			AffFeePropBean tempbean=new AffFeePropBean();
+			tempbean.setFeeId(feelist.get(i).getFeeId());
+			tempbean.setFeeName(feelist.get(i).getFeeName());
+			tempbean.setDueBean(new PaymentDuesBean());
+			propSet.add(tempbean);
+			
+		}
+		
 		feeset.addAll(feelist);
 		// Add Fees to College Beans' FeeSet
 		collegedata.setFeeSet(feeset);
+		collegedata.setFeeProps(propSet);
 		affDao.saveOrUpdate(collegedata, null);
+		request.setAttribute("msg", "Fees Updated Successfully");
 		// Save College Bean
 		return SUCCESS;
 		}
 		catch(java.lang.NumberFormatException e)
 		{
 			e.printStackTrace();
+		
 			return ERROR;
 		}
 	}
@@ -444,11 +461,47 @@ public class AffAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	// deleteInstitute()
-	// getAssociatedFees()
-	// getAssociatedApplicants()
-	//
-
+	
+	
+	//Method to get Fee Properties' Details
+	public String viewFeeProps()
+	{
+		//get institute id from request
+		Integer reqinstId=Integer.parseInt(request.getParameter("instId").trim());
+		//get fee id from request		
+		Integer reqfeeId=Integer.parseInt(request.getParameter("reqfeeId").trim());
+		//get inst bean from database
+		AffBean tempbean=affDao.getOneCollegeRecord(reqinstId);
+		//populate feeprop bean with correct object from set
+		Set<AffFeePropBean>feePropsSet=tempbean.getFeeProps();
+		log.info("set size is "+feePropsSet.size());
+		Iterator<AffFeePropBean>setIt=feePropsSet.iterator();
+		while(setIt.hasNext())
+		{
+			AffFeePropBean tempbean2=new AffFeePropBean();
+			tempbean2=setIt.next();
+			if(tempbean2.getFeeId()==reqfeeId)
+			{
+				propbean=tempbean2;
+				return SUCCESS;
+			}
+			
+		}
+		return ERROR;
+	}
+	
+	public String getDues()
+	{
+		//Get id from session
+		Integer id=(Integer) ses.getAttribute("sesId");
+		//get bean from db
+		AffBean collbean=affDao.getOneCollegeRecord(id);
+		//get feeprops set in list
+		dueList=new ArrayList<AffFeePropBean>(collbean.getFeeProps());
+		return SUCCESS;
+	}
+	
+	
 	// End of Action Methods
 
 	// ---------------------------------------------------
@@ -564,6 +617,22 @@ public class AffAction extends ActionSupport {
 
 	public void setParamList2(ArrayList<LookupBean> paramList2) {
 		this.paramList2 = paramList2;
+	}
+
+	public AffFeePropBean getPropbean() {
+		return propbean;
+	}
+
+	public void setPropbean(AffFeePropBean propbean) {
+		this.propbean = propbean;
+	}
+
+	public ArrayList<AffFeePropBean> getDueList() {
+		return dueList;
+	}
+
+	public void setDueList(ArrayList<AffFeePropBean> dueList) {
+		this.dueList = dueList;
 	}
 	
 

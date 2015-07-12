@@ -67,11 +67,12 @@ public class LoginAction extends ActionSupport {
 				response.addCookie(usercookie);
 
 				httpSession.setAttribute("loginUserBean", lgbean);
-
+				
 				if (lgbean.getAffBean() != null) {
 					log.info("Valid College");
 					httpSession.setAttribute("sesProfile", "Affiliated");
 					httpSession.setAttribute("dashLink", "index-College.jsp");
+					httpSession.setAttribute("sesId", lgbean.getAffBean().getInstId());
 					return "college";
 				} else if (lgbean.getParBean() != null) {
 					log.info("Valid University");
@@ -106,6 +107,8 @@ public class LoginAction extends ActionSupport {
 		response.setHeader("Vary", "*");
 
 		httpSession.removeAttribute("loginBean");
+		httpSession.removeAttribute("sesProfile");
+		httpSession.removeAttribute("dashLink");
 
 		request.setAttribute("redirectLink", "Login.jsp");
 
