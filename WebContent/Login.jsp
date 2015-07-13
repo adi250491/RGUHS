@@ -75,14 +75,13 @@
 				<div class="well col-md-5 center login-box">
 					<div class="alert alert-info">Please login with your Username
 						and Password.</div>
-					<form class="form-horizontal" action="LoginUser"
-						method="post">
+					<form class="form-horizontal" action="LoginUser" method="post">
 						<fieldset>
 							<div class="input-group input-group-lg">
 								<span class="input-group-addon"><i
 									class="glyphicon glyphicon-user red"></i></span> <input type="text"
-									name="loginBean.userName" class="form-control" required="required"
-									placeholder="Username">
+									name="loginBean.userName" class="form-control"
+									required="required" placeholder="Username">
 							</div>
 							<div class="clearfix"></div>
 							<br>
@@ -90,14 +89,21 @@
 							<div class="input-group input-group-lg">
 								<span class="input-group-addon"><i
 									class="glyphicon glyphicon-lock red"></i></span> <input
-									type="password" name="loginBean.password" class="form-control" required="required"
-									placeholder="Password">
+									type="password" name="loginBean.password" class="form-control"
+									required="required" placeholder="Password">
 							</div>
 							<div class="clearfix"></div>
 
 							<div class="input-prepend">
 								<label class="remember" for="remember"><input
 									type="checkbox" id="remember"> Remember me</label>
+							</div>
+
+							<div class="input-prepend">
+
+								<a href="Student-Enrollment-Number.jsp">Click for Quick Pay
+								</a>
+
 							</div>
 							<div class="clearfix"></div>
 

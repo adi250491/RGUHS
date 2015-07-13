@@ -28,7 +28,8 @@
 		<mapping class="com.dexpert.feecollection.main.users.LoginBean" />
 		<mapping class="com.dexpert.feecollection.main.users.superadmin.SaBean" />
 		<mapping class="com.dexpert.feecollection.main.users.affiliated.AffBean" />
-		<mapping class="com.dexpert.feecollection.main.users.affiliated.AffFeePropBean" />
+		<mapping
+			class="com.dexpert.feecollection.main.users.affiliated.AffFeePropBean" />
 		<mapping class="com.dexpert.feecollection.main.users.applicant.AppBean" />
 		<mapping class="com.dexpert.feecollection.main.payment.transaction.PayBean" />
 		<mapping class="com.dexpert.feecollection.main.users.parent.ParBean" />
@@ -37,7 +38,8 @@
 		<mapping class="com.dexpert.feecollection.main.fee.config.FcBean" />
 		<mapping class="com.dexpert.feecollection.main.fee.PaymentDuesBean" />
 		<mapping class="com.dexpert.feecollection.main.fee.config.FeeDetailsBean" />
-
+		<mapping
+			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionBean" />
 
 	</session-factory>
 </hibernate-configuration>

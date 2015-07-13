@@ -103,7 +103,7 @@
 			<%
 				if (msg != null)
 
-																																				{
+																																							{
 			%>
 
 			<div
@@ -187,33 +187,39 @@
 
 												<tr>
 
-													<td><strong>Gender</strong></td>
+													<td>Gender</td>
 													<td><div id="the-basics" class="has-success">
 
-															<s:set var="gender"><s:property value="appBean1.gender"/></s:set>
+															<s:set var="gender">
+																<s:property value="appBean1.gender" />
+															</s:set>
 															<s:if test='%{#gender=="Male"}'>
-																														<input type="radio" required="required"
-																name="appBean1.gender" checked="checked" id="userPrefixMr" value="Male">Male
+																<input type="radio" required="required"
+																	name="appBean1.gender" checked="checked"
+																	id="userPrefixMr" value="Male">Male
 															&nbsp;&nbsp;&nbsp;<input type="radio" required="required"
-																name="appBean1.gender" id="userPrefixMrs" value="Female">Female
+																	name="appBean1.gender" id="userPrefixMrs"
+																	value="Female">Female
 															
 															</s:if>
 															<s:elseif test='%{#gender=="Female"}'>
-																														<input type="radio" required="required"
-																name="appBean1.gender" id="userPrefixMr" value="Male">Male
-															&nbsp;&nbsp;&nbsp;<input checked="checked" type="radio" required="required"
-																name="appBean1.gender" id="userPrefixMrs" value="Female">Female
+																<input type="radio" required="required"
+																	name="appBean1.gender" id="userPrefixMr" value="Male">Male
+															&nbsp;&nbsp;&nbsp;<input checked="checked" type="radio"
+																	required="required" name="appBean1.gender"
+																	id="userPrefixMrs" value="Female">Female
 															
 															</s:elseif>
-															
+
 															<s:else>
-																														<input type="radio" required="required"
-																name="appBean1.gender" id="userPrefixMr" value="Male">Male
+																<input type="radio" required="required"
+																	name="appBean1.gender" id="userPrefixMr" value="Male">Male
 															&nbsp;&nbsp;&nbsp;<input type="radio" required="required"
-																name="appBean1.gender" id="userPrefixMrs" value="Female">Female
+																	name="appBean1.gender" id="userPrefixMrs"
+																	value="Female">Female
 															
 															</s:else>
-															
+
 
 
 														</div></td>
@@ -250,13 +256,13 @@
 
 												<tr>
 
-													<td>Address</td>
+													<td>Student Address</td>
 													<td colspan="2"><div id="the-basics"
 															class="has-success">
 															<textarea required="required" id="CollegeName"
 																name="appBean1.aplAddress" placeholder="Address"
-																
-																class="form-control"><s:property value="appBean1.aplAddress"/></textarea>
+																class="form-control"><s:property
+																	value="appBean1.aplAddress" /></textarea>
 
 														</div></td>
 
@@ -419,6 +425,12 @@
 			}
 
 		} */
+
+		function getCollegeList() {
+
+		}
 	</script>
+
+
 </body>
 </html>

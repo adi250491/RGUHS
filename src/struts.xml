@@ -387,13 +387,35 @@
 			<result name="success">View-Applicant.jsp</result>
 		</action>
 
+		<action name="StudentQuickPay"
+			class="com.dexpert.feecollection.main.users.applicant.AppAction"
+			method="authenticateStudent">
 
+			<result name="success">Student-Detail-For-QuickPay.jsp</result>
+			<result name="failure">Student-Enrollment-Number.jsp</result>
+		</action>
 
 
 
 	</package>
 
+	<package name="Student Payment" extends="struts-default">
 
+
+		<action name="submitingParameter"
+			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
+			method="submitParameter">
+
+
+			<result name="success"> Student-Detail-For-QuickPay.jsp</result>
+			<result name="failure"> Student-Detail-For-QuickPay.jsp</result>
+
+
+
+
+		</action>
+
+	</package>
 
 
 

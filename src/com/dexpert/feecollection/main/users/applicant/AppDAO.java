@@ -10,6 +10,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import COM.rsa.Intel.cr;
+
 import com.dexpert.feecollection.main.ConnectionClass;
 import com.dexpert.feecollection.main.users.affiliated.AffBean;
 import com.dexpert.feecollection.main.users.affiliated.AffDAO;
@@ -90,6 +92,24 @@ public class AppDAO {
 			criteria.add(Restrictions.eq("enrollmentNumber", appBean.getEnrollmentNumber()));
 			List<String> list = criteria.list();
 			return list;
+
+		} finally {
+			session.close();
+			// TODO: handle exception
+		}
+
+	}
+
+	public List<AppBean> getStudentDetailByEnrollMentNumber(String enrollmentNumber) {
+		Session session = factory.openSession();
+
+		try {
+
+			Criteria criteria = session.createCriteria(AppBean.class);
+			criteria.add(Restrictions.eq("enrollmentNumber", enrollmentNumber));
+
+			List<AppBean> appBeanList = criteria.list();
+			return appBeanList;
 
 		} finally {
 			session.close();

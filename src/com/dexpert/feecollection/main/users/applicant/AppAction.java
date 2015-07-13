@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class AppAction extends ActionSupport {
 
 	// Declare Global Variables Here
-	AppBean appBean1;
+	AppBean appBean1, appBean;
 	List<AppBean> appBeansList = new ArrayList<AppBean>();
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
@@ -37,17 +37,13 @@ public class AppAction extends ActionSupport {
 		log.info("College id  ::" + appBean1.getAplInstId());
 
 		List<String> existEnrollmentList = aplDAO.existingEnrollNum(appBean1);
-		log.info("List Size  ::" + existEnrollmentList.size());
 		if (existEnrollmentList.isEmpty()) {
-			log.info("1");
 			if (appBean1.getAplInstId() == null) {
-				log.info("2");
 				request.setAttribute("msg", "Please Select College Name");
 				return "failure";
-
 			}
-			log.info("3");
-			// appBean1 = aplDAO.saveOrUpdate(appBean1);
+
+			appBean1 = aplDAO.saveOrUpdate(appBean1);
 			return SUCCESS;
 
 		} else {
@@ -80,6 +76,22 @@ public class AppAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String authenticateStudent() {
+		log.info("User Entered Enrollment Number is ::" + appBean1.getEnrollmentNumber());
+
+		appBeansList = aplDAO.getStudentDetailByEnrollMentNumber(appBean1.getEnrollmentNumber());
+
+		if (appBeansList.isEmpty()) {
+			log.info("Invalid Enrollment ID");
+			request.setAttribute("msg", "Please Enter valid Enrollment Number");
+			return "failure";
+
+		}
+
+		return SUCCESS;
+
+	}
+
 	// End of Action Methods
 
 	// ---------------------------------------------------
@@ -99,6 +111,14 @@ public class AppAction extends ActionSupport {
 
 	public void setAppBeansList(List<AppBean> appBeansList) {
 		this.appBeansList = appBeansList;
+	}
+
+	public AppBean getAppBean() {
+		return appBean;
+	}
+
+	public void setAppBean(AppBean appBean) {
+		this.appBean = appBean;
 	}
 
 }
