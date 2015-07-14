@@ -277,8 +277,22 @@ public class AffDAO {
 		Criteria criteria = session.createCriteria(AffBean.class);
 		criteria.add(Restrictions.eq("instName", instName));
 		criteria.setProjection(Projections.property("instName"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		List<String> affList = criteria.list();
+
+		return affList;
+	}
+
+	// to check whether record is already exist or New
+	public List<AffBean> getCollegeNameFromDB(String instName) {
+
+		Session session = factory.openSession();
+
+		Criteria criteria = session.createCriteria(AffBean.class);
+		criteria.add(Restrictions.eq("instName", instName));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<AffBean> affList = criteria.list();
 
 		return affList;
 	}
@@ -329,16 +343,22 @@ public class AffDAO {
 
 			Cell r = row.getCell(0);
 			instName = r.getStringCellValue();
+
 			r = row.getCell(1);
-			contactNum = (int) r.getNumericCellValue();
-			r = row.getCell(2);
-			mobileNum = (int) r.getNumericCellValue();
-			r = row.getCell(3);
-			email = r.getStringCellValue();
-			r = row.getCell(4);
-			ContactPerson = r.getStringCellValue();
-			r = row.getCell(5);
 			instAddress = r.getStringCellValue();
+
+			r = row.getCell(2);
+			contactNum = (int) r.getNumericCellValue();
+
+			r = row.getCell(3);
+			ContactPerson = r.getStringCellValue();
+
+			r = row.getCell(4);
+			mobileNum = (int) r.getNumericCellValue();
+
+			r = row.getCell(5);
+			email = r.getStringCellValue();
+
 			r = row.getCell(6);
 			place = r.getStringCellValue();
 

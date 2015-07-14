@@ -16,23 +16,30 @@ public class ApplicantFeeCollectionDAO {
 	public static SessionFactory factory = ConnectionClass.getFactory();
 	static Logger log = Logger.getLogger(LookupDAO.class.getName());
 
-	public List<ApplicantFeeCollectionBean> calculateTotalFee(ApplicantFeeCollectionBean fc) {
+	public ApplicantFeeCollectionBean calculateTotalFee(ApplicantFeeCollectionBean fc) {
 
 		log.info("in DAO ::" + fc.getService_type());
 		log.info("in DAO ::" + fc.getCourse());
 		log.info("in DAO ::" + fc.getFaculty());
 		log.info("in DAO ::" + fc.getNationality());
-
+		ApplicantFeeCollectionBean beanlist = new ApplicantFeeCollectionBean();
 		Session session = factory.openSession();
 		try {
 
 			Criteria criteria = session.createCriteria(ApplicantFeeCollectionBean.class);
-			criteria.add(Restrictions.like("service_type", "%" + fc.getService_type() + "%"))
+			criteria.add(Restrictions.eq("service_type", fc.getService_type()))
 					.add(Restrictions.eq("course", fc.getCourse())).add(Restrictions.eq("faculty", fc.getFaculty()))
 					.add(Restrictions.eq("nationality", fc.getNationality()));
 
-			List<ApplicantFeeCollectionBean> beanlist = criteria.list();
-			log.info("List Size::" + beanlist.size());
+			// List<ApplicantFeeCollectionBean> beanlist = criteria.list();
+
+			try {
+				beanlist = (ApplicantFeeCollectionBean) criteria.list().iterator().next();
+
+			} catch (java.util.NoSuchElementException e) {
+				log.info("Combination Not Available");
+			}
+			// log.info("List Size::" + beanlist.size());
 			return beanlist;
 		} finally {
 			session.close();

@@ -127,7 +127,7 @@
 
 
 
-				<form action="AddBulkColleges" enctype="multipart/form-data"
+				<form action="AddBulkStudent" enctype="multipart/form-data"
 					method="post">
 					<div class="row">
 						<div class="box col-md-12">

@@ -1,6 +1,9 @@
 package com.dexpert.feecollection.main.users.applicant;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +24,12 @@ public class AppAction extends ActionSupport {
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
+	String fileFileName;
+	FileInputStream inputStream;
+	private File fileUpload;
+	private String fileUploadFileName;
 
+	private String contentType;
 	public AppDAO aplDAO = new AppDAO();
 
 	// End of Global Variables
@@ -92,6 +100,32 @@ public class AppAction extends ActionSupport {
 
 	}
 
+	// add Bulk Students
+	public String addBulkStudents() throws Exception {
+
+		if (fileUploadFileName.endsWith(".xlsx")) {
+
+			String path = request.getServletContext().getRealPath("/");
+			path = path + File.separator;
+			File f = new File(path + "/RGUHS/");
+			f.mkdir();
+
+			appBeansList = aplDAO.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+
+			return SUCCESS;
+
+		}
+
+		else {
+
+			log.info("file Format not Match");
+			String msg = "Please Select Proper File Format";
+			request.setAttribute("msg", msg);
+			return "failure";
+		}
+
+	}
+
 	// End of Action Methods
 
 	// ---------------------------------------------------
@@ -119,6 +153,46 @@ public class AppAction extends ActionSupport {
 
 	public void setAppBean(AppBean appBean) {
 		this.appBean = appBean;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public File getFileUpload() {
+		return fileUpload;
+	}
+
+	public void setFileUpload(File fileUpload) {
+		this.fileUpload = fileUpload;
+	}
+
+	public String getFileUploadFileName() {
+		return fileUploadFileName;
+	}
+
+	public void setFileUploadFileName(String fileUploadFileName) {
+		this.fileUploadFileName = fileUploadFileName;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public FileInputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(FileInputStream inputStream) {
+		this.inputStream = inputStream;
 	}
 
 }

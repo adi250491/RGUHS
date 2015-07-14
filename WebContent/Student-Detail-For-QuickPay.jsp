@@ -148,6 +148,12 @@
 
 				</div>
 				<form action="submitingParameter" method="post">
+
+
+					<input type="text" readonly="readonly"
+						name="appBean1.enrollmentNumber" id="enrollId"
+						value="<s:property value="appBean1.enrollmentNumber" />">
+
 					<div class="row">
 						<div class="box col-md-12">
 							<div class="box-inner">
@@ -183,7 +189,7 @@
 																<div class="controls">
 
 
-																	<select required="required" data-rel="chosen"
+																	<select data-rel="chosen" id="serviceType"
 																		name="feeCollectionBean.service_type"
 																		style="width: 400px;">
 																		<option value="">--Select from Option--</option>
@@ -285,7 +291,16 @@
 
 																	</select>
 
+																	<script type="text/javascript">
+																		var value =
+																	<%=request.getParameter("selectedValue")%>
+																		;
+																		if (value != null) {
 
+																			document.f1.slvalue.selectedIndex = value;
+
+																		}
+																	</script>
 																</div>
 															</div>
 
@@ -303,7 +318,7 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen"
+																	<select data-rel="chosen" id="nationality"
 																		name="feeCollectionBean.nationality"
 																		style="width: 400px;">
 																		<option value="">--Select Option--</option>
@@ -313,7 +328,10 @@
 																		<option value="FOREIGN">FOREIGN</option>
 
 																	</select>
-
+																	<script type="text/javascript">
+																		document
+																				.getElementById('nationality').value = "feeCollectionBean.nationality";
+																	</script>
 																</div>
 															</div>
 														</div>
@@ -326,7 +344,7 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen"
+																	<select data-rel="chosen" id="faculty"
 																		name="feeCollectionBean.faculty" style="width: 400px;">
 																		<option value="">--Select Option--</option>
 
@@ -338,6 +356,12 @@
 																			Others</option>
 
 																	</select>
+
+
+																	<script type="text/javascript">
+																		document
+																				.getElementById('faculty').value = "feeCollectionBean.faculty";
+																	</script>
 
 																</div>
 															</div>
@@ -352,7 +376,7 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen"
+																	<select data-rel="chosen" id="course"
 																		name="feeCollectionBean.course" style="width: 400px;">
 																		<option value="">--Select Option--</option>
 
@@ -362,7 +386,10 @@
 																		<option value="PHD">PHD</option>
 
 																	</select>
-
+																	<script type="text/javascript">
+																		document
+																				.getElementById('course').value = "feeCollectionBean.course";
+																	</script>
 																</div>
 															</div>
 														</div>
@@ -371,20 +398,23 @@
 
 
 												<tr>
-													<td><strong>Total Fees</strong></td>
+													<td><span style="font-size: large; font-weight: bold;">Total
+															Fees</span></td>
 													<td>
-
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
 
 																	<div>
-																		<s:iterator value="collectionBeanList">
 
-																			<s:property value="fee" />
-																		</s:iterator>
+																		<input type="text" readonly="readonly" id="feeId"
+																			name="feeCollectionBean.fee"
+																			style="width: 400px; font-size: large; font-weight: bold; padding: 5px;"
+																			value='<s:property value="feeCollectionBean.fee" />'>
 
-
+																		<s:set var="fee">
+																			<s:property value="feeCollectionBean.fee" />
+																		</s:set>
 																	</div>
 
 																</div>
@@ -406,15 +436,39 @@
 						</div>
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-success">Proceed</button>
-
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>
+
+							<s:if test='%{#fee>"0.0"}'>
+
+
+								<input type="button" class="btn btn-danger"
+									onclick="openPaymentGateway(<s:property value="feeCollectionBean.fee" />,<s:property value="appBean1.enrollmentNumber" />)"
+									value="Pay">
+
+								<script type="text/javascript">
+									function openPaymentGateway(fee,id) {
+						
+										window.location = "AccessingPaymentGateway?feeValue="+fee+"&enrollId="+id;
+
+									}
+								</script>
+
+
+
+							</s:if>
+
+
+
 
 						</div>
 
 					</div>
-					<!--/row-->
 				</form>
+				<!--/row-->
+
+
+
 				<!--/row-->
 				<!-- content ends -->
 			</div>
@@ -422,10 +476,8 @@
 
 			<!--/#content.col-md-0-->
 		</div>
+
 		<!--/fluid-row-->
-
-
-
 		<hr>
 
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -461,6 +513,16 @@
 		</footer> -->
 
 	</div>
+
+	<script>
+		function OpenSummaryInParent() {
+			window.opener.location.reload(true);
+			window.close();
+
+		}
+	</script>
+
+
 	<!--/.fluid-container-->
 
 	<!-- external javascript -->
@@ -500,12 +562,6 @@
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
 
-	<script>
-		function OpenSummaryInParent() {
-			window.opener.location.reload(true);
-			window.close();
 
-		}
-	</script>
 </body>
 </html>
