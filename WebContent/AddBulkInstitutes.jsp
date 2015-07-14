@@ -202,7 +202,19 @@
 
 					</div>
 				</form>
+				<%-- <table>
+					<tr>
+						<td>Not Added College List is</td>
+					</tr>
+					<s:iterator value="affBeansList">
+						<tr>
+							<td><s:property value="instName" /></td>
 
+						</tr>
+
+
+					</s:iterator>
+				</table> --%>
 				<!--/row-->
 
 				<!--/row-->

@@ -38,19 +38,19 @@ public class AffAction extends ActionSupport {
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	HttpSession ses = request.getSession();
-
+	ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
 	Boolean saved = true;
 	private LookupDAO lookupdao = new LookupDAO();
 	public AffBean affInstBean;
-	
+
 	private AffFeePropBean propbean;
-	ArrayList<AffFeePropBean>dueList=new ArrayList<AffFeePropBean>();
+	ArrayList<AffFeePropBean> dueList = new ArrayList<AffFeePropBean>();
 	AffDAO affDao = new AffDAO();
 	FcDAO feeDAO = new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
-	private ArrayList<Integer>paramIds=new ArrayList<Integer>();
-;	ArrayList<AffBean> failureAffBeanList = new ArrayList<AffBean>();
+	private ArrayList<Integer> paramIds = new ArrayList<Integer>();;
+	ArrayList<AffBean> failureAffBeanList = new ArrayList<AffBean>();
 	ArrayList<AffBean> existingInstitureRecordList = new ArrayList<AffBean>();
 	private ArrayList<LookupBean> paramList2 = new ArrayList<LookupBean>();
 	String fileFileName;
@@ -69,7 +69,7 @@ public class AffAction extends ActionSupport {
 
 	// registerInstitute()
 	public String registerInstitute() throws Exception {
-		//log.info("paramset is "+affInstBean.getParamvalues().toString());
+		// log.info("paramset is "+affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("List Size is ::" + instNameList.size());
 
@@ -190,7 +190,7 @@ public class AffAction extends ActionSupport {
 		Integer instId = Integer.parseInt(instituteId);
 		affInstBean = affDao.viewInstDetail(instId);
 		ses.setAttribute("sesAffBean", affInstBean);
-		
+
 		return SUCCESS;
 	}
 
@@ -211,7 +211,7 @@ public class AffAction extends ActionSupport {
 	// update COllege Record
 
 	public String updateCollegeDetail() {
-		log.info("paramlist is "+affInstBean.getParamvalues().toString());
+		log.info("paramlist is " + affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("list Size is ::" + instNameList.size());
 		if (instNameList.isEmpty()) {
@@ -231,24 +231,23 @@ public class AffAction extends ActionSupport {
 		}
 
 	}
+
 	public String configureCollegeParam() {
-		
-		
-		log.info("parameter ids are "+paramIds.toString());
-		HashMap<Integer,FvBean>valueMap=(HashMap<Integer, FvBean>) ses.getAttribute("sesParamMap");
-		AffBean savedata=(AffBean) ses.getAttribute("sesAffBean");
-		log.info("keys are "+valueMap.keySet().toString());
+
+		log.info("parameter ids are " + paramIds.toString());
+		HashMap<Integer, FvBean> valueMap = (HashMap<Integer, FvBean>) ses.getAttribute("sesParamMap");
+		AffBean savedata = (AffBean) ses.getAttribute("sesAffBean");
+		log.info("keys are " + valueMap.keySet().toString());
 		for (int i = 0; i < paramIds.size(); i++) {
 			savedata.getParamvalues().add(valueMap.get(paramIds.get(i)));
 		}
-		
-			affDao.saveOrUpdate(savedata,null);
-			ses.removeAttribute("sesAffBean");
-			ses.removeAttribute("sesParamMap");
-			request.setAttribute("msg", "Institute Updated Successfully");
 
-			return SUCCESS;
-		 
+		affDao.saveOrUpdate(savedata, null);
+		ses.removeAttribute("sesAffBean");
+		ses.removeAttribute("sesParamMap");
+		request.setAttribute("msg", "Institute Updated Successfully");
+
+		return SUCCESS;
 
 	}
 
@@ -305,7 +304,6 @@ public class AffAction extends ActionSupport {
 	public String bulkCollegesAdd() throws Exception {
 		log.info("file Name ::" + fileUploadFileName);
 		log.info("file IS  ::" + fileUpload);
-		ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
 
 		// if loop to check format of file
 		if (fileUploadFileName.endsWith(".xlsx")) {
@@ -316,49 +314,11 @@ public class AffAction extends ActionSupport {
 			f.mkdir();
 
 			affBeansList = affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+
 			Iterator<AffBean> iterator = affBeansList.iterator();
-			log.info("COllege List  from Action is   ::" + affBeansList.size());
-			// if to check file is empty or not
-			if (iterator.hasNext()) {
-				int counter = 1;
-				while (iterator.hasNext()) {
-					log.info("Counterrrrrrrrrrrrrrrrrrrrrrrrrr ::" + counter);
-					counter++;
-
-					AffBean affBean = (AffBean) iterator.next();
-
-					// to get college name list from database
-					existingInstitureRecordList = affDao.getCollegesListByInstName(affBean);
-					log.info("COllege List  from Database is   ::" + affBeansList.size());
-
-					// check if existing college name and newly added
-					// college name is same, if not same then ok it will
-					// added to DB else it will
-					// addded to failure list
-
-					if (existingInstitureRecordList.isEmpty()) {
-
-						affBean = affDao.addBulkData(affBean);
-						return SUCCESS;
-
-					} else {
-
-						log.info("Not Added list of institute");
-						log.info("rejected COllege name is ::" + affBean.getInstName());
-						failureAffBeanList.add(affBean);
-						log.info("failure List Size is ::" + failureAffBeanList.size());
-						//return "failure";
-
-					}
-
-				}
-
-			} else {
-
-				log.info("Empty File");
-				String msg = "File is Empty";
-				request.setAttribute("msg", msg);
-				return "failure";
+			while (iterator.hasNext()) {
+				AffBean affBean = (AffBean) iterator.next();
+				log.info("Colleges in action class are ::" + affBean.getInstName());
 
 			}
 
@@ -386,70 +346,66 @@ public class AffAction extends ActionSupport {
 		ArrayList<FeeDetailsBean> feelist = new ArrayList<FeeDetailsBean>();
 
 		AffBean collegedata = new AffBean();
-		try{
-		// Get College id from request
-		Integer id = Integer.parseInt(request.getParameter("collId").trim());
-		// Get Fee ids from request
-		String feeidstr = request.getParameter("reqFeeIds").trim();
-		log.info(feeidstr);
-		List<String> FeeIds = Arrays.asList(feeidstr.split(","));
-		ArrayList<Integer> FeeIdsInt = new ArrayList<Integer>();
-		Iterator<String> idIt = FeeIds.iterator();
-		log.info(FeeIds.toString());
-		while (idIt.hasNext()) {
-			FeeIdsInt.add(Integer.parseInt(idIt.next()));
-		}
-		// Get College Data
-		collegedata = affDao.getOneCollegeRecord(id);
-		// Get Fees in Set
-		feelist = feeDAO.GetFees("ids", null, null, FeeIdsInt);
-		Set<FeeDetailsBean> feeset = collegedata.getFeeSet();
-		Set<AffFeePropBean> propSet=collegedata.getFeeProps();
-		for (int i = 0; i < feelist.size(); i++) {
-			AffFeePropBean tempbean=new AffFeePropBean();
-			tempbean.setFeeId(feelist.get(i).getFeeId());
-			tempbean.setFeeName(feelist.get(i).getFeeName());
-			tempbean.setDueBean(new PaymentDuesBean());
-			propSet.add(tempbean);
-			
-		}
-		
-		feeset.addAll(feelist);
-		// Add Fees to College Beans' FeeSet
-		collegedata.setFeeSet(feeset);
-		collegedata.setFeeProps(propSet);
-		affDao.saveOrUpdate(collegedata, null);
-		request.setAttribute("msg", "Fees Updated Successfully");
-		// Save College Bean
-		return SUCCESS;
-		}
-		catch(java.lang.NumberFormatException e)
-		{
+		try {
+			// Get College id from request
+			Integer id = Integer.parseInt(request.getParameter("collId").trim());
+			// Get Fee ids from request
+			String feeidstr = request.getParameter("reqFeeIds").trim();
+			log.info(feeidstr);
+			List<String> FeeIds = Arrays.asList(feeidstr.split(","));
+			ArrayList<Integer> FeeIdsInt = new ArrayList<Integer>();
+			Iterator<String> idIt = FeeIds.iterator();
+			log.info(FeeIds.toString());
+			while (idIt.hasNext()) {
+				FeeIdsInt.add(Integer.parseInt(idIt.next()));
+			}
+			// Get College Data
+			collegedata = affDao.getOneCollegeRecord(id);
+			// Get Fees in Set
+			feelist = feeDAO.GetFees("ids", null, null, FeeIdsInt);
+			Set<FeeDetailsBean> feeset = collegedata.getFeeSet();
+			Set<AffFeePropBean> propSet = collegedata.getFeeProps();
+			for (int i = 0; i < feelist.size(); i++) {
+				AffFeePropBean tempbean = new AffFeePropBean();
+				tempbean.setFeeId(feelist.get(i).getFeeId());
+				tempbean.setFeeName(feelist.get(i).getFeeName());
+				tempbean.setDueBean(new PaymentDuesBean());
+				propSet.add(tempbean);
+
+			}
+
+			feeset.addAll(feelist);
+			// Add Fees to College Beans' FeeSet
+			collegedata.setFeeSet(feeset);
+			collegedata.setFeeProps(propSet);
+			affDao.saveOrUpdate(collegedata, null);
+			request.setAttribute("msg", "Fees Updated Successfully");
+			// Save College Bean
+			return SUCCESS;
+		} catch (java.lang.NumberFormatException e) {
 			e.printStackTrace();
-		
+
 			return ERROR;
 		}
 	}
 
 	public String GetParameterListInstitute() {
 		try {
-			
-			paramList2 = lookupdao.getLookupData("Scope", "Institute", null,null);
-			HashMap<Integer,FvBean> paramMap=new HashMap<Integer,FvBean>();
-			Iterator<LookupBean>lIt=paramList2.iterator();
-			while(lIt.hasNext())
-			{
-				LookupBean temp=lIt.next();
-				List<FvBean>valueList=new ArrayList<FvBean>();
-				valueList=temp.getFvBeansList();
-				Iterator<FvBean> pIt=valueList.iterator();
-				while(pIt.hasNext())
-				{
-					FvBean temp2=pIt.next();
+
+			paramList2 = lookupdao.getLookupData("Scope", "Institute", null, null);
+			HashMap<Integer, FvBean> paramMap = new HashMap<Integer, FvBean>();
+			Iterator<LookupBean> lIt = paramList2.iterator();
+			while (lIt.hasNext()) {
+				LookupBean temp = lIt.next();
+				List<FvBean> valueList = new ArrayList<FvBean>();
+				valueList = temp.getFvBeansList();
+				Iterator<FvBean> pIt = valueList.iterator();
+				while (pIt.hasNext()) {
+					FvBean temp2 = pIt.next();
 					paramMap.put(temp2.getFeeValueId(), temp2);
 				}
 			}
-			
+
 			ses.setAttribute("sesParamMap", paramMap);
 			String instituteId = request.getParameter("instId");
 			Integer instId = Integer.parseInt(instituteId);
@@ -461,47 +417,41 @@ public class AffAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	
-	
-	//Method to get Fee Properties' Details
-	public String viewFeeProps()
-	{
-		//get institute id from request
-		Integer reqinstId=Integer.parseInt(request.getParameter("instId").trim());
-		//get fee id from request		
-		Integer reqfeeId=Integer.parseInt(request.getParameter("reqfeeId").trim());
-		//get inst bean from database
-		AffBean tempbean=affDao.getOneCollegeRecord(reqinstId);
-		//populate feeprop bean with correct object from set
-		Set<AffFeePropBean>feePropsSet=tempbean.getFeeProps();
-		log.info("set size is "+feePropsSet.size());
-		Iterator<AffFeePropBean>setIt=feePropsSet.iterator();
-		while(setIt.hasNext())
-		{
-			AffFeePropBean tempbean2=new AffFeePropBean();
-			tempbean2=setIt.next();
-			if(tempbean2.getFeeId()==reqfeeId)
-			{
-				propbean=tempbean2;
+
+	// Method to get Fee Properties' Details
+	public String viewFeeProps() {
+		// get institute id from request
+		Integer reqinstId = Integer.parseInt(request.getParameter("instId").trim());
+		// get fee id from request
+		Integer reqfeeId = Integer.parseInt(request.getParameter("reqfeeId").trim());
+		// get inst bean from database
+		AffBean tempbean = affDao.getOneCollegeRecord(reqinstId);
+		// populate feeprop bean with correct object from set
+		Set<AffFeePropBean> feePropsSet = tempbean.getFeeProps();
+		log.info("set size is " + feePropsSet.size());
+		Iterator<AffFeePropBean> setIt = feePropsSet.iterator();
+		while (setIt.hasNext()) {
+			AffFeePropBean tempbean2 = new AffFeePropBean();
+			tempbean2 = setIt.next();
+			if (tempbean2.getFeeId() == reqfeeId) {
+				propbean = tempbean2;
 				return SUCCESS;
 			}
-			
+
 		}
 		return ERROR;
 	}
-	
-	public String getDues()
-	{
-		//Get id from session
-		Integer id=(Integer) ses.getAttribute("sesId");
-		//get bean from db
-		AffBean collbean=affDao.getOneCollegeRecord(id);
-		//get feeprops set in list
-		dueList=new ArrayList<AffFeePropBean>(collbean.getFeeProps());
+
+	public String getDues() {
+		// Get id from session
+		Integer id = (Integer) ses.getAttribute("sesId");
+		// get bean from db
+		AffBean collbean = affDao.getOneCollegeRecord(id);
+		// get feeprops set in list
+		dueList = new ArrayList<AffFeePropBean>(collbean.getFeeProps());
 		return SUCCESS;
 	}
-	
-	
+
 	// End of Action Methods
 
 	// ---------------------------------------------------
@@ -634,7 +584,14 @@ public class AffAction extends ActionSupport {
 	public void setDueList(ArrayList<AffFeePropBean> dueList) {
 		this.dueList = dueList;
 	}
-	
+
+	public ArrayList<AffBean> getAffBeansList() {
+		return affBeansList;
+	}
+
+	public void setAffBeansList(ArrayList<AffBean> affBeansList) {
+		this.affBeansList = affBeansList;
+	}
 
 	// End of Getter Setter Methods
 }

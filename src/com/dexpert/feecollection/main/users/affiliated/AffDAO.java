@@ -44,7 +44,8 @@ public class AffDAO {
 	public static SessionFactory factory = ConnectionClass.getFactory();
 	static Logger log = Logger.getLogger(AffDAO.class.getName());
 	static Boolean isExist = false;
-	static ArrayList<AffBean> existingCollegeList = new ArrayList<AffBean>();
+
+	// static ArrayList<AffBean> existingCollegeList = new ArrayList<AffBean>();
 
 	// End of Global Variables
 
@@ -197,7 +198,6 @@ public class AffDAO {
 	}
 
 	public void updateCollege(AffBean newAffInstBean) {
-		// TODO Auto-generated method stub
 
 		Session session = factory.openSession();
 
@@ -288,7 +288,7 @@ public class AffDAO {
 	@SuppressWarnings("resource")
 	public ArrayList<AffBean> importExcelFileToDatabase(String fileUploadFileName, File fileUpload, String path)
 			throws Exception {
-
+		ArrayList<AffBean> notAddedCollegeList = new ArrayList<AffBean>();
 		String instName, email, ContactPerson, instAddress, place;
 		Integer contactNum, mobileNum;
 		ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
@@ -351,8 +351,11 @@ public class AffDAO {
 			affBean.setPlace(place);
 
 			affBeansList.add(affBean);
-			log.info("AffBean List Size is ::" + affBeansList.size());
-			// addBulkData(affBean);
+
+			addBulkData(affBean);
+			log.info("Not Addedd COllege List is ::" + notAddedCollegeList.size());
+			// }
+			// notAddedCollegeList.add(affBean);
 
 		}
 		return affBeansList;
@@ -362,77 +365,62 @@ public class AffDAO {
 	// ---------------------------------------------------
 
 	// to save record into Database
-	public AffBean addBulkData(AffBean affBean) throws InvalidKeyException, NoSuchAlgorithmException,
+	public ArrayList<AffBean> addBulkData(AffBean affBean) throws InvalidKeyException, NoSuchAlgorithmException,
 			InvalidKeySpecException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
 			IllegalBlockSizeException, BadPaddingException {
 		HttpServletRequest request = ServletActionContext.getRequest();
+		ArrayList<AffBean> collegeListFromDB = new ArrayList<AffBean>();
+		ArrayList<AffBean> notAddedCollegeList = new ArrayList<AffBean>();
+		collegeListFromDB = getCollegesListByInstName(affBean);
 
-		// List<String> instNameList =
-		// getCollegeNameList(affBean.getInstName());
-		// log.info("List Size is ::" + instNameList.size());
+		if (collegeListFromDB.isEmpty()) {
+			log.info(affBean.getInstName() + " is new in Table ");
 
-		// if (instNameList.isEmpty()) {
-		// / isExist = false;
-		// log.info("Existing College List is Empty...");
+			String username;
 
-		String username;
+			// generate credentials for admin login
+			try {
+				username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
+						.concat(getRowCount().toString()));
 
-		// generate credentials for admin login
-		try {
-			username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
-					.concat(getRowCount().toString()));
+			} catch (java.lang.NullPointerException e) {
+				username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
 
-		} catch (java.lang.NullPointerException e) {
-			username = "Inst".concat(affBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
+			}
 
-		}
+			String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
+			PasswordEncryption.encrypt(password);
+			String encryptedPwd = PasswordEncryption.encStr;
 
-		String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
-		PasswordEncryption.encrypt(password);
-		String encryptedPwd = PasswordEncryption.encStr;
+			LoginBean creds = new LoginBean();
+			creds.setPassword(encryptedPwd);
+			creds.setUserName(username);
 
-		LoginBean creds = new LoginBean();
-		creds.setPassword(encryptedPwd);
-		creds.setUserName(username);
-
-		String profile = "Admin";
-		creds.setProfile(profile);
-		affBean.setLoginBean(creds);
-		creds.setProfile(profile);
-
-		// for bidirectional relationship ,set parent record to child //
-		// record
-		creds.setAffBean(affBean);
-		if (creds.getProfile().equals("Admin")) {
-
-			// for bidirectional relationship ,set child record to Parent
-			// record
+			String profile = "Admin";
+			creds.setProfile(profile);
 			affBean.setLoginBean(creds);
+			creds.setProfile(profile);
+
+			// for bidirectional relationship ,set parent record to child // //
+			// record
+			creds.setAffBean(affBean);
+			if (creds.getProfile().equals("Admin")) {
+
+				// for bidirectional relationship ,set child record to Parent //
+				// record
+				affBean.setLoginBean(creds);
+			} // -----Code for sending email
+
+			EmailSessionBean email = new EmailSessionBean();
+			email.sendEmail(affBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
+					affBean.getInstName());
+			Session session = factory.openSession();
+			Transaction tx = session.beginTransaction();
+			session.save(affBean);
+			tx.commit();
+			session.close();
+
 		}
-		// -----Code for sending email
-
-		EmailSessionBean email = new EmailSessionBean();
-		email.sendEmail(affBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
-				affBean.getInstName());
-		Session session = factory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(affBean);
-		tx.commit();
-		session.close();
-
-		// } else {
-		isExist = true;
-
-		// log.info(" existing college Name inst " +
-		// existingCollegeList.size());
-		// log.info("College List is Not Empty...");
-
-		// }
-		return affBean;
-
+		return notAddedCollegeList;
 	}
 }
-// Keep Getter Setter Methods Here
-
-// End of Getter Setter Methods
-
