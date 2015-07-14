@@ -64,7 +64,7 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 		log.info("enrollment Number ::" + enrolId);
 		log.info("Total Fee CAlculated ::" + fee);
-		String url = "http://localhost:8081/SabPaisa?name=" + user + "&amount=" + fee;
+		String url = "http://localhost:8080/SabPaisa?name=" + user + "&amount=" + fee;
 		response.sendRedirect(url);
 
 	}

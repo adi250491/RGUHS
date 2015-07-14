@@ -51,7 +51,8 @@
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
-	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+	String profile = (String) session.getAttribute("sesProfile");
 
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
@@ -66,10 +67,10 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-	if (cookie.getName().equals("user"))
-		usercookie = cookie.getValue();
-	if (cookie.getName().equals("JSESSIONID"))
-		sessionID = cookie.getValue();
+			if (cookie.getName().equals("user"))
+				usercookie = cookie.getValue();
+			if (cookie.getName().equals("JSESSIONID"))
+				sessionID = cookie.getValue();
 		}
 	} else {
 		sessionID = session.getId();
@@ -173,8 +174,8 @@
 
 
 												<tr>
-													<td colspan="2"><a style="text-align: center;" href="DownloadExcelTemplateFile">Download
-															Template</a></td>
+													<td colspan="2"><a style="text-align: center;"
+														href="DownloadExcelTemplateFile">Download Template</a></td>
 
 
 												</tr>
@@ -193,11 +194,32 @@
 						</div>
 						<div class="col-md-12">
 
-							<input type="submit" class="btn btn-success" value="Upload File">
+							<input type="submit" id="btnSub" class="btn btn-success"
+								value="Upload File">
 
 
 
 							<button onclick="window.close()" class="btn btn-info">Close</button>
+
+							<div id="msg"></div>
+
+							<%-- <script type="text/javascript">
+								function WaitPage() {
+
+									var x = document.getElementById("btnSub");
+
+									setTimeout(
+											function() {
+												x.disabled = true;
+												document.getElementById("msg").innerHTML = "Please Wait While Processing";
+											}, 3000);
+
+									setTimeout(function() {
+										x.disabled = false;
+									}, 3000);
+
+								}
+							</script> --%>
 
 						</div>
 

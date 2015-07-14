@@ -104,8 +104,8 @@ try{
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class="glyphicon glyphicon-user"></i><span
-						class="hidden-sm hidden-xs"> <username>(Username)</span>
-					<span class="caret"></span>
+						class="hidden-sm hidden-xs"> <%=loginUser.getUserName()%>
+					</span> <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
@@ -240,7 +240,8 @@ try{
                     <button class="btn btn-default" onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Payments This Month</button>
                     <button class="btn btn-default">Other Relevant Quick Links</button>
                    -->
-										<button class="btn btn-default" onclick="window.location='ShowCollegeReport'">College
+										<button class="btn btn-default"
+											onclick="window.location='ShowCollegeReport'">College
 											Report</button>
 									</p>
 
@@ -727,8 +728,6 @@ try{
 		$("#selectReportType").chosen({
 			disable_search_threshold : 10
 		})
-
-		
 	</script>
 
 </body>
