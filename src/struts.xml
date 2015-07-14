@@ -365,6 +365,31 @@
 			<result name="success">StudentForm.jsp</result>
 		</action>
 
+
+		<action name="AddBulkStudent"
+			class="com.dexpert.feecollection.main.users.applicant.AppAction"
+			method="addBulkStudents">
+
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.maximumSize">100485760</param>
+				<param name="contentType">application/vnd.ms-excel,application/msexcel,application/x-msexcelapplication/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application</param>
+				<param name="allowedTypes">application/vnd.ms-excel,application/msexcel,application/x-msexcelapplication/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application</param>
+			</interceptor-ref>
+
+			<result name="success">AddBulkStudent.jsp</result>
+			<result name="failure">AddBulkStudent.jsp</result>
+			<result name="error">Login.jsp</result>
+
+
+
+
+
+
+
+
+
+		</action>
+
 		<action name="registerStudent"
 			class="com.dexpert.feecollection.main.users.applicant.AppAction"
 			method="registerStudent">
@@ -459,6 +484,16 @@
 				<param name="bufferSize">1024</param>
 			</result>
 
+
+		</action>
+
+	</package>
+
+	<package name="Payment gateway" extends="struts-default">
+
+		<action name="AccessingPaymentGateway"
+			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
+			method="jumpingToPaymentGateway">
 
 		</action>
 
