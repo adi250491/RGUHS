@@ -493,10 +493,12 @@
 
 		<action name="AccessingPaymentGateway"
 			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
-			method="jumpingToPaymentGateway">
+			method="studentToPaymentGateway">
 
 		</action>
-
+		<action name="instPaymentGateway"
+			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
+			method="instPaymentGateway"></action>
 	</package>
 
 </struts>

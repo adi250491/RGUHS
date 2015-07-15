@@ -150,7 +150,7 @@
 				<form action="submitingParameter" method="post">
 
 
-					<input type="text" readonly="readonly"
+					<input type="hidden" readonly="readonly"
 						name="appBean1.enrollmentNumber" id="enrollId"
 						value="<s:property value="appBean1.enrollmentNumber" />">
 
@@ -426,7 +426,7 @@
 											</tbody>
 										</table>
 
-
+<button type="submit" class="btn btn-success">Calculate Fee</button>
 
 									</div>
 
@@ -435,7 +435,7 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-success">Proceed</button>
+							
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>
 

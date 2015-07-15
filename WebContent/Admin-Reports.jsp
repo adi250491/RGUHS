@@ -240,11 +240,18 @@ try{
                     <button class="btn btn-default" onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Payments This Month</button>
                     <button class="btn btn-default">Other Relevant Quick Links</button>
                    -->
-										<button class="btn btn-default"
+										<button class="btn btn-default" title="Get College Report"
 											onclick="window.location='ShowCollegeReport'">College
 											Report</button>
 									</p>
-
+									<p class="btn-group">
+										<button class="btn btn-danger" title="Get College Due Report"
+											onclick="CollegeDueReport()">College Due Report</button>
+									</p>
+									<p class="btn-group">
+										<button class="btn btn-success" title="Get Transaction Report"
+											onclick="TransactionReport()">Transaction Report</button>
+									</p>
 
 
 								</div>
@@ -254,6 +261,18 @@ try{
 						</div>
 					</div>
 				</div>
+
+				<script type="text/javascript">
+					function TransactionReport() {
+						alert("No Data To Export");
+
+					}
+
+					function CollegeDueReport() {
+						alert("No Data To Export")
+
+					}
+				</script>
 				<!--/row-->
 
 				<!-- 

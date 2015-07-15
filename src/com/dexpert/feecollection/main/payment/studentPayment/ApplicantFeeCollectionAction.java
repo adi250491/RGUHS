@@ -54,7 +54,7 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 	// jumping to payment Gateway
 
-	public void jumpingToPaymentGateway() throws IOException {
+	public void studentToPaymentGateway() throws IOException {
 
 		String enrolId = request.getParameter("enrollId");
 		String fee = request.getParameter("feeValue");
@@ -64,7 +64,19 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 		log.info("enrollment Number ::" + enrolId);
 		log.info("Total Fee CAlculated ::" + fee);
-		String url = "http://localhost:8080/SabPaisa?name=" + user + "&amount=" + fee;
+		String url = "http://49.50.72.228:8080/SabPaisa/?name=" + user + "&amount=" + fee;
+		response.sendRedirect(url);
+
+	}
+
+	// jumping to payment Gateway
+
+	public void instPaymentGateway() throws IOException {
+
+		String user = request.getParameter("feeName");
+		String fee = request.getParameter("amt");
+
+		String url = "http://49.50.72.228:8080/SabPaisa/?name=" + user + "&amount=" + fee;
 		response.sendRedirect(url);
 
 	}

@@ -266,11 +266,18 @@
 												<tr>
 													<td><%=i%></td>
 
-													<td class="center"><s:property value="feeName" /></td>
-													<td class="center">Rs. <s:property value="duebean.netDue" default="0" /></td>
+													<td class="center"><s:property value="feeName" /> <input
+														type="hidden" id="feeName"
+														value='<s:property value="feeName" />'></td>
+
+													<td class="center">Rs. <s:property
+															value="dueBean.netDue" default="0" /></td>
 													<td><s:property value="endDate" default="not Set" /></td>
-													<td><s:property value="lateDate" default="not Set"  /></td>
-													<td class="center"></td>
+													<td><s:property value="lateDate" default="not Set" /></td>
+													<td class="center"><input type="button"
+														class="btn btn-danger"
+														onclick="openPaymentGateway(<s:property value="dueBean.netDue" />)"
+														value="Pay"></td>
 												</tr>
 
 												<%
@@ -281,6 +288,14 @@
 
 										</tbody>
 									</table>
+
+									<script type="text/javascript">
+									function openPaymentGateway(dueAmt) {
+						var feeNm=document.getElementById('feeName').value;
+										window.location = "instPaymentGateway?feeName="+feeNm+"&amt="+dueAmt;
+
+									}
+								</script>
 
 								</div>
 
@@ -306,7 +321,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">Ã—</button>
+						<button type="button" class="close" data-dismiss="modal">×</button>
 						<h3>Settings</h3>
 					</div>
 					<div class="modal-body">
