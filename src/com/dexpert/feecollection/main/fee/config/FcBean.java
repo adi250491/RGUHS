@@ -1,5 +1,6 @@
 package com.dexpert.feecollection.main.fee.config;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,7 +19,7 @@ import com.dexpert.feecollection.main.users.superadmin.SaBean;
 
 @Entity
 @Table(name = "fee_config_master")
-public class FcBean {
+public class FcBean implements Serializable {
 
 	@GenericGenerator(name = "g11", strategy = "increment")
 	@Id

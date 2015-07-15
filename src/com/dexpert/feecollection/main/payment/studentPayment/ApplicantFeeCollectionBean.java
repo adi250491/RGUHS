@@ -1,5 +1,7 @@
 package com.dexpert.feecollection.main.payment.studentPayment;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "university_service_fees")
-public class ApplicantFeeCollectionBean {
+public class ApplicantFeeCollectionBean implements Serializable {
 
 	@GenericGenerator(name = "g1", strategy = "increment")
 	@Id

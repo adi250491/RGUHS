@@ -1,6 +1,7 @@
 package com.dexpert.feecollection.main.payment.transaction;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="payment_details")
-public class PayBean {
+public class PayBean implements Serializable {
 	
 	
 	@GenericGenerator(name="g5",strategy="increment")

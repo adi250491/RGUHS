@@ -301,17 +301,17 @@
 			<result name="error">Institute-Fees.jsp</result>
 
 		</action>
-
-
-
 		<action name="CollegeDueReport"
-	class="com.dexpert.feecollection.main.users.affiliated.AffAction"
-	method="collegeDueReport()">
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="collegeDueReport">
 
 			<result name="success">College-Due-Report.jsp</result>
-			<result name="failure">College-Due-Report.jsp</result>
+
 
 		</action>
+
+
+
 
 	</package>
 
@@ -511,7 +511,6 @@
 			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
 			method="instPaymentGateway"></action>
 	</package>
-
 
 
 </struts>

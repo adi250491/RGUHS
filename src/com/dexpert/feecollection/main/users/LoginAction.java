@@ -45,7 +45,9 @@ public class LoginAction extends ActionSupport {
 		log.info("Password is ::" + loginBean.getPassword());
 		String encryptedPwd, decrypedText = null;
 		LoginBean lgbean = new LoginBean();
+
 		List<LoginBean> loginUserList = loginDAO.getLoginDetails(loginBean);
+
 		Iterator<LoginBean> loginIterator = loginUserList.iterator();
 		while (loginIterator.hasNext()) {
 			log.info("1");
@@ -67,7 +69,7 @@ public class LoginAction extends ActionSupport {
 				response.addCookie(usercookie);
 
 				httpSession.setAttribute("loginUserBean", lgbean);
-				
+
 				if (lgbean.getAffBean() != null) {
 					log.info("Valid College");
 					httpSession.setAttribute("sesProfile", "Affiliated");

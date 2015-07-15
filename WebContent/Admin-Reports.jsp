@@ -247,15 +247,36 @@ try{
 
 									<!---Content-->
 
-									<p class="btn-group">
-										<!--  <button class="btn btn-default" onclick="showDailyRequests()">Today's Student Requests</button>
+
+									<!--  <button class="btn btn-default" onclick="showDailyRequests()">Today's Student Requests</button>
                     <button class="btn btn-default" onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Payments This Month</button>
                     <button class="btn btn-default">Other Relevant Quick Links</button>
                    -->
+
+
+									<%
+										if (profile.contentEquals("Affiliated")){
+									%>
+
+
+
+									<%
+										}
+																																																										else
+																																																										{
+									%>
+									<p class="btn-group">
 										<button class="btn btn-default" title="Get College Report"
 											onclick="window.location='ShowCollegeReport'">College
 											Report</button>
 									</p>
+
+									<%
+										}
+									%>
+
+
+
 									<p class="btn-group">
 										<button class="btn btn-default" title="Get College Due Report"
 											onclick="window.location='CollegeDueReport'">College

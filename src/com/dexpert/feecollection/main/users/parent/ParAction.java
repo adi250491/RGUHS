@@ -56,10 +56,10 @@ public class ParAction extends ActionSupport {
 		// to generate unique user Name
 		try {
 
-			if (parDAO.getRowCount() >= 1) {
+			/*if (parDAO.getRowCount() >= 1) {
 				return "duplicate";
 			}
-
+*/
 			username = "Uni".concat(parBean.getParInstName().replaceAll("\\s+", "").substring(0, 4)
 					.concat(parDAO.getRowCount().toString()));
 		} catch (java.lang.NullPointerException e) {

@@ -106,6 +106,23 @@ public class AppDAO {
 
 	}
 
+	public AffBean getStudentDetail(LoginBean bean) {
+		Session session = factory.openSession();
+		try {
+
+			Integer id= bean.getAffBean().getInstId();
+			Criteria criteria = session.createCriteria(AffBean.class);
+
+			criteria.add(Restrictions.eq("instId", id));
+			AffBean affBean = (AffBean) criteria.list().iterator().next();
+			return affBean;
+
+		} finally {
+			session.close();
+			// TODO: handle exception
+		}
+	}
+
 	public List<String> existingEnrollNum(AppBean appBean) {
 		Session session = factory.openSession();
 		try {
@@ -286,4 +303,5 @@ public class AppDAO {
 
 		return null;
 	}
+
 }

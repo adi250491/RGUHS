@@ -22,16 +22,20 @@ public class LoginDAO {
 	// ---------------------------------------------------
 
 	// DAO Methods Here
-//method to getDetails About user
+	// method to getDetails About user
 	public List<LoginBean> getLoginDetails(LoginBean loginBean) {
 		Session session = factory.openSession();
+		try {
 
-		Criteria criteria = session.createCriteria(LoginBean.class);
-		criteria.add(Restrictions.eq("userName", loginBean.getUserName()));
+			Criteria criteria = session.createCriteria(LoginBean.class);
+			criteria.add(Restrictions.eq("userName", loginBean.getUserName()));
 
-		List<LoginBean> bean = criteria.list();
+			List<LoginBean> bean = criteria.list();
 
-		return bean;
+			return bean;
+		} finally {
+			session.close();
+		}
 	}
 
 }

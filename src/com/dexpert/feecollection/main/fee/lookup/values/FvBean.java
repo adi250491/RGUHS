@@ -1,5 +1,7 @@
 package com.dexpert.feecollection.main.fee.lookup.values;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +15,7 @@ import com.dexpert.feecollection.main.fee.config.FcBean;
 
 @Entity
 @Table(name = "fee_values_master")
-public class FvBean {
+public class FvBean implements Serializable {
 
 	@GenericGenerator(name = "g10", strategy = "increment")
 	@Id

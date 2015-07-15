@@ -1,6 +1,7 @@
 package com.dexpert.feecollection.main.users.affiliated;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,7 +28,7 @@ import com.dexpert.feecollection.main.users.applicant.AppBean;
 
 @Entity
 @Table(name = "affiliated_institute_details")
-public class AffBean {
+public class AffBean implements Serializable {
 
 	@GenericGenerator(name = "g1", strategy = "increment")
 	@Id

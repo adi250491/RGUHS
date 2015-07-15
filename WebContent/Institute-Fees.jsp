@@ -286,10 +286,15 @@
 															value="dueBean.netDue" default="0" /></td>
 													<td><s:property value="endDate" default="not Set" /></td>
 													<td><s:property value="lateDate" default="not Set" /></td>
-													<td class="center"><input type="button"
-														class="btn btn-danger"
-														onclick="openPaymentGateway(<s:property value="dueBean.netDue" />)"
-														value="Pay"></td>
+													<td class="center"><s:set var="dueAmt">
+															<s:property value="dueBean.netDue" default="0" />
+														</s:set> <s:if test='%{#dueAmt >"0"}'>
+
+															<input type="button" class="btn btn-danger"
+																onclick="openPaymentGateway(<s:property value="dueBean.netDue" default="0"  />)"
+																value="Pay">
+
+														</s:if></td>
 												</tr>
 
 												<%

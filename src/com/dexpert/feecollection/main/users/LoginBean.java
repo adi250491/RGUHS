@@ -1,9 +1,11 @@
 package com.dexpert.feecollection.main.users;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,8 +22,12 @@ import com.dexpert.feecollection.main.users.superadmin.SaBean;
 
 @Entity
 @Table(name = "login_master")
-public class LoginBean {
+public class LoginBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@GenericGenerator(name = "g1", strategy = "increment")
 	@Id
 	@GeneratedValue(generator = "g1")
@@ -31,7 +37,7 @@ public class LoginBean {
 	private String profile;
 
 	// one to one bidirectional relationship with super admin
-	//child
+	// child
 	@OneToOne(cascade = CascadeType.ALL, targetEntity = SaBean.class)
 	@JoinColumn(name = "super_Admin_Id_Fk", referencedColumnName = "saId")
 	private SaBean saBean;
@@ -52,12 +58,6 @@ public class LoginBean {
 	@OneToOne(cascade = CascadeType.ALL, targetEntity = ParBean.class)
 	@JoinColumn(name = "Par_Inst_Id_Fk", referencedColumnName = "parInstId")
 	private ParBean parBean;
-
-	/*
-	 * // many to one bidirectional relationship with Institute (College)
-	 * 
-	 * @ManyToOne(cascade = CascadeType.ALL) private AffBean affBean;
-	 */
 
 	public SaBean getSaBean() {
 		return saBean;

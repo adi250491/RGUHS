@@ -170,14 +170,14 @@
 								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<%
-								if (profile.contentEquals("SU")){
+								if (profile.contentEquals("SU")) {
 							%><li><a class="ajax-link" href="UniversityDetailRecord"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<%
 								}
 							%>
 							<%
-								if (!profile.contentEquals("Affiliated")){
+								if (!profile.contentEquals("Affiliated")) {
 							%>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
@@ -185,14 +185,14 @@
 								}
 							%>
 							<%
-								if (profile.contentEquals("Affiliated")){
+								if (profile.contentEquals("Affiliated")) {
 							%><li><a class="ajax-link" href="StudentTotalRecord"><i
 									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
 							<%
 								}
 							%>
 							<%
-								if (!profile.contentEquals("Affiliated")){
+								if (!profile.contentEquals("Affiliated")) {
 							%>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
@@ -200,7 +200,7 @@
 								}
 							%>
 							<%
-								if (profile.contentEquals("Affiliated")){
+								if (profile.contentEquals("Affiliated")) {
 							%><li><a class="ajax-link" href="getInstDues"><i
 									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
 							<%
@@ -309,7 +309,7 @@
 											<%
 												int i = 1;
 											%>
-											<s:iterator value="appBeansList">
+											<s:iterator value="affBean.aplBeanSet">
 												<tr>
 													<td><%=i%></td>
 													<td class="center"><s:property

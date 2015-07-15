@@ -8,10 +8,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
+import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.affiliated.AffAction;
 import com.dexpert.feecollection.main.users.affiliated.AffBean;
 import com.opensymphony.xwork2.ActionSupport;
@@ -24,6 +26,7 @@ public class AppAction extends ActionSupport {
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
+	AffBean affBean = new AffBean();
 	String fileFileName;
 	FileInputStream inputStream;
 	private File fileUpload;
@@ -66,8 +69,22 @@ public class AppAction extends ActionSupport {
 	// to get list of All Students
 
 	public String getStudentList() {
+		HttpSession httpSession = request.getSession();
+		LoginBean loginBean = (LoginBean) httpSession.getAttribute("loginUserBean");
 
-		appBeansList = aplDAO.getAllStudentList();
+		log.info("Login User Name ::" + loginBean.getUserName());
+		log.info("Login inst ID ::" + loginBean.getAffBean().getInstId());
+		log.info("Login inst Name ::" + loginBean.getAffBean().getInstName());
+
+		// appBeansList = aplDAO.getAllStudentList();
+		affBean = aplDAO.getStudentDetail(loginBean);
+		log.info("List Size is ::" + affBean.getAplBeanSet().size());
+		Iterator<AppBean> itr = affBean.getAplBeanSet().iterator();
+		while (itr.hasNext()) {
+			AppBean appBean = (AppBean) itr.next();
+			log.info("Student Name is ::" + appBean.getAplFirstName());
+
+		}
 
 		return SUCCESS;
 
@@ -193,6 +210,14 @@ public class AppAction extends ActionSupport {
 
 	public void setInputStream(FileInputStream inputStream) {
 		this.inputStream = inputStream;
+	}
+
+	public AffBean getAffBean() {
+		return affBean;
+	}
+
+	public void setAffBean(AffBean affBean) {
+		this.affBean = affBean;
 	}
 
 }

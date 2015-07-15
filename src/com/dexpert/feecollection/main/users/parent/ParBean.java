@@ -1,6 +1,7 @@
 package com.dexpert.feecollection.main.users.parent;
 
 import java.io.File;
+import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,11 +18,15 @@ import com.dexpert.feecollection.main.users.LoginBean;
 
 @Entity
 @Table(name = "parent_inst_detail")
-public class ParBean {
+public class ParBean implements Serializable {
 
-	@GenericGenerator(name = "g9", strategy = "increment")
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@GenericGenerator(name = "g15", strategy = "increment")
 	@Id
-	@GeneratedValue(generator = "g9")
+	@GeneratedValue(generator = "g15")
 	private Integer parInstId;
 	private String parInstName, parInstAddress, parInstContPerson, parInstEmail, parInstContact;
 	// --------------------------------------
