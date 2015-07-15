@@ -452,6 +452,14 @@ public class AffAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	// to get College Due Report
+
+	public String collegeDueReport() {
+		log.info("COllege Due Report");
+
+		return SUCCESS;
+	}
+
 	// End of Action Methods
 
 	// ---------------------------------------------------

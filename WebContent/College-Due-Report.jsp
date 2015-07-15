@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
-	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+	String profile = (String) session.getAttribute("sesProfile");
 
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
@@ -30,7 +32,7 @@
 	}
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal</title>
+<title>Fee Collection Portal- College Due Report</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -168,7 +170,7 @@
 								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<%
-								if (profile.contentEquals("SU")){
+								if (profile.contentEquals("SU")) {
 							%><li><a class="ajax-link" href="UniversityDetailRecord"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<%
@@ -177,7 +179,7 @@
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
 							<%
-								if (!profile.contentEquals("Affiliated")){
+								if (!profile.contentEquals("Affiliated")) {
 							%><li><a class="ajax-link" href="StudentTotalRecord"><i
 									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
 							<%
@@ -186,8 +188,9 @@
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
 							<%
-								if (profile.contentEquals("Affiliated")){
-							%><li><a class="ajax-link" href="getInstDues"><i
+								if (profile.contentEquals("Affiliated")) {
+							%><li><a class="ajax-link" href="#"
+								onclick='window.open("LockFeature.jsp", "University Report", "height=1080,width=1920")'><i
 									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
 							<%
 								}
@@ -200,7 +203,6 @@
 			</div>
 			<!--/span-->
 			<!-- left menu ends -->
-
 			<noscript>
 				<div class="alert alert-block col-md-12">
 					<h4 class="alert-heading">Warning!</h4>
@@ -214,15 +216,23 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				
+				<!-- <div>
+					<ul class="breadcrumb">
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Dashboard</a></li>
+					</ul>
+				</div> -->
 
 
+
+
+				<!--/row-->
 				<div class="row">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-info-sign"></i> Introduction
+									<i class="glyphicon glyphicon-list-alt"></i> College Due Report Detail
 								</h2>
 
 								<div class="box-icon">
@@ -234,19 +244,59 @@
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
-									<h1>
-										Welcome
-										<%=loginUser.getAffBean().getInstName()%><br> <small>
-											This is the online fee payment portal</small>
-									</h1>
-									<p>You can use the portal to pay various fees to the
-										governing university in a hasslefree manner. We accept various
-										payment methods such as Cash, Cheque, Online Banking,
-										Credit/Debit Card, NEFT & RTGS. Please use the menu list on
-										the left sidebar to use the features of the portal. You can
-										use the cart option in the top bar to view and edit your
-										current payable amount.</p>
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn btn-sm btn-info pull-right"
+												onclick='window.open("GenerateCollegeReport", "CollegeForm", "width=1500,height=1080")'>
+												<i class="fa fa-plus"></i> Print Report
+											</button>
+										</div>
+									</div>
+									<!---Content-->
+									<table
+										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
+										<thead>
+											<tr>
+												<th width="7%">Sr. No.</th>
 
+												<th>Institute Name</th>
+												<th>Contact Number</th>
+												<th>College Email</th>
+												<th>Institute Address</th>
+												<th>Place</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<%
+												int i = 1;
+											%>
+											<s:iterator value="affInstList">
+												<tr>
+													<td><span style="margin-left: 10px;"><%=i%></span></td>
+
+													<td><span style="margin-left: 10px;"><s:property
+																value="instName" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="contactNumber" /></span></td>
+
+													<td><span style="margin-left: 10px;"><s:property
+																value="email" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="instAddress" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="place" /></span></td>
+
+												</tr>
+
+												<%
+													i++;
+												%>
+											</s:iterator>
+
+
+										</tbody>
+									</table>
 
 								</div>
 
@@ -255,9 +305,6 @@
 						</div>
 					</div>
 				</div>
-
-				<!--/row-->
-
 				<!--/row-->
 				<!-- content ends -->
 			</div>
@@ -340,6 +387,9 @@
 	<script src="js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
+	<!-- TypeAhead Script -->
+	<script src="js/typeahead.bundle.js"></script>
+
 
 
 </body>

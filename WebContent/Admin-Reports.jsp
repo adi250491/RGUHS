@@ -245,11 +245,12 @@ try{
 											Report</button>
 									</p>
 									<p class="btn-group">
-										<button class="btn btn-danger" title="Get College Due Report"
-											onclick="CollegeDueReport()">College Due Report</button>
+										<button class="btn btn-default" title="Get College Due Report"
+											onclick="window.location='CollegeDueReport'">College
+											Due Report</button>
 									</p>
 									<p class="btn-group">
-										<button class="btn btn-success" title="Get Transaction Report"
+										<button class="btn btn-default" title="Get Transaction Report"
 											onclick="TransactionReport()">Transaction Report</button>
 									</p>
 
