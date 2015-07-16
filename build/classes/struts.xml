@@ -450,6 +450,18 @@
 
 
 		</action>
+		<action name="submitingParameterNoValidate"
+			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
+			method="submitParameter">
+
+
+			<result name="success"> Student-Detail-For-QuickPayNoValidation.jsp</result>
+			<result name="failure"> Student-Detail-For-QuickPayNoValidation.jsp</result>
+
+
+
+
+		</action>
 
 	</package>
 
