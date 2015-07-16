@@ -257,7 +257,7 @@
 						<a data-toggle="tooltip"
 							title="600 new student requests. Click here to view"
 							class="well top-block" href="#"
-							onclick='window.open("UniversityReportStudent.html", "Dail Report", "width=1920,height=1080");'>
+							onclick='window.open("LockFeature.jsp", "Dail Report", "width=1920,height=1080");'>
 							<i class="glyphicon glyphicon-user blue"></i>
 
 							<div>Total Student Requests</div>
@@ -269,7 +269,7 @@
 						<a data-toggle="tooltip"
 							title="4 new payments by colleges. Click here to view"
 							class="well top-block" href="#"
-							onclick='window.open("University-Report.html", "University Report", "height=1080,width=1920")'>
+							onclick='window.open("LockFeature.jsp", "University Report", "height=1080,width=1920")'>
 							<i class="fa fa-inr green"></i>
 
 							<div>Total Payments Made This Month</div>

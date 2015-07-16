@@ -211,7 +211,7 @@ public class AffAction extends ActionSupport {
 	// update COllege Record
 
 	public String updateCollegeDetail() {
-		log.info("paramlist is " + affInstBean.getParamvalues().toString());
+		//log.info("paramlist is " + affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("list Size is ::" + instNameList.size());
 		if (instNameList.isEmpty()) {

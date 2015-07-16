@@ -115,6 +115,9 @@ public class AppDAO {
 
 			criteria.add(Restrictions.eq("instId", id));
 			AffBean affBean = (AffBean) criteria.list().iterator().next();
+			
+			log.info("List is ::"+affBean.getAplBeanSet().size());
+			log.info("List is ::"+affBean.getEmail());
 			return affBean;
 
 		} finally {

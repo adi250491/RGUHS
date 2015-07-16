@@ -258,7 +258,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<button class="btn btn-sm btn-info pull-right"
-												onclick='window.open("GenerateCollegeReport", "CollegeForm", "width=1500,height=1080")'>
+												onclick='window.open("LockFeature.jsp", "CollegeForm", "width=500,height=700")'>
 												<i class="fa fa-plus"></i> Print Report
 											</button>
 										</div>

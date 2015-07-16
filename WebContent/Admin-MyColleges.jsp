@@ -137,7 +137,7 @@
 			</div>
 			<!-- theme selector ends -->
 			<!-- cart button starts -->
-			<div class="btn-group pull-right">
+			<%-- <div class="btn-group pull-right">
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
 					<i class=" glyphicon glyphicon-shopping-cart"></i><span
@@ -151,7 +151,7 @@
 						onclick='window.open("Cart.html", "MyCart", "width=500,height=900")'>View
 							Cart</a></li>
 				</ul>
-			</div>
+			</div> --%>
 			<!-- cart button ends -->
 		</div>
 	</div>

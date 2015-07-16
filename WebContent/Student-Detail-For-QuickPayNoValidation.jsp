@@ -150,9 +150,8 @@
 				<form action="submitingParameterNoValidate" method="post">
 
 
-					<input type="hidden" readonly="readonly"
-						name="appBean1.enrollmentNumber" id="enrollId"
-						value="<s:property value="appBean1.enrollmentNumber" />">
+					<input type="hidden" name="appBean1.enrollmentNumber" id="enrollId"
+						value='<s:property value="appBean1.enrollmentNumber" />'>
 
 					<div class="row">
 						<div class="box col-md-12">
@@ -179,7 +178,7 @@
 
 											</thead>
 											<tbody>
-											
+
 												<tr>
 													<td>Enter Enrollment Number</td>
 
@@ -195,9 +194,8 @@
 
 
 
-													<td><input style="width: 400px;" type="text"
-														name="as" class="form-control"
-														required="required"></td>
+													<td><input style="width: 400px;" type="text" name="as"
+														class="form-control" required="required"></td>
 
 												</tr>
 												<tr>
@@ -206,8 +204,7 @@
 
 
 													<td><input style="width: 400px;" type="text"
-														name="lstName" class="form-control"
-														required="required"></td>
+														name="lstName" class="form-control" required="required"></td>
 
 												</tr>
 												<tr>
@@ -216,8 +213,7 @@
 
 
 													<td><input style="width: 400px;" type="text"
-														name="contact" class="form-control"
-														required="required"></td>
+														name="contact" class="form-control" required="required"></td>
 
 												</tr>
 												<tr>
@@ -226,8 +222,7 @@
 
 
 													<td><input style="width: 400px;" type="email"
-														name="email" class="form-control"
-														required="required"></td>
+														name="email" class="form-control" required="required"></td>
 
 												</tr>
 												<tr>
@@ -477,7 +472,8 @@
 											</tbody>
 										</table>
 
-<button type="submit" class="btn btn-success">Calculate Fee</button>
+										<button type="submit" class="btn btn-success">Calculate
+											Fee</button>
 
 									</div>
 
@@ -486,7 +482,7 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							
+
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>
 
@@ -494,13 +490,22 @@
 
 
 								<input type="button" class="btn btn-danger"
-									onclick="openPaymentGateway(<s:property value="feeCollectionBean.fee" />,<s:property value="appBean1.enrollmentNumber" />)"
-									value="Pay">
+									onclick="openPaymentGateway()" value="Pay">
 
 								<script type="text/javascript">
-									function openPaymentGateway(fee,id) {
-						
-										window.location = "AccessingPaymentGateway?feeValue="+fee+"&enrollId="+id;
+									function openPaymentGateway() {
+									
+
+										var fee = document
+												.getElementById("feeId").value;
+										var id = document
+												.getElementById("enrollId").value
+												.trim();
+										id = id.replace(",", "")
+										id = id.replace(" ", "")
+
+										window.location = "AccessingPaymentGateway?feeValue="
+												+ fee + "&enrollId=" + id;
 
 									}
 								</script>

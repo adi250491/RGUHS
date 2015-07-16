@@ -55,6 +55,8 @@ public class AppAction extends ActionSupport {
 			}
 
 			appBean1 = aplDAO.saveOrUpdate(appBean1);
+			
+			
 			return SUCCESS;
 
 		} else {
