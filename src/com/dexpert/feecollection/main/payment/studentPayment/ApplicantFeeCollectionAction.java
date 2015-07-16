@@ -33,21 +33,23 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 	// //
 
+	// get Student Service Detail
+
+	public String studentServiceDetail()
+	{
+		
+		
+		
+		
+		
+		return SUCCESS;
+	}
+
 	public String submitParameter() {
 
 		feeCollectionBean = afc.calculateTotalFee(feeCollectionBean);
-
-		/*
-		 * Iterator<ApplicantFeeCollectionBean> iterator =
-		 * collectionBeanList.iterator(); while (iterator.hasNext()) {
-		 * ApplicantFeeCollectionBean applicantFeeCollectionBean =
-		 * (ApplicantFeeCollectionBean) iterator.next();
-		 * 
-		 * log.info("Calculated Fees Is ::" +
-		 * applicantFeeCollectionBean.getFee());
-		 * 
-		 * }
-		 */
+		log.info("enroll ment  number ::" + appBean1.getEnrollmentNumber());
+		appBean1 = appDAO.getUserDetail(appBean1.getEnrollmentNumber());
 
 		return SUCCESS;
 	}
@@ -58,13 +60,14 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 		String enrolId = request.getParameter("enrollId");
 		String fee = request.getParameter("feeValue");
+		log.info("Enroll ment Id is ::" + enrolId);
 
 		appBean1 = appDAO.getUserDetail(enrolId);
 		String user = appBean1.getAplFirstName().concat(" ").concat(appBean1.getAplLstName());
 
 		log.info("enrollment Number ::" + enrolId);
 		log.info("Total Fee CAlculated ::" + fee);
-		String url = "http://49.50.72.228:8080/SabPaisa/?name=" + user + "&amount=" + fee;
+		String url = "http://localhost:8083/SabPaisa/?name=" + user + "&amount=" + fee;
 		response.sendRedirect(url);
 
 	}
@@ -76,7 +79,7 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 		String user = request.getParameter("feeName");
 		String fee = request.getParameter("amt");
 
-		String url = "http://49.50.72.228:8080/SabPaisa/?name=" + user + "&amount=" + fee;
+		String url = "http://localhost:8083/SabPaisa/?name=" + user + "&amount=" + fee;
 		response.sendRedirect(url);
 
 	}

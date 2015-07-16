@@ -147,11 +147,10 @@
 
 
 				</div> --%>
-				<form action="submitingParameterNoValidate" method="post">
+				<form action="submitingParameterNoValidate" method="get">
 
 
-					<input type="hidden" name="appBean1.enrollmentNumber" id="enrollId"
-						value='<s:property value="appBean1.enrollmentNumber" />'>
+
 
 					<div class="row">
 						<div class="box col-md-12">
@@ -186,7 +185,8 @@
 
 													<td><input style="width: 400px;" type="text"
 														name="appBean1.enrollmentNumber" class="form-control"
-														required="required"></td>
+														required="required" id="enrollId"
+														value='<s:property value="appBean1.enrollmentNumber" />'></td>
 
 												</tr>
 												<tr>
@@ -195,7 +195,8 @@
 
 
 													<td><input style="width: 400px;" type="text" name="as"
-														class="form-control" required="required"></td>
+														class="form-control" required="required"
+														value='<s:property value="appBean1.aplFirstName" />'></td>
 
 												</tr>
 												<tr>
@@ -204,7 +205,8 @@
 
 
 													<td><input style="width: 400px;" type="text"
-														name="lstName" class="form-control" required="required"></td>
+														name="lstName" class="form-control" required="required"
+														value='<s:property value="appBean1.aplLstName" />'></td>
 
 												</tr>
 												<tr>
@@ -213,7 +215,8 @@
 
 
 													<td><input style="width: 400px;" type="text"
-														name="contact" class="form-control" required="required"></td>
+														name="contact" class="form-control" required="required"
+														value='<s:property value="appBean1.aplMobilePri" />'></td>
 
 												</tr>
 												<tr>
@@ -222,7 +225,8 @@
 
 
 													<td><input style="width: 400px;" type="email"
-														name="email" class="form-control" required="required"></td>
+														name="email" class="form-control" required="required"
+														value='<s:property value="appBean1.aplEmail" />'></td>
 
 												</tr>
 												<tr>
@@ -494,7 +498,6 @@
 
 								<script type="text/javascript">
 									function openPaymentGateway() {
-									
 
 										var fee = document
 												.getElementById("feeId").value;
