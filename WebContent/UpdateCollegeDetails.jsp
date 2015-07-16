@@ -188,9 +188,9 @@
 												<tr>
 
 													<td style="font-weight: bold;">Address</td>
-													<td><input type="text" class="form-control"
-														required="required" name="affInstBean.instAddress"
-														value="<s:property value="affInstBean.instAddress" />"></td>
+													<td><textarea  class="form-control"
+														required="required" name="affInstBean.instAddress"><s:property value="affInstBean.instAddress" /></textarea>
+														</td>
 
 												</tr>
 

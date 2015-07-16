@@ -167,7 +167,7 @@
 		<action name="deleteParam"
 			class="com.dexpert.feecollection.main.fee.lookup.LookupAction"
 			method="deleteRecord">
-			<result name="success">/FeeConfig-Parameters.jsp</result>
+			<result name="success">/Success.jsp</result>
 
 		</action>
 		<action name="viewParam"
@@ -321,8 +321,9 @@
 			class="com.dexpert.feecollection.main.fee.lookup.values.FvAction"
 			method="updateValues">
 
-			<result name="success">ParamValForm.jsp</result>
-
+			<result name="success">ParamForm.jsp</result>
+			<result name="view">Success.jsp</result>
+	
 		</action>
 
 	</package>
@@ -345,7 +346,7 @@
 		<action name="saveFee"
 			class="com.dexpert.feecollection.main.fee.config.FcAction" method="SaveFee">
 
-			<result name="success">FeeForm2.jsp</result>
+			<result name="success">Success.jsp</result>
 
 
 		</action>

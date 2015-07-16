@@ -308,11 +308,12 @@
 	<script src="js/charisma.js"></script>
 
 	<script>
-		function OpenSummaryInParent() {
-			window.opener.location.reload(true);
-			window.close();
-
-		}
+	window.onunload = function() {
+		window.opener.document.location.reload();
+		setTimeout(window.close(), 100);
+	}
+	
+		
 	</script>
 </body>
 </html>

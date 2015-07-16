@@ -145,8 +145,7 @@
 	<!-- topbar ends -->
 	<div class="ch-container">
 		<div class="row">
-
-			<!-- left menu starts -->
+<!-- left menu starts -->
 			<div class="col-sm-2 col-lg-2">
 				<div class="sidebar-nav">
 					<div class="nav-canvas">
@@ -156,12 +155,43 @@
 							<li><a class="ajax-link"
 								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
-							<li><a class="ajax-link" href="UniversityDetailRecord"><i
+							<%
+								if (profile.contentEquals("SU")) {
+							%><li><a class="ajax-link" href="UniversityDetailRecord"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
+							<%
+								}
+							%>
+							<%
+								if (!profile.contentEquals("Affiliated")) {
+							%>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
+							<%
+								}
+							%>
+							<%
+								if (profile.contentEquals("Affiliated")) {
+							%><li><a class="ajax-link" href="StudentTotalRecord"><i
+									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
+							<%
+								}
+							%>
+							<%
+								if (!profile.contentEquals("Affiliated")) {
+							%>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
+							<%
+								}
+							%>
+							<%
+								if (profile.contentEquals("Affiliated")) {
+							%><li><a class="ajax-link" href="getInstDues"><i
+									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
+							<%
+								}
+							%>
 							<li><a class="ajax-link" href="Admin-Reports.jsp"><i
 									class="fa fa-list-alt"></i><span> Reports</span></a></li>
 						</ul>
@@ -283,11 +313,12 @@
 														<td><%=i%></td>
 														<td><s:property value="lookupScope" /></td>
 														<td><s:property value="lookupName" /></td>
-														<td><a onclick='window.open("viewParam?reqParamId=<s:property value='lookupId' />", "Admin Report", "height=1080,width=1000")' class="btn btn-success btn-sm" href="#">
+														<td><a onclick='window.open("viewParam?reqParamId=<s:property value='lookupId' />&view=true", "Admin Report", "height=1080,width=1000")' class="btn btn-success btn-sm" href="#">
 																<i class="glyphicon glyphicon-zoom-in icon-white"
 																></i>
 																View
-														</a> <a class="btn btn-info btn-sm" href="#"> <i
+														</a> <a class="btn btn-info btn-sm" href="#" data-toggle="popover" data-content=""
+																			title="Feature Locked"> <i
 																class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
 														</a> <a class="btn btn-danger btn-sm" href="#"
 															onclick='confirmDelete("<s:property value='lookupId' />")'>
@@ -418,6 +449,10 @@
 			} else {
 				alert("Record Not changed");
 			}
+		}
+		window.onfocus=function()
+		{
+			window.location.reload();
 		}
 	</script>
 

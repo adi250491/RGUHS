@@ -44,7 +44,7 @@
 
 <!-- The fav icon -->
 <link rel="shortcut icon" href="img/favicon.ico">
-
+<%int i=1; %>
 </head>
 
 <body>
@@ -106,7 +106,7 @@
 										<s:iterator value="feeList">
 										
 										<tr>
-												<td>1</td>
+												<td><%=i %><%i++; %></td>
 												<td><s:property value="feeId"/></td>
 												<td><s:property value="feeName"/></td>
 												<td><button id='Add[<s:property value="feeId"/>]' onclick='AddToArray(<s:property value="feeId"/>)' class="btn btn-success btn-sm">Add</button>
@@ -124,7 +124,7 @@
 						</div>
 					</div>
 					<div class="col-md-12">
-						<button onclick="showDetails()" class="btn btn-success">Back</button>
+						<button onclick='window.location="ViewCollegeFees?instId=<%=request.getParameter("collId")%>"' class="btn btn-success">Back</button>
 						<button class="btn btn-warning" onclick='saveValues()'>Save</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
@@ -227,7 +227,7 @@
 
 		}
 		function showDetails() {
-			window.open("CollegeDetails.html", "CollegeDetails", "width=700,height=900");
+			window.location="ViewCollegeFees?instId=<%=request.getParameter("collId")%>";
 		}
 		
 		function AddToArray(value) {

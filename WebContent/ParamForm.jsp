@@ -32,10 +32,11 @@
 	}
 	try{
 		alertflag=(boolean)request.getAttribute("reqAlertFlag");
+		
 	}
 	catch(Exception e)
 	{
-		
+		e.printStackTrace();
 	}
 	
 %>
@@ -132,7 +133,7 @@
 										<table class="table table-condensed">
 											<thead>
 												<tr>
-													<th></th>
+													
 													<th></th>
 													<th></th>
 												</tr>
@@ -140,7 +141,7 @@
 											<tbody>
 												<tr>
 													<s:token />
-													<td>1</td>
+													
 													<td>Parameter Scope</td>
 													<td><div class="control-group">
 															<div class="controls">
@@ -158,7 +159,7 @@
 														</div></td>
 												</tr>
 												<tr>
-													<td>2</td>
+													
 													<td>Parameter Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="CollegeName"
@@ -169,7 +170,6 @@
 														</div></td>
 												</tr>
 												<tr>
-													<td>3</td>
 													<td>Parameter type</td>
 													<td><div class="control-group">
 															<div class="controls">
@@ -187,7 +187,7 @@
 														</div></td>
 												</tr>
 												<tr>
-													<td>4</td>
+													
 													<td>Description</td>
 													<td><div id="the-basics" class="has-success">
 															<textarea required="required" id="DescriptionName"
@@ -208,9 +208,8 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-success">Save
-								Parameter</button>
-
+							<button type="submit" class="btn btn-success">Next</button>
+							
 							<button onclick="window.close()" class="btn btn-info">Close
 							</button>
 

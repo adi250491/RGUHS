@@ -409,6 +409,7 @@ public class FcAction extends ActionSupport {
 		}
 		log.info("final combos are "+comboList.toString());
 		configdao.insertFeeBulk(comboList);
+		request.setAttribute("msg", "Fee Saved Successfully");
 		return SUCCESS;
 	}
 	

@@ -103,75 +103,85 @@
 
 
 				<div class="row">
-				<form action="saveFee" method="post">
-					<div class="box col-md-12">
-						<div class="box-inner">
-							<div class="box-header well">
-								<h2>
-									<i class="glyphicon glyphicon-info-sign"></i> Set Fee Values
-									for Admission Fee
-								</h2>
+					<form action="saveFee" method="post">
+						<div class="box col-md-12">
+							<div class="box-inner">
+								<div class="box-header well">
+									<h2>
+										<i class="glyphicon glyphicon-info-sign"></i> Set Fee Values
+										for Admission Fee
+									</h2>
 
-								<div class="box-icon">
+									<div class="box-icon">
 
-									<a href="#" class="btn btn-minimize btn-round btn-default"><i
-										class="glyphicon"></i></a>
+										<a href="#" class="btn btn-minimize btn-round btn-default"><i
+											class="glyphicon"></i></a>
 
+									</div>
 								</div>
-							</div>
-							<div class="box-content row">
-								<div class="col-lg-12 col-md-12 animated fadeIn">
+								<div class="box-content row">
+									<div class="col-lg-12 col-md-12 animated fadeIn">
 
-									
-									<table class="table table-condensed table-striped">
 
-										<thead>
-											<tr>
-											<th>Sr. No.</th>
-												<th></th>
-												<s:iterator value="HeaderList" status="ind">
+										<table class="table table-condensed table-striped">
 
-													<th><s:property /></th>
-
-												</s:iterator>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<s:iterator value="BodyList">
+											<thead>
 												<tr>
-												<td><%=i %> <s:property value="%{#ind.index}"/></td>
-													<s:iterator status="incr">
-													
-													
-														<td><s:if test="%{#incr.index==0}">
-																<input value='<s:property />'  name="uids[<%=j%>].comboId" hidden="hidden">
-															</s:if> <s:else>
-																<s:property />
-															</s:else></td>
+													<th>Sr. No.</th>
+													<th></th>
+													<s:iterator value="HeaderList" status="ind">
 
+														<th><s:property /></th>
 
 													</s:iterator>
-													<%i++;
-													  j++;%>
-													<td><input name="uids[<%=j%>].amount"  class="form-control" type="text" placeholder="Enter Fee Value">
-														<button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></td>
+													<th></th>
 												</tr>
-											</s:iterator>
-										</tbody>
-									</table>
+											</thead>
+											<tbody>
+												<s:iterator value="BodyList">
+													<tr>
+														<td><%=i%> <s:property value="%{#ind.index}" /></td>
+														<s:iterator status="incr">
+
+
+															<td><s:if test="%{#incr.index==0}">
+																	<input value='<s:property />'
+																		name="uids[<%=j%>].comboId" hidden="hidden">
+																</s:if> <s:else>
+																	<s:property />
+																</s:else></td>
+
+
+														</s:iterator>
+														<%
+															i++;
+																									  j++;
+														%>
+														<td><input name="uids[<%=j%>].amount"
+															class="form-control" type="text" required="required"
+															placeholder="Enter Fee Value" pattern="[0-9.,]*">
+															<button type="button" data-toggle="popover"
+																data-content="" title="Feature Locked"
+																class="btn btn-sm btn-danger">
+																<i class="fa fa-trash"></i>
+															</button></td>
+													</tr>
+												</s:iterator>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-12">
-						<button type="submit" class="btn btn-success">Save Fee Details</button>
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-success">Save Fee
+								Details</button>
 
-						<button onclick="window.close()" class="btn btn-info">Close
-						</button>
-					
-					</div>
-</form>
+							<button onclick="window.close()" class="btn btn-info">Close
+							</button>
+
+						</div>
+					</form>
 				</div>
 
 				<!--/row-->

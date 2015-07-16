@@ -243,6 +243,7 @@
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
+						<button onclick="window.location='ParamForm.jsp'" class="btn btn-default">Back</button>
 
 					</div>
 

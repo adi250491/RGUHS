@@ -368,13 +368,13 @@
 	<script src="js/charisma.js"></script>
 
 	<script>
-		function OpenSummaryInParent() {
+		
 			window.onunload = function() {
 				window.opener.document.location.reload();
 				setTimeout(window.close(), 100);
 			}
 
-		}
+		
 	</script>
 </body>
 </html>

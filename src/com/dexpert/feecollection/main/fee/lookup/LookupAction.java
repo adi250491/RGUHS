@@ -114,6 +114,7 @@ public class LookupAction extends ActionSupport {
 		LookupBean tempBean=new LookupBean();
 		tempBean.setLookupId(Integer.parseInt(request.getParameter("paramid").trim()));
 		lookupdao.removeLookupData(tempBean);
+		request.setAttribute("msg", "Parameter deleted successfully");
 		return SUCCESS;
 	}
 	// End of Action Methods

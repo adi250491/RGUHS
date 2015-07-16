@@ -142,7 +142,7 @@ Integer count=0;%>
 											<thead>
 
 												<tr>
-													<th></th>
+													
 													<th></th>
 													<th></th>
 
@@ -150,7 +150,7 @@ Integer count=0;%>
 											</thead>
 											<tbody>
 												<tr>
-													<td>0</td>
+													
 													<td>Fee Payable By</td>
 													<td><div class="control-group">
 
@@ -166,7 +166,7 @@ Integer count=0;%>
 
 												</tr>
 												<tr>
-													<td>1</td>
+													
 													<td>Fee Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="District/Area"
@@ -178,7 +178,7 @@ Integer count=0;%>
 
 
 												<tr>
-													<td>2</td>
+													
 													<td>Select Course Parameters</td>
 													<td><div class="control-group">
 
@@ -195,7 +195,7 @@ Integer count=0;%>
 
 												</tr>
 												<tr>
-													<td>3</td>
+													
 													<td>Select College Parameters</td>
 													<td><div class="control-group">
 
@@ -212,7 +212,7 @@ Integer count=0;%>
 
 												</tr>
 												<tr>
-													<td>4</td>
+													
 													<td>Select Student Parameters</td>
 													<td><div class="control-group">
 
@@ -231,7 +231,7 @@ Integer count=0;%>
 
 												</tr>
 												<tr>
-													<td>5</td>
+													
 													<td>Select Service Parameters</td>
 
 													<td><div class="control-group">
@@ -248,7 +248,7 @@ Integer count=0;%>
 														</div></td>
 												</tr>
 												<tr>
-													<td>6</td>
+													
 													<td>Select Fee Calculation Parameter</td>
 													<td><div class="control-group">
 															<div class="controls">

@@ -129,7 +129,7 @@
 						</div>
 					</div>
 					<div class="col-md-12">
-						<button onclick="showDetails()" class="btn btn-success">Back</button>
+						<button onclick='window.location="ViewCollegeFees?instId=<%=request.getParameter("instId") %>"' class="btn btn-success">Back</button>
 						<button class="btn btn-warning" onclick='window.location="GetAffFees?collId=<s:property value='affInstBean.instId' />"'>Add Associated Fees</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close

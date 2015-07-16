@@ -6,7 +6,8 @@
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
-	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
+	loginUser = (LoginBean) session.getAttribute("loginUserBean");
+	String profile = (String) session.getAttribute("sesProfile");
 
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
@@ -21,14 +22,15 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-	if (cookie.getName().equals("user"))
-		usercookie = cookie.getValue();
-	if (cookie.getName().equals("JSESSIONID"))
-		sessionID = cookie.getValue();
+			if (cookie.getName().equals("user"))
+				usercookie = cookie.getValue();
+			if (cookie.getName().equals("JSESSIONID"))
+				sessionID = cookie.getValue();
 		}
 	} else {
 		sessionID = session.getId();
 	}
+	int i = 1;
 %>
 <meta charset="utf-8">
 <title>Fee Collection Portal- Reports</title>
@@ -153,14 +155,14 @@
 								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<%
-								if (profile.contentEquals("SU")){
+								if (profile.contentEquals("SU")) {
 							%><li><a class="ajax-link" href="UniversityDetailRecord"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<%
 								}
 							%>
 							<%
-								if (!profile.contentEquals("Affiliated")){
+								if (!profile.contentEquals("Affiliated")) {
 							%>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
@@ -168,14 +170,14 @@
 								}
 							%>
 							<%
-								if (profile.contentEquals("Affiliated")){
+								if (profile.contentEquals("Affiliated")) {
 							%><li><a class="ajax-link" href="StudentTotalRecord"><i
 									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
 							<%
 								}
 							%>
 							<%
-								if (!profile.contentEquals("Affiliated")){
+								if (!profile.contentEquals("Affiliated")) {
 							%>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
@@ -183,7 +185,7 @@
 								}
 							%>
 							<%
-								if (profile.contentEquals("Affiliated")){
+								if (profile.contentEquals("Affiliated")) {
 							%><li><a class="ajax-link" href="getInstDues"><i
 									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
 							<%
@@ -211,7 +213,7 @@
 
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
-				
+
 				<div class="row">
 					<div class="box col-md-12">
 						<div class="box-inner">
@@ -236,8 +238,8 @@
 										<button class="btn btn-default"
 											onclick='window.open("LockFeature.jsp", "Feature Lock", "height=500,width=500")'>Fee
 											Templates</button>
-										<button class="btn btn-default" onclick='window.location="GetFeesAll"'>Fee
-											Values</button>
+										<button class="btn btn-default"
+											onclick='window.location="GetFeesAll"'>Fee Values</button>
 										<button class="btn btn-default"
 											onclick='window.location="GetAllParameters"'>Fee
 											Parameters</button>
@@ -287,7 +289,7 @@
 
 									</p>
 
-									
+
 								</div>
 
 
@@ -323,11 +325,11 @@
 										<button class="btn btn-default "
 											onclick='window.open("GetParamValues", "Fee Form", "height=1080,width=1000")'>Add
 											New Fee</button>
-									
+
 
 									</p>
 
-									 <table
+									<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
 											<tr>
@@ -339,28 +341,38 @@
 											</tr>
 										</thead>
 										<tbody>
-										<s:iterator value="fDfeeList">
-										<tr>
-												<td>1</td>
-												<td><s:property value="feeId"/> </td>
-												<td><s:property value="feeName"/> </td>
-												<td>
-												<s:set var="app" ><s:property value="forApplicant"/></s:set>
-												<s:set var="ins" ><s:property value="forInstitute"/></s:set>
-												<s:if test="%{#app==1}">Student</s:if>
-													<s:if test="%{#ins==1}">College</s:if> </td>
-												<td class="center"><a class="btn btn-success btn-sm"
-													href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> View
-												</a> <a class="btn btn-info btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
-												</a> <a class="btn btn-danger btn-sm" href="#"> <i
-														class="glyphicon glyphicon-zoom-in icon-white"></i> Delete
-												</a></td>
-											</tr>
-										</s:iterator>
-											
-											
+											<s:iterator value="fDfeeList">
+												<tr>
+													<td><%=i%>
+														<%
+															i++;
+														%></td>
+													<td><s:property value="feeId" /></td>
+													<td><s:property value="feeName" /></td>
+													<td><s:set var="app">
+															<s:property value="forApplicant" />
+														</s:set> <s:set var="ins">
+															<s:property value="forInstitute" />
+														</s:set> <s:if test="%{#app==1}">Student</s:if> <s:if
+															test="%{#ins==1}">College</s:if></td>
+													<td class="center"><a class="btn btn-success btn-sm"
+														href="#" data-toggle="popover" data-content=""
+														title="Feature Locked"> <i
+															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+													</a> <a class="btn btn-info btn-sm" href="#"
+														data-toggle="popover" data-content=""
+														title="Feature Locked"> <i
+															class="glyphicon glyphicon-zoom-in icon-white"></i> Edit
+													</a> <a class="btn btn-danger btn-sm" href="#"
+														data-toggle="popover" data-content=""
+														title="Feature Locked"> <i
+															class="glyphicon glyphicon-zoom-in icon-white"></i>
+															Delete
+													</a></td>
+												</tr>
+											</s:iterator>
+
+
 										</tbody>
 									</table>
 								</div>
@@ -403,8 +415,8 @@
 			</div>
 		</div>
 
-		
-			
+
+
 	</div>
 	<!--/.fluid-container-->
 
@@ -446,6 +458,12 @@
 	<script src="js/charisma.js"></script>
 	<!-- TypeAhead Script -->
 	<script src="js/typeahead.bundle.js"></script>
-	
+
+<script>
+window.onfocus=function()
+{
+	window.location.reload();
+}
+</script>
 </body>
 </html>

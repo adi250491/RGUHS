@@ -24,7 +24,18 @@ public class FvAction extends ActionSupport {
 	
 	public String updateValues()
 	{
-		
+		boolean targetFlag=false;
+		try
+		{
+			if(request.getParameter("view").contentEquals("true"))
+			{
+				targetFlag=true;
+			}
+		}
+		catch(Exception e)
+		{
+			targetFlag=false;
+		}
 		ArrayList<LookupBean>paramList=new ArrayList<LookupBean>();
 		LookupBean paramBean=new LookupBean();
 		Integer id=Integer.parseInt(request.getParameter("paramId"));
@@ -60,6 +71,11 @@ public class FvAction extends ActionSupport {
 		paramBean.setFvBeansList(valuesList);
 		paramBean=lpDao.saveLookupData(paramBean);
 		request.setAttribute("reqAlertFlag", true);
+		if(targetFlag)
+		{
+			request.setAttribute("msg", "Parameter Sucessfully Updated");
+			return "view";
+		}
 		return SUCCESS;
 	}
 }

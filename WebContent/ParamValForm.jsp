@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 <%
+boolean view=false;
 	Boolean alertflag=false;
 	//checking session
 	LoginBean loginUser = new LoginBean();
@@ -31,6 +32,17 @@
 		sessionID = session.getId();
 	}
 	int i=1;
+	try
+	{
+		if(request.getParameter("view").contentEquals("true"))
+		{
+			view=true;
+		}
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
 %>
 <meta charset="utf-8">
 <title>Fee Collection Portal - Parameter Values</title>
@@ -165,7 +177,7 @@
 									<table class="table table-condensed">
 										<thead>
 											<tr>
-												<th></th>
+												
 												<th></th>
 												<th></th>
 											</tr>
@@ -173,30 +185,30 @@
 										<tbody>
 											<tr>
 
-												<td>1</td>
+												
 												<td>Parameter Scope</td>
 												<input hidden="hidden" id="paramID"
 													value='<s:property value="lookupdata.lookupId"/>'>
 												<td><s:property value="lookupdata.lookupScope" /></td>
 											</tr>
 											<tr>
-												<td>2</td>
+												
 												<td>Parameter Name</td>
 												<td><s:property value="lookupdata.lookupName" /></td>
 											</tr>
 											<tr>
-												<td>3</td>
+												
 												<td>Parameter type</td>
 												<td><s:property value="lookupdata.lookupType" /></td>
 											</tr>
 											<tr>
-												<td>4</td>
+												
 												<td>Description</td>
 												<td><s:property value="lookupdata.lookupDesc" /></td>
 											</tr>
 											<s:if test="%{!(lookupdata.getFvBeansList().isEmpty())}">
 												<tr>
-													<td colspan="3">
+													<td colspan="2">
 														<table class="table table-condensed">
 															<thead>
 																<tr>
@@ -222,7 +234,7 @@
 												</tr>
 											</s:if>
 											<tr>
-												<td>6</td>
+												
 												<td>Possible Values</td>
 												<td><div id="tags">
 														<input type="text" value=""
@@ -241,12 +253,14 @@
 					</div>
 					<div class="col-md-12">
 						<button type="button" onclick="saveValues()"
-							class="btn btn-success">Save Parameter</button>
+							class="btn btn-success">Save</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
 						</button>
-						<button onclick="window.history.back();" class="btn btn-default">Back</button>
-
+						<%if(view==false) {%>
+							
+						<button onclick="window.location='ParamForm.jsp'" class="btn btn-default">Back</button>
+<%} %>
 					</div>
 
 				</div>
@@ -385,7 +399,7 @@
 				dataArray.push(values[value]);
 			}
 			window.location = "saveParamValues?values=" + dataArray
-					+ "&paramId=" + id;
+					+ "&paramId=" + id+"&view=<%=view%>";
 		}
 	</script>
 </body>
