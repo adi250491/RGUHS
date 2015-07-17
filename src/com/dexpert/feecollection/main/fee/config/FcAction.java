@@ -17,12 +17,16 @@ import com.dexpert.feecollection.main.fee.lookup.LookupBean;
 import com.dexpert.feecollection.main.fee.lookup.LookupDAO;
 import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 import com.dexpert.feecollection.main.fee.lookup.values.FvDAO;
+import com.dexpert.feecollection.main.users.affiliated.AffFeeCalcDetail;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class FcAction extends ActionSupport {
 	// Global Declarations Start
 
 	private ArrayList<FcBean> uids = new ArrayList<FcBean>();
+	
 	private FeeDetailsBean feedetails;
 	private String feePayee, cal_mode;
 	private FcBean fcbean1;
@@ -420,9 +424,13 @@ public class FcAction extends ActionSupport {
 				temp.setFeedetailbean(fee);
 				comboList.add(temp);
 			}
+			
 		}
 		log.info("final combos are "+comboList.toString());
-		configdao.insertFeeBulk(comboList);
+		fee.setConfigs(comboList);
+		configdao.saveFeeDetails(fee);
+		//configdao.insertFeeBulk(comboList);
+		
 		request.setAttribute("msg", "Fee Saved Successfully");
 		return SUCCESS;
 	}
@@ -430,9 +438,85 @@ public class FcAction extends ActionSupport {
 	public String GetFeesAll()
 	{
 		fDfeeList=configdao.GetFees("ALL", null, null, null);
+		log.info(fDfeeList.toString());
 		
 		return SUCCESS;
 	}
+	
+	public String FeeDetails()
+	{
+		Integer id=Integer.parseInt(request.getParameter("reqFeeId").trim());
+		ses.setAttribute("sesFeeId", id);
+		Integer inst_id=Integer.parseInt(request.getParameter("instId").trim());
+		ses.setAttribute("sesInstId", inst_id);
+		fDfeeList=configdao.GetFees("id", null, id, null);
+		FeeDetailsBean fdBean=new FeeDetailsBean();
+		fdBean=fDfeeList.get(0);
+		ListMultimap<Integer, FcBean>comboMap=ArrayListMultimap.create();
+		List<FcBean>comboList=new ArrayList<FcBean>();
+		log.info(fdBean.getConfigs().toString());
+		if(fdBean.getConfigs().size()>0)
+		{
+		
+			comboList=fdBean.getConfigs();
+			for (int i = 0; i < comboList.size(); i++) {
+				
+				FcBean temp=new FcBean();
+				temp=comboList.get(i);
+				
+				comboMap.put(temp.getComboId(), temp);
+			}
+			//Get Headers
+			ArrayList<FcBean>tempList=new ArrayList<FcBean>();
+			
+			ArrayList<Integer>keyList=new ArrayList<Integer>(comboMap.keySet());
+			
+			tempList.addAll(comboMap.get(keyList.get(0)));
+			ArrayList<Integer[]>headerinput=new ArrayList<Integer[]>();
+			
+			ArrayList<Integer>valueidList=new ArrayList<Integer>();
+			log.info("templist is "+tempList.toString());
+			for (int i = 0; i < tempList.size(); i++) {
+				valueidList.add(tempList.get(i).getValueId());
+			}
+			Integer[]valueids=new Integer[valueidList.size()];
+			valueidList.toArray(valueids);
+			headerinput.add(valueids);
+			HeaderList=GetHeaders(headerinput);
+			
+			//Prepare Body
+			ArrayList<FvBean> FvBeanList = new ArrayList<FvBean>();
+			FvBeanList = fvdao.getValues("ALL", null, null);
+			HashMap<Integer, FvBean> ValueMap = new HashMap<Integer, FvBean>();
+			ValueMap = CreateMap(FvBeanList);
+			ArrayList<ArrayList<String>>tempbody=new ArrayList<ArrayList<String>>();
+			Integer comboId=0;
+			Iterator<Integer> keyIt=keyList.iterator();
+			while(keyIt.hasNext())
+			{
+				ArrayList<String>temp=new ArrayList<String>();
+				
+				tempList.clear();
+				tempList.addAll(comboMap.get(keyIt.next()));
+				temp.add(tempList.get(0).getComboId().toString());
+				
+				for (int i = 0; i < tempList.size(); i++) {
+					temp.add(ValueMap.get(tempList.get(i).getValueId()).getValue());
+				}
+				temp.add(tempList.get(0).getAmount().toString());
+				tempbody.add(temp);
+			}
+			BodyList=tempbody;
+			return SUCCESS;
+		}
+		else
+		{
+			//return error when no no config found in feedetail bean
+			return ERROR;
+		}
+	}
+	
+	
 
 	// Action Methods End
 	// ----------------------
@@ -1232,13 +1316,16 @@ public class FcAction extends ActionSupport {
 		this.uids = uids;
 	}
 
-	public ArrayList<FeeDetailsBean> getFDfeeList() {
+
+	public ArrayList<FeeDetailsBean> getfDfeeList() {
 		return fDfeeList;
 	}
 
-	public void setFDfeeList(ArrayList<FeeDetailsBean> fDfeeList) {
-		fDfeeList = fDfeeList;
+	public void setfDfeeList(ArrayList<FeeDetailsBean> fDfeeList) {
+		this.fDfeeList = fDfeeList;
 	}
+
+	
 	
 
 	// Getter Setters End

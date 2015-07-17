@@ -65,6 +65,7 @@ public class FvAction extends ActionSupport {
 		{
 			FvBean valuesBean=new FvBean();
 			valuesBean.setValue(valuesIt.next());
+			valuesBean.setLookupname(paramBean);
 			valuesList.add(valuesBean);
 			
 		}

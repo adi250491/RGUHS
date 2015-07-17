@@ -1,11 +1,13 @@
 package com.dexpert.feecollection.main.users.affiliated;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,6 +31,8 @@ public class AffFeePropBean {
 	@OneToOne(cascade = CascadeType.ALL)
 	private PaymentDuesBean dueBean;
 	
+	@OneToMany(cascade= CascadeType.ALL)
+	private Set<AffFeeCalcDetail>multipliers;
 	
 	public Integer getPropId() {
 		return propId;
@@ -89,6 +93,12 @@ public class AffFeePropBean {
 	}
 	public void setDueBean(PaymentDuesBean dueBean) {
 		this.dueBean = dueBean;
+	}
+	public Set<AffFeeCalcDetail> getMultipliers() {
+		return multipliers;
+	}
+	public void setMultipliers(Set<AffFeeCalcDetail> multipliers) {
+		this.multipliers = multipliers;
 	}
 	
 	

@@ -42,7 +42,7 @@ public class AffAction extends ActionSupport {
 	Boolean saved = true;
 	private LookupDAO lookupdao = new LookupDAO();
 	public AffBean affInstBean;
-
+	private ArrayList<AffFeeCalcDetail>calcList=new ArrayList<AffFeeCalcDetail>();
 	private AffFeePropBean propbean;
 	ArrayList<AffFeePropBean> dueList = new ArrayList<AffFeePropBean>();
 	AffDAO affDao = new AffDAO();
@@ -459,8 +459,77 @@ public class AffAction extends ActionSupport {
 
 		return SUCCESS;
 	}
+	
+	public String UpdateCalcParameters()
+	{
+		AffFeePropBean feePropbean=new AffFeePropBean();
+				
+		//Get Fee Id
+		Integer feeId=(Integer)ses.getAttribute("sesFeeId");
+		//Get Institute Id
+		Integer InsId=(Integer)ses.getAttribute("sesInstId");
+		//Get Institute Bean from dB
+		AffBean instBean=affDao.getOneCollegeRecord(InsId);
+		//Get Institute Fee Property Bean from Institute Bean
+		Set<AffFeePropBean> feeProp=instBean.getFeeProps();
+		Iterator<AffFeePropBean>feeIt=feeProp.iterator();
+		while(feeIt.hasNext())
+		{
+			AffFeePropBean temp=feeIt.next();
+			if(temp.getFeeId()==feeId)
+			{
+				feePropbean=temp;
+			}
+			
+		}
+		//Add Fee Calc Detail Beans to Institute Fee Property Bean and update the Institute Bean
+		Set<AffFeeCalcDetail>multipliers=new HashSet<AffFeeCalcDetail>(calcList);
+		feePropbean.setMultipliers(multipliers);
+		instBean.getFeeProps().add(feePropbean);
+		affDao.saveOrUpdate(instBean, null);
+		
+		//Remove session Attributes
+		ses.removeAttribute("sesInstId");
+		ses.removeAttribute("sesFeeId");
+		return SUCCESS;
+	}
 
 	// End of Action Methods
+	
+	private ArrayList<AffFeePropBean> calculateFee(AffBean institute)
+	{
+		//Get Associated Fees
+		ArrayList<AffFeePropBean>tempList=new ArrayList<AffFeePropBean>(institute.getFeeProps());
+		//Get First Fee and see if it is fixed or per applicant
+		Iterator<AffFeePropBean>tempIt=tempList.iterator();
+		while(tempIt.hasNext())
+		{
+			
+			AffFeePropBean propBean=tempIt.next();
+			PaymentDuesBean due=new PaymentDuesBean();
+			FeeDetailsBean feedetail=feeDAO.GetFees("id", null, propBean.getFeeId(), null).get(0);
+			//if Fixed update amount
+			if(feedetail.getCal_mode()==0)
+			{
+				log.info("Calculation Mode is fixed,... development pending on fixed mode");
+			}
+			
+			//if per Applicant see if calc multipliers have been set
+			if(feedetail.getCal_mode()==1)
+			{
+			Set<AffFeeCalcDetail>mults=propBean.getMultipliers();
+			//if set then calculate 
+			if(mults.size()>0)
+			{
+				
+			}
+			//if no then set zero
+				
+			}
+			
+		}
+		
+	}
 
 	// ---------------------------------------------------
 
@@ -599,6 +668,14 @@ public class AffAction extends ActionSupport {
 
 	public void setAffBeansList(ArrayList<AffBean> affBeansList) {
 		this.affBeansList = affBeansList;
+	}
+
+	public ArrayList<AffFeeCalcDetail> getCalcList() {
+		return calcList;
+	}
+
+	public void setCalcList(ArrayList<AffFeeCalcDetail> calcList) {
+		this.calcList = calcList;
 	}
 
 	// End of Getter Setter Methods

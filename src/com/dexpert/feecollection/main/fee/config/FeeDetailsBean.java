@@ -1,26 +1,22 @@
 package com.dexpert.feecollection.main.fee.config;
 
+import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.dexpert.feecollection.main.fee.lookup.LookupBean;
-
 
 @Entity
 @Table(name = "fee_details")
-public class FeeDetailsBean {
+public class FeeDetailsBean implements Serializable {
 
 	@GenericGenerator(name = "g11", strategy = "increment")
 	@Id
@@ -35,8 +31,7 @@ public class FeeDetailsBean {
 
 	
 	// one to many relationship with FeeDetails (Students)
-		@OneToMany(cascade = CascadeType.ALL, targetEntity = FcBean.class, fetch = FetchType.EAGER )
-		@JoinColumn(name = "feeId_fk", referencedColumnName = "feeId")
+		@OneToMany(cascade = CascadeType.ALL)
 		private List<FcBean>configs;
 		
 	

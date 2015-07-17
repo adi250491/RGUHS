@@ -309,7 +309,14 @@
 
 
 		</action>
+	<action name="saveFeeCalcDetails"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="UpdateCalcParameters">
 
+			<result name="success">Success.jsp</result>
+
+
+		</action>
 
 
 
@@ -354,6 +361,12 @@
 			class="com.dexpert.feecollection.main.fee.config.FcAction" method="GetFeesAll">
 
 			<result name="success">FeeConfig-Values.jsp</result>
+
+		</action>
+		<action name="getFeeCalcDetails"
+			class="com.dexpert.feecollection.main.fee.config.FcAction" method="FeeDetails">
+
+			<result name="success">FeeCalcDetails.jsp</result>
 
 		</action>
 	</package>

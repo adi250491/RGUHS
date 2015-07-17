@@ -45,6 +45,25 @@ public class FcDAO {
 			session.close();
 		}
 	}
+	public void saveFeeDetails(FeeDetailsBean savedata)
+	{
+		// Declarations
+
+		// Open session from session factory
+		Session session = factory.openSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(savedata);
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			// close session
+			session.close();
+		}
+	}
 
 	public ArrayList<FeeDetailsBean> GetFees(String filterKey, String filterValue, Integer id, ArrayList<Integer> ids) {
 		// Declarations

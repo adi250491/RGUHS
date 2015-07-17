@@ -28,6 +28,7 @@
 		<mapping class="com.dexpert.feecollection.main.users.LoginBean" />
 		<mapping class="com.dexpert.feecollection.main.users.superadmin.SaBean" />
 		<mapping class="com.dexpert.feecollection.main.users.affiliated.AffBean" />
+		<mapping class="com.dexpert.feecollection.main.users.affiliated.AffFeeCalcDetail" />
 		<mapping
 			class="com.dexpert.feecollection.main.users.affiliated.AffFeePropBean" />
 		<mapping class="com.dexpert.feecollection.main.users.applicant.AppBean" />

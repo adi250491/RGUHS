@@ -117,7 +117,11 @@
 													<td><s:property value="feeName" /></td>
 													<td><button
 															onclick='window.location="getFeeProps?instId=<s:property value='affInstBean.instId'/>&reqfeeId=<s:property value='feeId'/>"'
-															class="btn btn-success btn-sm">View Details</button></td>
+															class="btn btn-success btn-sm">View Details</button>
+															<button
+															onclick='window.location="getFeeCalcDetails?instId=<s:property value='affInstBean.instId'/>&reqFeeId=<s:property value='feeId'/>"'
+															class="btn btn-success btn-sm">Calculation Details</button>
+															</td>
 
 												</tr>
 											</s:iterator>

@@ -103,7 +103,7 @@
 
 
 				<div class="row">
-					<form action="saveFee" method="post">
+					<form action="saveFeeCalcDetails" method="post">
 						<div class="box col-md-12">
 							<div class="box-inner">
 								<div class="box-header well">
@@ -134,7 +134,8 @@
 														<th><s:property /></th>
 
 													</s:iterator>
-													<th></th>
+													<th>Amount Per Student</th>
+													<th>Number of Students</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -146,7 +147,7 @@
 
 															<td><s:if test="%{#incr.index==0}">
 																	<input value='<s:property />'
-																		name="uids[<%=j%>].comboId" hidden="hidden">
+																		name="calcList[<%=j%>].comboId" hidden="hidden">
 																</s:if> <s:else>
 																	<s:property />
 																</s:else></td>
@@ -154,14 +155,10 @@
 
 														</s:iterator>
 														
-														<td><input name="uids[<%=j%>].amount"
+														<td><input name="calcList[<%=j%>].multiplier"
 															class="form-control" type="text" required="required"
-															placeholder="Enter Fee Value" pattern="[0-9.,]*">
-															<button type="button" data-toggle="popover"
-																data-content="" title="Feature Locked"
-																class="btn btn-sm btn-danger">
-																<i class="fa fa-trash"></i>
-															</button></td>
+															placeholder="Enter Number of Students" pattern="[0-9]*">
+															</td>
 													</tr>
 													<%
 															i++;

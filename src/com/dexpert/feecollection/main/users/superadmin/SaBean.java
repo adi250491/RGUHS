@@ -1,5 +1,7 @@
 package com.dexpert.feecollection.main.users.superadmin;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,7 @@ import com.dexpert.feecollection.main.users.LoginBean;
 
 @Entity
 @Table(name = "super_admin_master")
-public class SaBean {
+public class SaBean implements Serializable{
 
 	@GenericGenerator(name = "g2", strategy = "increment")
 	@Id

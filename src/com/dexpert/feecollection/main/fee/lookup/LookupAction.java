@@ -36,9 +36,11 @@ public class LookupAction extends ActionSupport {
 				List<FvBean> valueList = new ArrayList<FvBean>();
 				FvBean paramvalues = new FvBean();
 				paramvalues.setValue("1");
+				paramvalues.setLookupname(lookupdata);
 				valueList.add(paramvalues);
 				paramvalues = new FvBean();
 				paramvalues.setValue("0");
+				paramvalues.setLookupname(lookupdata);
 				valueList.add(paramvalues);
 				lookupdata.setFvBeansList(valueList);
 			}

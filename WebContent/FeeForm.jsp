@@ -272,7 +272,7 @@ Integer count=0;%>
 																<select required="required" id="selectError1" class="form-control"
 																	data-rel="chosen" name="cal_mode">
 																	<option value="1">Per Student</option>
-																	<option value="1">Per College</option>
+																	
 																	<option value="0">Fixed</option>
 
 																</select>

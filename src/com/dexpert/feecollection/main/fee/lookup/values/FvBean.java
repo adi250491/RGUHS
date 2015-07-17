@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.dexpert.feecollection.main.fee.config.FcBean;
+import com.dexpert.feecollection.main.fee.lookup.LookupBean;
 
 @Entity
 @Table(name = "fee_values_master")
@@ -27,6 +28,9 @@ public class FvBean implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "fee_config_fk")
 	private FcBean fcBean;
+	
+	@OneToOne
+	private LookupBean lookupname;
 
 	public FcBean getFcBean() {
 		return fcBean;
@@ -50,6 +54,14 @@ public class FvBean implements Serializable {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public LookupBean getLookupname() {
+		return lookupname;
+	}
+
+	public void setLookupname(LookupBean lookupname) {
+		this.lookupname = lookupname;
 	}
 	
 	
