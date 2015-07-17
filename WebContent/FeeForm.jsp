@@ -6,7 +6,8 @@
 	//checking session
 	LoginBean loginUser = new LoginBean();
 	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
-
+	boolean alertflag=false;
+	boolean alertflag2=false;
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
 
@@ -27,6 +28,22 @@
 		}
 	} else {
 		sessionID = session.getId();
+	}
+	try{
+		alertflag=(boolean)request.getAttribute("reqAlertFlag");
+		
+		
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	try{
+	alertflag2=(boolean)request.getAttribute("reqAlertFlag2");
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
 	}
 %>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -75,7 +92,7 @@
 
 </head>
 
-<body>
+<body onload="showAlert(<%=alertflag%>,<%=alertflag2%>)">
 	<!-- topbar starts -->
 	<%
 		Integer headCount = 4;
@@ -379,6 +396,17 @@ Integer count=0;%>
 
 		function getValue() {
 			alert(document.getElementById("CourseParamSelect").value);
+		}
+		function showAlert(x,y)
+		{
+			if(x)
+				{
+				alert("Please select atleast one Parameter");
+				}
+			if(y)
+			{
+			alert("Fee Name already taken Please use different name");
+			}
 		}
 	</script>
 </body>

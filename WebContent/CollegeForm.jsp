@@ -174,7 +174,7 @@
 													<td>College Name</td>
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="CollegeName"
-																pattern=".{6}"  name="affInstBean.instName"
+																pattern="{6}"  name="affInstBean.instName"
 																placeholder="College Name (min 6 Character)" type="text"
 																class="form-control">
 

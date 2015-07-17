@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,10 @@ public class FeeDetailsBean {
 	@Id
 	@GeneratedValue(generator = "g11")
 	private Integer feeId;
-	private String feeName,ins_param,cou_param,app_param,ser_param;
+	
+	@Column(unique = true)
+	private String feeName;
+	private String ins_param,cou_param,app_param,ser_param;
 	//private Boolean forApplicant=false,forInstitute=false,cal_mode=false;
 	private Integer forApplicant,forInstitute,cal_mode;
 

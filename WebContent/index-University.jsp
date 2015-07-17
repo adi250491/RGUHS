@@ -31,7 +31,7 @@
 	}
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal</title>
+<title>FeeDesk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -255,25 +255,25 @@
 				<div class=" row">
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<a data-toggle="tooltip"
-							title="600 new student requests. Click here to view"
+							title="1 new student requests. Click here to view"
 							class="well top-block" href="#"
 							onclick='window.open("LockFeature.jsp", "Dail Report", "width=1920,height=1080");'>
 							<i class="glyphicon glyphicon-user blue"></i>
 
 							<div>Total Student Requests</div>
-							<div>5070</div> <span class="notification">600</span>
+							<div>1</div> <span class="notification">1</span>
 						</a>
 					</div>
 
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<a data-toggle="tooltip"
-							title="4 new payments by colleges. Click here to view"
+							title="0 new payments by colleges. Click here to view"
 							class="well top-block" href="#"
 							onclick='window.open("LockFeature.jsp", "University Report", "height=1080,width=1920")'>
 							<i class="fa fa-inr green"></i>
 
 							<div>Total Payments Made This Month</div>
-							<div>228</div> <span class="notification green">4</span>
+							<div>0</div> <span class="notification green">0</span>
 						</a>
 					</div>
 

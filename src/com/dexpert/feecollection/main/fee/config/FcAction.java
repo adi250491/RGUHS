@@ -107,6 +107,15 @@ public class FcAction extends ActionSupport {
 
 	public String GenerateCombination() {
 
+		//Validate fee name
+		ArrayList<FeeDetailsBean>templist=new ArrayList<FeeDetailsBean>();
+		templist=configdao.GetFees("name", feedetails.getFeeName().trim(), null, null);
+		if(!templist.isEmpty())
+		{
+			request.setAttribute("reqAlertFlag2", true);
+			return ERROR;
+		}
+		
 		// Local Declarations
 		ArrayList<String> SelCouParVal1 = new ArrayList<String>();
 		ArrayList<String> SelCouParVal2 = new ArrayList<String>();
@@ -360,6 +369,11 @@ public class FcAction extends ActionSupport {
 
 		// Limit max parameters to 16 to prevent large number of combos
 		if (count > 16) {
+			return ERROR;
+		}
+		if(count==0)
+		{
+			request.setAttribute("reqAlertFlag", true);
 			return ERROR;
 		}
 		// ----
