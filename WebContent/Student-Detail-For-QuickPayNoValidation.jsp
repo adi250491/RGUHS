@@ -237,119 +237,22 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-
-
-																	<select data-rel="chosen" id="serviceType"
+																	<s:select theme="simple" headerKey=" " id="service"
+																		requiredLabel="true" headerValue="Select an Option"
+																		cssClass="form-control" data-rel="chosen"
+																		cssStyle="width:400px" list="serviceList"
 																		name="feeCollectionBean.service_type"
-																		style="width: 400px;">
-																		<option value="">--Select from Option--</option>
-																		<option value="EC">ELIGIBILITY CERTIFICATE</option>
-																		<option value="ECR">ELIGIBILITY
-																			CERTIFICATE-RENEWAL</option>
-																		<option value="CONAIE">CHANGE OF NAME &
-																			INITIAL EXPANSION</option>
-																		<option value="MC">MIGRATION CERTIFICATE</option>
-																		<option value="MT">MIGRATION TRANSFER - From
-																			1st to 2nd year</option>
-																		<option value="NOCIT">NOC (for internship
-																			transfer)</option>
-																		<option value="CMCL">CONSOLIDATED MARKS CARD
-																			(LAMINATED)</option>
-																		<option value="NCIMC">NAME CORRECTION IN
-																			MARKS CARD</option>
-																		<option value="PDC">PDC</option>
-																		<option value="RC">RANK CERTIFICATE</option>
-																		<option value="RCD">RANK
-																			CERTIFICATE-DUPLICATE</option>
-																		<option value="MPC">MEDAL/PRIZE CERTIFICATE</option>
-																		<option value="MPCD">MEDAL/PRIZE
-																			CERTIFICATE-Duplicate</option>
-																		<option value="DDC">DUPLICATE DEGREE
-																			CERTIFICATE</option>
-																		<option value="PGETS">PGET Superspeciality</option>
-																		<option value="PGETF">PGET Fee</option>
-																		<option value="PGETA">PGET Application</option>
-																		<option value="VO">VERIFICATION ONLY</option>
-																		<option value="VACOC">VERIFICATION AND
-																			CERTIFICATION OF COPY'S</option>
-																		<option value="CCOTSO">CERTIFIED COPY OF THE
-																			SYLLABUS/ORINANCE</option>
-																		<option value="DMC">DUPLICATE MARKS CARD</option>
-																		<option value="PPC">PROVISIONAL PASS
-																			CERTIFICATE</option>
-																		<option value="DC">DEGREE CERTIFICATE</option>
-																		<option value="CC">CERTIFICATE COURSE</option>
-																		<option value="NCIDC">NAME CORRECTION IN
-																			DEGREE CERTIFICATE</option>
-																		<option value="COTOTP">CHANGE OF TITLE OF
-																			THESIS-PHD</option>
-																		<option value="RRP">RE-REGISTRATION-PH.D</option>
-																		<option value="EOR">EXTENSION OF REGISTRATION</option>
-																		<option value="PE">PRE EXAMINATION</option>
-																		<option value="RF">REGISTRATION FEE</option>
-																		<option value="FSSAFPE">FINAL SYNOPSIS
-																			SUBMISSION AND FINAL PH.D. EXAMINATION</option>
-																		<option value="DF">DISSERTATION FEE</option>
-																		<option value="DFR">DISSERTATION
-																			FEE-RESUBMISSION</option>
-																		<option value="CVOTAOTDF">CREDENTIAL
-																			VERIFICATION / OFFICIAL TRANSCRIPT/ ATTESTATION OF
-																			THE DOCUMENTS FEE</option>
-																		<option value="MOIEC">MEDIUM OF INSTRUCTION
-																			IN ENGLISH CERTIFICATION</option>
-																		<option value="MLCPFR2500">MALPRACTICE LAPSES
-																			COMMITTEE - PENALTY FEE-RS. 2500</option>
-																		<option value="MLCPFR5000">MALPRACTICE LAPSES
-																			COMMITTEE - PENALTY FEE-RS. 5000</option>
-																		<option value="MLCPFR7500">MALPRACTICE LAPSES
-																			COMMITTEE - PENALTY FEE-RS. 7500</option>
-																		<option value="MLCPFR10000">MALPRACTICE
-																			LAPSES COMMITTEE - PENALTY FEE-RS. 10000</option>
-																		<option value="MLCPFR12500">MALPRACTICE
-																			LAPSES COMMITTEE - PENALTY FEE-RS. 12500</option>
-																		<option value="MLCPFR15000">MALPRACTICE
-																			LAPSES COMMITTEE - PENALTY FEE-RS. 15000</option>
-																		<option value="MLCPFR17500">MALPRACTICE
-																			LAPSES COMMITTEE - PENALTY FEE-RS. 17500</option>
-																		<option value="MLCPFR20000">MALPRACTICE
-																			LAPSES COMMITTEE - PENALTY FEE-RS. 20000</option>
-																		<option value="MLCPFR25000">MALPRACTICE
-																			LAPSES COMMITTEE - PENALTY FEE-RS. 25000</option>
-																		<option value="RTFS1">RE-TOTALING FOR 1
-																			SUBJECT</option>
-																		<option value="RTFS2">RE-TOTALING FOR 2
-																			SUBJECT</option>
-																		<option value="RTFS3">RE-TOTALING FOR 3
-																			SUBJECT</option>
-																		<option value="RTFS4">RE-TOTALING FOR 4
-																			SUBJECT</option>
-																		<option value="RTFS5">RE-TOTALING FOR 5
-																			SUBJECT</option>
-																		<option value="PMCFFR5000">PROFESSIONAL
-																			MISCONDUCT COMMITTEE FINE FEES-RS. 5000</option>
-																		<option value="PMCFFR1000">PROFESSIONAL
-																			MISCONDUCT COMMITTEE FINE FEES-RS. 10000</option>
-																		<option value="PMCFFR20000">PROFESSIONAL
-																			MISCONDUCT COMMITTEE FINE FEES-RS. 20000</option>
-																		<option value="PMCFFR30000">PROFESSIONAL
-																			MISCONDUCT COMMITTEE FINE FEES-RS. 30000</option>
-																		<option value="PMCFFR50000">PROFESSIONAL
-																			MISCONDUCT COMMITTEE FINE FEES-RS. 50000</option>
-																		<option value="PMCFFR100000">PROFESSIONAL
-																			MISCONDUCT COMMITTEE FINE FEES-RS. 100000</option>
+																		value="{%serviceList}">
 
 
-																	</select>
+
+																	</s:select>
+
+
 
 																	<script type="text/javascript">
-																		var value =
-																	<%=request.getParameter("selectedValue")%>
-																		;
-																		if (value != null) {
-
-																			document.f1.slvalue.selectedIndex = value;
-
-																		}
+																		document
+																				.getElementById('service').value = "feeCollectionBean.nationality";
 																	</script>
 																</div>
 															</div>
@@ -368,16 +271,22 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen" id="nationality"
+
+
+
+																	<s:select theme="simple" headerKey=" " id="nationality"
+																		headerValue="Select an Option" cssClass="form-control"
+																		cssStyle="width:400px;" data-rel="chosen"
+																		list="nationalityList"
 																		name="feeCollectionBean.nationality"
-																		style="width: 400px;">
-																		<option value="">--Select Option--</option>
+																		value="{%nationalityList}">
 
-																		<option value="INDIAN">INDIAN</option>
-																		<option value="NRISAARC">NRI/SAARC</option>
-																		<option value="FOREIGN">FOREIGN</option>
 
-																	</select>
+
+																	</s:select>
+
+
+
 																	<script type="text/javascript">
 																		document
 																				.getElementById('nationality').value = "feeCollectionBean.nationality";
@@ -394,18 +303,20 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen" id="faculty"
-																		name="feeCollectionBean.faculty" style="width: 400px;">
-																		<option value="">--Select Option--</option>
 
-																		<option value="MED">MEDICAL</option>
-																		<option value="DENT">DENTAL</option>
-																		<option value="NursPHYSIOPHARM">NURSING,PHYSIOTHERAPY,PHARMACY</option>
-																		<option value="AYAVRDHOMEOUNANYOGA">AYUSH,AYURVEDA,HOMEOPATHY,UNANI,YOGA</option>
-																		<option value="PMEDIAOTHERS">PARAMEDICAL AND
-																			Others</option>
 
-																	</select>
+																	<s:select theme="simple" headerKey=" " id="faculty"
+																		headerValue="Select an Option" cssClass="form-control"
+																		cssStyle="width:400px;" data-rel="chosen"
+																		list="facultyList" name="feeCollectionBean.faculty"
+																		value="{%facultyList}">
+
+
+
+																	</s:select>
+
+
+
 
 
 																	<script type="text/javascript">
@@ -426,16 +337,17 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen" id="course"
-																		name="feeCollectionBean.course" style="width: 400px;">
-																		<option value="">--Select Option--</option>
 
-																		<option value="PG">PG</option>
-																		<option value="UG">UG</option>
-																		<option value="PGDIPLOMA">PG DIPLOMA</option>
-																		<option value="PHD">PHD</option>
+																	<s:select theme="simple" headerKey=" " id="course"
+																		headerValue="Select an Option" cssClass="form-control"
+																		cssStyle="width:400px;" data-rel="chosen"
+																		list="courseList" name="feeCollectionBean.course"
+																		value="{%courseList}">
 
-																	</select>
+
+
+																	</s:select>
+
 																	<script type="text/javascript">
 																		document
 																				.getElementById('course').value = "feeCollectionBean.course";

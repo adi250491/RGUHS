@@ -1,6 +1,8 @@
 package com.dexpert.feecollection.main.payment.studentPayment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
@@ -53,7 +56,8 @@ public class ApplicantFeeCollectionDAO {
 	public Map<String, String> serviceTypeList() {
 
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("EC", "ELIGIBILITY CRITERIA");
+		List<ServiceTypeBean> list = new ArrayList<ServiceTypeBean>();
+	/*	map.put("EC", "ELIGIBILITY CRITERIA");
 		map.put("ECR", "ELIGIBILITY CERTIFICATE RENEWAL");
 		map.put("CONAIE", "CHANGE OF NAME & INITIAL EXPANSION");
 		map.put("MC", "MIGRATION CERTIFICATE");
@@ -63,11 +67,11 @@ public class ApplicantFeeCollectionDAO {
 		map.put("NCIMC", "NAME CORRECTION IN MARKS CARD");
 		map.put("PDC", "PDC");
 		map.put("RC", "RANK CERTIFICATE");
-		map.put("MPC", "PDC");
-		map.put("MPCD", "PDC");
-		map.put("DDC", "PDC");
-		map.put("PGETS", "PDC");
-		map.put("PGETF", "PDC");
+		map.put("MPC", "MEDAL/PRIZE CERTIFICATE");
+		map.put("MPCD", "MEDAL/PRIZE sCERTIFICATE-Duplicate");
+		map.put("DDC", "DUPLICATE DEGREE CERTIFICATE");
+		map.put("PGETS", "PGET Superspeciality");
+		map.put("PGETF", "PGET Fee");
 		map.put("PGETA", "PGET Application");
 		map.put("VO", "VERIFICATION ONLY");
 		map.put("VACOC", "VERIFICATION AND CERTIFICATION OF COPY'S");
@@ -105,9 +109,104 @@ public class ApplicantFeeCollectionDAO {
 		map.put("PMCFFR20000", "PROFESSIONAL MISCONDUCT COMMITTEE FINE FEES-RS. 20000");
 		map.put("PMCFFR30000", "PROFESSIONAL MISCONDUCT COMMITTEE FINE FEES-RS. 30000");
 		map.put("PMCFFR50000", "PROFESSIONAL MISCONDUCT COMMITTEE FINE FEES-RS. 50000");
-		map.put("PMCFFR100000", "PROFESSIONAL MISCONDUCT COMMITTEE FINE FEES-RS. 100000");
+		map.put("PMCFFR100000", "PROFESSIONAL MISCONDUCT COMMITTEE FINE FEES-RS. 100000");*/
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(ServiceTypeBean.class);
+		list = criteria.list();
+		Iterator<ServiceTypeBean> itr = list.iterator();
+		while (itr.hasNext()) {
+			ServiceTypeBean serviceTypeBean = (ServiceTypeBean) itr.next();
+
+			map.put(serviceTypeBean.getServiceKey(), serviceTypeBean.getServiceValue());
+
+		}
+
+		/*
+		 * for (Map.Entry<String, String> entry : map.entrySet()) { Session
+		 * session = factory.openSession(); Transaction tx =
+		 * session.beginTransaction();
+		 * serviceTypeBean.setServiceKey(entry.getKey());
+		 * serviceTypeBean.setServiceValue(entry.getValue());
+		 * 
+		 * System.out.println("Key is ::" + entry.getKey() + "/" + "value is" +
+		 * entry.getValue()); session.save(serviceTypeBean); tx.commit();
+		 * 
+		 * }
+		 */
+		return map;
+
+	}
+
+	public Map<String, String> facultyList() {
+
+		Map<String, String> map = new HashMap<String, String>();
+		List<FacultyBean> list = new ArrayList<FacultyBean>();
+		/*
+		 * map.put("MED", "MEDICAL"); map.put("DENT", "DENTAL");
+		 * map.put("NursPHYSIOPHARM", "NURSING,PHYSIOTHERAPY,PHARMACY");
+		 * map.put("AYAVRDHOMEOUNANYOGA",
+		 * "AYUSH,AYURVEDA,HOMEOPATHY,UNANI,YOGA"); map.put("PMEDIAOTHERS",
+		 * "PARAMEDICAL AND Others");
+		 */
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(FacultyBean.class);
+		list = criteria.list();
+		Iterator<FacultyBean> itr = list.iterator();
+		while (itr.hasNext()) {
+			FacultyBean serviceTypeBean = (FacultyBean) itr.next();
+
+			map.put(serviceTypeBean.getFacultyKey(), serviceTypeBean.getFacultyValue());
+
+		}
+		return map;
+
+	}
+
+	public Map<String, String> nationalityList() {
+
+		Map<String, String> map = new HashMap<String, String>();
+		/*
+		 * map.put("INDIAN", "INDIAN"); map.put("NRISAARC", "NRI/SAARC");
+		 * map.put("FOREIGN", "FOREIGN");
+		 */
+		Session session = factory.openSession();
+		List<NationalityBean> list = new ArrayList<NationalityBean>();
+		Criteria criteria = session.createCriteria(NationalityBean.class);
+		list = criteria.list();
+		Iterator<NationalityBean> itr = list.iterator();
+		while (itr.hasNext()) {
+			NationalityBean serviceTypeBean = (NationalityBean) itr.next();
+
+			map.put(serviceTypeBean.getNationalityKey(), serviceTypeBean.getNationalityValue());
+
+		}
+		return map;
+
+	}
+
+	public Map<String, String> courseList() {
+
+		Session session = factory.openSession();
+		CourseBean facultyBean = new CourseBean();
+		Map<String, String> map = new HashMap<String, String>();
+
+		/*
+		 * map.put("PG", "PG"); map.put("UG", "UG"); map.put("PGDIPLOMA",
+		 * "PG DIPLOMA"); map.put("PHD", "PHD");
+		 */
+		List<CourseBean> list = new ArrayList<CourseBean>();
+		Criteria criteria = session.createCriteria(CourseBean.class);
+		list = criteria.list();
+		Iterator<CourseBean> itr = list.iterator();
+		while (itr.hasNext()) {
+			CourseBean serviceTypeBean = (CourseBean) itr.next();
+
+			map.put(serviceTypeBean.getCourseKey(), serviceTypeBean.getCourseValue());
+
+		}
 
 		return map;
 
 	}
+
 }

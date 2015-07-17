@@ -323,7 +323,7 @@
 
 			<result name="success">ParamForm.jsp</result>
 			<result name="view">Success.jsp</result>
-	
+
 		</action>
 
 	</package>
@@ -456,8 +456,10 @@
 			method="submitParameter">
 
 
-			<result name="success"> Student-Detail-For-QuickPayNoValidation.jsp</result>
-			<result name="failure"> Student-Detail-For-QuickPayNoValidation.jsp</result>
+			<result name="success"> Student-Detail-For-QuickPayNoValidation.jsp
+			</result>
+			<result name="failure"> Student-Detail-For-QuickPayNoValidation.jsp
+			</result>
 
 
 
@@ -523,6 +525,15 @@
 		<action name="instPaymentGateway"
 			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
 			method="instPaymentGateway"></action>
+
+
+		<action name="StudentQuickPayMod"
+			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
+			method="studentServiceDetail">
+
+			<result name="success">Student-Detail-For-QuickPayNoValidation.jsp
+			</result>
+		</action>
 	</package>
 
 

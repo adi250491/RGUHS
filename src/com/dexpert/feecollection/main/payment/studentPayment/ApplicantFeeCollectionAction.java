@@ -2,8 +2,10 @@ package com.dexpert.feecollection.main.payment.studentPayment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +26,13 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 	HttpSession httpSession = request.getSession();
 	static Logger log = Logger.getLogger(LookupAction.class.getName());
 
-	ApplicantFeeCollectionBean feeCollectionBean = new ApplicantFeeCollectionBean();
+	Map<String, String> serviceList = new HashMap<String, String>();
+	Map<String, String> courseList = new HashMap<String, String>();
+	Map<String, String> nationalityList = new HashMap<String, String>();
+	Map<String, String> facultyList = new HashMap<String, String>();
 
+	ApplicantFeeCollectionBean feeCollectionBean = new ApplicantFeeCollectionBean();
+	ApplicantFeeCollectionDAO dao = new ApplicantFeeCollectionDAO();
 	AppBean appBean1 = new AppBean();
 	List<ApplicantFeeCollectionBean> collectionBeanList = new ArrayList<ApplicantFeeCollectionBean>();
 	ApplicantFeeCollectionDAO afc = new ApplicantFeeCollectionDAO();
@@ -35,13 +42,13 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 	// get Student Service Detail
 
-	public String studentServiceDetail()
-	{
-		
-		
-		
-		
-		
+	public String studentServiceDetail() {
+
+		serviceList = dao.serviceTypeList();
+		courseList = dao.courseList();
+		facultyList = dao.facultyList();
+		nationalityList = dao.nationalityList();
+
 		return SUCCESS;
 	}
 
@@ -50,6 +57,11 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 		feeCollectionBean = afc.calculateTotalFee(feeCollectionBean);
 		log.info("enroll ment  number ::" + appBean1.getEnrollmentNumber());
 		appBean1 = appDAO.getUserDetail(appBean1.getEnrollmentNumber());
+		
+		serviceList = dao.serviceTypeList();
+		courseList = dao.courseList();
+		facultyList = dao.facultyList();
+		nationalityList = dao.nationalityList();
 
 		return SUCCESS;
 	}
@@ -107,6 +119,38 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 	public void setAppBean1(AppBean appBean1) {
 		this.appBean1 = appBean1;
+	}
+
+	public Map<String, String> getServiceList() {
+		return serviceList;
+	}
+
+	public void setServiceList(Map<String, String> serviceList) {
+		this.serviceList = serviceList;
+	}
+
+	public Map<String, String> getCourseList() {
+		return courseList;
+	}
+
+	public void setCourseList(Map<String, String> courseList) {
+		this.courseList = courseList;
+	}
+
+	public Map<String, String> getNationalityList() {
+		return nationalityList;
+	}
+
+	public void setNationalityList(Map<String, String> nationalityList) {
+		this.nationalityList = nationalityList;
+	}
+
+	public Map<String, String> getFacultyList() {
+		return facultyList;
+	}
+
+	public void setFacultyList(Map<String, String> facultyList) {
+		this.facultyList = facultyList;
 	}
 
 }

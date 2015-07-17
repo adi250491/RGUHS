@@ -40,6 +40,16 @@
 		<mapping class="com.dexpert.feecollection.main.fee.config.FeeDetailsBean" />
 		<mapping
 			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionBean" />
+		<mapping
+			class="com.dexpert.feecollection.main.payment.studentPayment.CourseBean" />
+		<mapping
+			class="com.dexpert.feecollection.main.payment.studentPayment.FacultyBean" />
+		<mapping
+			class="com.dexpert.feecollection.main.payment.studentPayment.NationalityBean" />
+		<mapping
+			class="com.dexpert.feecollection.main.payment.studentPayment.ServiceTypeBean" />
+
+
 
 	</session-factory>
 </hibernate-configuration>

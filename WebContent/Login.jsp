@@ -101,7 +101,7 @@
 
 							<div class="input-prepend">
 
-								<a href="Student-Detail-For-QuickPayNoValidation.jsp">Click for Quick Pay
+								<a href="StudentQuickPayMod">Click for Quick Pay
 								</a>
 
 							</div>
