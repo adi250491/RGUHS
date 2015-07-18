@@ -104,7 +104,7 @@
 			<%
 				if (msg != null)
 
-								{
+									{
 			%>
 
 			<div
@@ -175,8 +175,9 @@
 													<td><div id="the-basics" class="has-success">
 															<input required="required" id="CollegeName" pattern="{6}"
 																name="affInstBean.instName"
-																placeholder="College Name (min 6 Character)" type="text"
-																class="form-control">
+																value='<s:property value="affInstBean.instName" />'
+															placeholder="College Name (min 6 Character)" type="text"
+															class="form-control">
 
 														</div></td>
 
@@ -187,7 +188,7 @@
 													<td>University Name</td>
 													<td colspan="2">
 														<div id="the-basics" class="has-success">
-															<select data-rel="chosen" name="affInstBean.parInstId">
+															<select data-rel="chosen" name="parInstId" style="width:300px;" >
 																<option value="">--Select College--</option>
 																<s:iterator value="parBeansList">
 
@@ -208,8 +209,8 @@
 													<td><div id="the-basics" class="has-success">
 															<textarea required="required" id="CollegeName"
 																name="affInstBean.instAddress" placeholder="Address"
-																<s:property value="affInstBean.place"/>
-																class="form-control"></textarea>
+																class="form-control"><s:property
+																	value="affInstBean.place" /></textarea>
 
 														</div></td>
 
@@ -388,10 +389,10 @@
 	<script src="js/charisma.js"></script>
 
 	<script>
-		window.onunload = function() {
-			window.opener.document.location.reload();
-			setTimeout(window.close(), 100);
-		}
+		//window.onunload = function() {
+		//	window.opener.document.location.reload();
+		//	setTimeout(window.close(), 100);
+		//}
 	</script>
 </body>
 </html>

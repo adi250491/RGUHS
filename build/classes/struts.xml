@@ -40,7 +40,7 @@
 			<result name="success">Admin-MyColleges.jsp</result>
 
 		</action>
-		
+
 		<action name="GetCollegeListOnUniversity"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="getUniversityCollegeList">

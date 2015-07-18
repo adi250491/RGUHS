@@ -279,13 +279,13 @@
 									<div class="row">
 										<div class="col-md-12">
 											<button class="btn btn-sm btn-info" style="float: right;"
-												onclick='window.open("AddStudentColleges", "Studetn Form", "width=500,height=900")'>
+												onclick='window.open("AddStudentColleges", "Studetn Form", "width=500,height=600")'>
 												<i class="fa fa-plus"></i> Add Student
 											</button>
 
 											<button class="btn btn-sm btn-info"
 												style="margin-right: 3%; float: right;"
-												onclick='window.open("AddBulkStudent.jsp", "CollegeForm", "width=500,height=900")'>
+												onclick='window.open("AddBulkStudent.jsp", "CollegeForm", "width=500,height=600")'>
 												<i class="fa fa-plus"></i> Add Bulk Student
 											</button>
 										</div>

@@ -16,6 +16,7 @@ import org.apache.struts2.ServletActionContext;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.affiliated.AffAction;
 import com.dexpert.feecollection.main.users.affiliated.AffBean;
+import com.dexpert.feecollection.main.users.affiliated.AffDAO;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class AppAction extends ActionSupport {
@@ -27,10 +28,13 @@ public class AppAction extends ActionSupport {
 	HttpServletResponse response = ServletActionContext.getResponse();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	AffBean affBean = new AffBean();
+	Integer aplInstId;
+	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
 	String fileFileName;
 	FileInputStream inputStream;
 	private File fileUpload;
 	private String fileUploadFileName;
+	AffDAO affDAO = new AffDAO();
 
 	private String contentType;
 	public AppDAO aplDAO = new AppDAO();
@@ -49,20 +53,20 @@ public class AppAction extends ActionSupport {
 
 		List<String> existEnrollmentList = aplDAO.existingEnrollNum(appBean1);
 		if (existEnrollmentList.isEmpty()) {
-			if (appBean1.getAplInstId() == null) {
+			if (aplInstId == null) {
 				request.setAttribute("msg", "Please Select College Name");
+				affInstList = affDAO.getCollegesList();
 				return "failure";
 			}
 
-			appBean1 = aplDAO.saveOrUpdate(appBean1);
-			
-			
+			appBean1 = aplDAO.saveOrUpdate(appBean1, aplInstId);
+
 			return SUCCESS;
 
 		} else {
 			log.info("4");
 			request.setAttribute("msg", "Enrollment Number Already Registered");
-
+			affInstList = affDAO.getCollegesList();
 			return "failure";
 		}
 
@@ -80,13 +84,6 @@ public class AppAction extends ActionSupport {
 
 		// appBeansList = aplDAO.getAllStudentList();
 		affBean = aplDAO.getStudentDetail(loginBean);
-		log.info("List Size is ::" + affBean.getAplBeanSet().size());
-		Iterator<AppBean> itr = affBean.getAplBeanSet().iterator();
-		while (itr.hasNext()) {
-			AppBean appBean = (AppBean) itr.next();
-			log.info("Student Name is ::" + appBean.getAplFirstName());
-
-		}
 
 		return SUCCESS;
 
@@ -220,6 +217,22 @@ public class AppAction extends ActionSupport {
 
 	public void setAffBean(AffBean affBean) {
 		this.affBean = affBean;
+	}
+
+	public Integer getAplInstId() {
+		return aplInstId;
+	}
+
+	public void setAplInstId(Integer aplInstId) {
+		this.aplInstId = aplInstId;
+	}
+
+	public ArrayList<AffBean> getAffInstList() {
+		return affInstList;
+	}
+
+	public void setAffInstList(ArrayList<AffBean> affInstList) {
+		this.affInstList = affInstList;
 	}
 
 }

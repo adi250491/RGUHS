@@ -25,6 +25,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -51,18 +52,18 @@ public class AppDAO {
 
 	// DAO Methods Here
 
-	public AppBean saveOrUpdate(AppBean appBean) {
+	public AppBean saveOrUpdate(AppBean appBean, Integer aplInstId) {
 		// Declarations
 		// Open session from session factory
 		Session session = factory.openSession();
 		AffBean affBean = new AffBean();
 
 		// to get college record based on id to create relationship
-		affBean = aff.viewInstDetail(appBean.getAplInstId());
+		affBean = aff.viewInstDetail(aplInstId);
 		// one to one bidirectional
 		appBean.setAffBean(affBean);
 		affBean.setAppBean(appBean);
-		
+
 		// one to many Relationship
 		affBean.getAplBeanSet().add(appBean);
 
@@ -115,6 +116,7 @@ public class AppDAO {
 			Criteria criteria = session.createCriteria(AffBean.class);
 
 			criteria.add(Restrictions.eq("instId", id));
+
 			AffBean affBean = (AffBean) criteria.list().iterator().next();
 
 			log.info("List is ::" + affBean.getAplBeanSet().size());

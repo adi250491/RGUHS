@@ -28,7 +28,7 @@ public class ExcelTemplateDAO {
 		paramStr.add("Applicant Mob. No. Secondary");
 		paramStr.add("Applicant Email Address");
 		paramStr.add("Applicant Address");
-		paramStr.add("Aplicant Institue Name");
+		
 		try {
 
 			Row header = xssfSheet.createRow(0);

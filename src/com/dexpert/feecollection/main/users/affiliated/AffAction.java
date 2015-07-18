@@ -51,6 +51,7 @@ public class AffAction extends ActionSupport {
 	ArrayList<AffFeePropBean> dueList = new ArrayList<AffFeePropBean>();
 	AffDAO affDao = new AffDAO();
 	ParBean parBean = new ParBean();
+	List<ParBean> parBeansList = new ArrayList<ParBean>();
 	ParDAO parDAO = new ParDAO();
 	FcDAO feeDAO = new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
@@ -79,80 +80,90 @@ public class AffAction extends ActionSupport {
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("List Size is ::" + instNameList.size());
 
-		
-
 		if (instNameList.isEmpty()) {
+			if (parInstId == null) {
 
-			String path = request.getServletContext().getRealPath("/");
-			path = path + File.separator;
-			File f = new File(path + "/RGUHS/");
-			f.mkdir();
+				request.setAttribute("msg", "Please Select University");
 
-			// add parent institute details to affInstBean
+				parBeansList = parDAO.getUniversityList();
+				return "failure";
 
-			affInstBean.setFileUpload(fileUpload);
-			affInstBean.setFileUploadFileName(fileUploadFileName);
+			} else {
 
-			// affInstBean = affDao.saveOrUpdate(affInstBean);
-			log.info("The ID after saving is is " + affInstBean.getInstId());
-			// if saved successfully generate credentials and forward success
-			String username;
-			// generate credentials for admin login
-			try {
-				username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
-						.concat(affDao.getRowCount().toString()));
+				String path = request.getServletContext().getRealPath("/");
+				path = path + File.separator;
+				File f = new File(path + "/RGUHS/");
+				f.mkdir();
 
-			} catch (java.lang.NullPointerException e) {
-				username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
+				// add parent institute details to affInstBean
 
-			}
+				affInstBean.setFileUpload(fileUpload);
+				affInstBean.setFileUploadFileName(fileUploadFileName);
 
-			String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
-			log.info("Password Generated is " + password);
+				// affInstBean = affDao.saveOrUpdate(affInstBean);
+				log.info("The ID after saving is is " + affInstBean.getInstId());
+				// if saved successfully generate credentials and forward
+				// success
+				String username;
+				// generate credentials for admin login
+				try {
+					username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
+							.concat(affDao.getRowCount().toString()));
 
-			PasswordEncryption.encrypt(password);
-			String encryptedPwd = PasswordEncryption.encStr;
+				} catch (java.lang.NullPointerException e) {
+					username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
+							.concat("1"));
 
-			LoginBean creds = new LoginBean();
-			creds.setPassword(encryptedPwd);
-			creds.setUserName(username);
+				}
 
-			log.info("User Name is ::" + username);
-			log.info("Password is ::" + password);
+				String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
+				log.info("Password Generated is " + password);
 
-			log.info("User Profile is  ::" + affInstBean.getLoginBean().getProfile());
-			creds.setProfile(affInstBean.getLoginBean().getProfile());
+				PasswordEncryption.encrypt(password);
+				String encryptedPwd = PasswordEncryption.encStr;
 
-			parBean = parDAO.viewUniversity(affInstBean.getParInstId());
+				LoginBean creds = new LoginBean();
+				creds.setPassword(encryptedPwd);
+				creds.setUserName(username);
 
-			log.info("Parent Inst Name and IS ::" + parBean.getParInstName() + "  ::: " + parBean.getParInstId());
+				log.info("User Name is ::" + username);
+				log.info("Password is ::" + password);
 
-			parBean.getAffBeanOneToManySet().add(affInstBean);
+				log.info("User Profile is  ::" + affInstBean.getLoginBean().getProfile());
+				creds.setProfile(affInstBean.getLoginBean().getProfile());
 
-			parDAO.saveOrUpdate(parBean, null);
+				parBean = parDAO.viewUniversity(parInstId);
 
-			// for bidirectional relationship ,set parent record to child
-			// record
-			creds.setAffBean(affInstBean);
-			if (creds.getProfile().equals("Admin")) {
+				log.info("Parent Inst Name and IS ::" + parBean.getParInstName() + "  ::: " + parBean.getParInstId());
 
-				// for bidirectional relationship ,set child record to Parent
+				parBean.getAffBeanOneToManySet().add(affInstBean);
+
+				parDAO.saveOrUpdate(parBean, null);
+
+				// for bidirectional relationship ,set parent record to child
 				// record
-				affInstBean.setLoginBean(creds);
+				creds.setAffBean(affInstBean);
+				if (creds.getProfile().equals("Admin")) {
+
+					// for bidirectional relationship ,set child record to
+					// Parent
+					// record
+					affInstBean.setLoginBean(creds);
+
+				}
+
+				affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
+
+				// -----Code for sending email//--------------------
+				EmailSessionBean email = new EmailSessionBean();
+				email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
+						affInstBean.getInstName());
+
+				request.setAttribute("msg", "Institute Added Successfully");
+				request.setAttribute("redirectLink", "Success.jsp");
+				return SUCCESS;
 
 			}
-
-			affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
-
-			// -----Code for sending email//--------------------
-			EmailSessionBean email = new EmailSessionBean();
-			email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
-					affInstBean.getInstName());
-
-			request.setAttribute("msg", "Institute Added Successfully");
-			request.setAttribute("redirectLink", "Success.jsp");
-			return SUCCESS;
-
 		}
 
 		// else forward error message on input page
@@ -393,15 +404,15 @@ public class AffAction extends ActionSupport {
 				AffFeePropBean tempbean = new AffFeePropBean();
 				tempbean.setFeeId(feelist.get(i).getFeeId());
 				tempbean.setFeeName(feelist.get(i).getFeeName());
-				//Set Due Bean
-				PaymentDuesBean duebean=new PaymentDuesBean();
+				// Set Due Bean
+				PaymentDuesBean duebean = new PaymentDuesBean();
 				duebean.setDateCalculated(new Date());
 				duebean.setFeeId(tempbean.getFeeId());
-				duebean.setPayments_to_date((double)0);
+				duebean.setPayments_to_date((double) 0);
 				duebean.setPayee("Institute");
-				duebean.setTotal_fee_amount((double)0);
+				duebean.setTotal_fee_amount((double) 0);
 				duebean.setNetDue((double) 0);
-				
+
 				tempbean.setDueBean(duebean);
 				propSet.add(tempbean);
 
@@ -517,8 +528,8 @@ public class AffAction extends ActionSupport {
 		Set<AffFeeCalcDetail> multipliers = new HashSet<AffFeeCalcDetail>(calcList);
 		feePropbean.setMultipliers(multipliers);
 		instBean.getFeeProps().add(feePropbean);
-		ArrayList<AffFeePropBean>calculatedFees=calculateFee(instBean);
-		Set<AffFeePropBean> calculateSet=new HashSet<AffFeePropBean>(calculatedFees);
+		ArrayList<AffFeePropBean> calculatedFees = calculateFee(instBean);
+		Set<AffFeePropBean> calculateSet = new HashSet<AffFeePropBean>(calculatedFees);
 		instBean.setFeeProps(calculateSet);
 		affDao.saveOrUpdate(instBean, null);
 
@@ -541,14 +552,13 @@ public class AffAction extends ActionSupport {
 			AffFeePropBean propBean = tempIt.next();
 			PaymentDuesBean due = new PaymentDuesBean();
 			FeeDetailsBean feedetail = feeDAO.GetFees("id", null, propBean.getFeeId(), null).get(0);
-			List<FcBean>configs=new ArrayList<FcBean>();
-			configs=feedetail.getConfigs();
-			HashMap<Integer, Double> configMap=new HashMap<Integer, Double>();
-			Iterator<FcBean>configIt=configs.iterator();
-			while(configIt.hasNext())
-			{
-				FcBean tempconfig=configIt.next();
-				configMap.put(tempconfig.getComboId(),tempconfig.getAmount());
+			List<FcBean> configs = new ArrayList<FcBean>();
+			configs = feedetail.getConfigs();
+			HashMap<Integer, Double> configMap = new HashMap<Integer, Double>();
+			Iterator<FcBean> configIt = configs.iterator();
+			while (configIt.hasNext()) {
+				FcBean tempconfig = configIt.next();
+				configMap.put(tempconfig.getComboId(), tempconfig.getAmount());
 			}
 			// if Fixed update amount
 			if (feedetail.getCal_mode() == 0) {
@@ -558,21 +568,20 @@ public class AffAction extends ActionSupport {
 			// if per Applicant see if calc multipliers have been set
 			if (feedetail.getCal_mode() == 1) {
 				Set<AffFeeCalcDetail> mults = propBean.getMultipliers();
-				Double feeDue=(double) 0;
+				Double feeDue = (double) 0;
 				// if set then calculate
 				if (mults.size() > 0) {
-					Iterator<AffFeeCalcDetail>mulIt=mults.iterator();
-					while(mulIt.hasNext())
-					{
-						AffFeeCalcDetail mul=mulIt.next();
-						Double amount=configMap.get(mul.getComboId());
-						feeDue=feeDue+(amount*mul.getMultiplier());
-						
+					Iterator<AffFeeCalcDetail> mulIt = mults.iterator();
+					while (mulIt.hasNext()) {
+						AffFeeCalcDetail mul = mulIt.next();
+						Double amount = configMap.get(mul.getComboId());
+						feeDue = feeDue + (amount * mul.getMultiplier());
+
 					}
-					PaymentDuesBean dueBean=propBean.getDueBean();
+					PaymentDuesBean dueBean = propBean.getDueBean();
 					dueBean.setTotal_fee_amount(feeDue);
 					dueBean.setDateCalculated(new Date());
-					dueBean.setNetDue(dueBean.getTotal_fee_amount()-dueBean.getPayments_to_date());
+					dueBean.setNetDue(dueBean.getTotal_fee_amount() - dueBean.getPayments_to_date());
 					propBean.setDueBean(dueBean);
 					resList.add(propBean);
 				}
@@ -746,6 +755,14 @@ public class AffAction extends ActionSupport {
 
 	public void setParBean(ParBean parBean) {
 		this.parBean = parBean;
+	}
+
+	public List<ParBean> getParBeansList() {
+		return parBeansList;
+	}
+
+	public void setParBeansList(List<ParBean> parBeansList) {
+		this.parBeansList = parBeansList;
 	}
 
 	// End of Getter Setter Methods

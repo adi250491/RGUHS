@@ -234,7 +234,7 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen" name="appBean1.aplInstId">
+																	<select data-rel="chosen" name="aplInstId" style="width:300px;">
 																		<option value="">--Select College--</option>
 																		<s:iterator value="affInstList">
 

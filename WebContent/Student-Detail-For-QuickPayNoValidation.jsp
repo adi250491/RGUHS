@@ -179,7 +179,7 @@
 											<tbody>
 
 												<tr>
-													<td>Enter Enrollment Number</td>
+													<td style="font-weight: bold;">Enter Enrollment Number</td>
 
 
 
@@ -190,7 +190,7 @@
 
 												</tr>
 												<tr>
-													<td>First Name</td>
+													<td style="font-weight: bold;">First Name</td>
 
 
 
@@ -200,7 +200,7 @@
 
 												</tr>
 												<tr>
-													<td>Last Name</td>
+													<td style="font-weight: bold;">Last Name</td>
 
 
 
@@ -210,7 +210,7 @@
 
 												</tr>
 												<tr>
-													<td>Contact</td>
+													<td style="font-weight: bold;">Contact</td>
 
 
 
@@ -220,7 +220,7 @@
 
 												</tr>
 												<tr>
-													<td>Email</td>
+													<td style="font-weight: bold;">Email</td>
 
 
 
