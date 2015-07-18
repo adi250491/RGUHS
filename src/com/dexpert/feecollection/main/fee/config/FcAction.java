@@ -45,7 +45,8 @@ public class FcAction extends ActionSupport {
 	private ArrayList<ArrayList<String>> ComboList = new ArrayList<ArrayList<String>>();
 	private ArrayList<ArrayList<String>> BodyList = new ArrayList<ArrayList<String>>();
 	private ArrayList<String> HeaderList = new ArrayList<String>();
-	private ArrayList<FeeDetailsBean>fDfeeList=new ArrayList<FeeDetailsBean>();
+	ArrayList<FeeDetailsBean>fDfeeList=new ArrayList<FeeDetailsBean>();
+	public ArrayList<FeeDetailsBean>fDfeeList2=new ArrayList<FeeDetailsBean>();
 	LookupDAO lpDao = new LookupDAO();
 	FvDAO fvdao = new FvDAO();
 	FcDAO configdao=new FcDAO(); 
@@ -437,9 +438,8 @@ public class FcAction extends ActionSupport {
 	
 	public String GetFeesAll()
 	{
-		fDfeeList=configdao.GetFees("ALL", null, null, null);
-		log.info(fDfeeList.toString());
-		
+		fDfeeList2=configdao.GetFees("ALL", null, null, null);
+		log.info(fDfeeList2.toString());
 		return SUCCESS;
 	}
 	
@@ -1316,7 +1316,6 @@ public class FcAction extends ActionSupport {
 		this.uids = uids;
 	}
 
-
 	public ArrayList<FeeDetailsBean> getfDfeeList() {
 		return fDfeeList;
 	}
@@ -1325,6 +1324,14 @@ public class FcAction extends ActionSupport {
 		this.fDfeeList = fDfeeList;
 	}
 
+	public ArrayList<FeeDetailsBean> getfDfeeList2() {
+		return fDfeeList2;
+	}
+
+	public void setfDfeeList2(ArrayList<FeeDetailsBean> fDfeeList2) {
+		this.fDfeeList2 = fDfeeList2;
+	}
+	
 	
 	
 

@@ -256,7 +256,7 @@
 				<!--/row-->
 
 				<!-- Fee Parameters Row -->
-				<div class="row" id="FeeParametersBox" style="display: none">
+				<!-- <div class="row" id="FeeParametersBox" style="display: none">
 					<div class="box col-md-12">
 						<div class="box-inner">
 							<div class="box-header well">
@@ -274,7 +274,7 @@
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 
-									<!---Content-->
+									-Content
 
 									<p class="btn-group">
 									<div class="btn-group">
@@ -287,8 +287,7 @@
 										onclick='window.open("Admin-Report.html", "Admin Report", "height=1080,width=1920")'>Search
 										Parameters</button>
 
-									</p>
-
+									
 
 								</div>
 
@@ -296,7 +295,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<!--/row-->
 
 				<!--/row-->
@@ -328,12 +327,12 @@
 
 
 									</p>
-
+	
 									<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
 											<tr>
-												<th>Sr. No.</th>
+												<th>Sr. No. </th>
 												<th>Fee ID</th>
 												<th>Fee Name</th>
 												<th>Paid By</th>
@@ -341,12 +340,10 @@
 											</tr>
 										</thead>
 										<tbody>
-											<s:iterator value="fDfeeList">
+											<s:iterator value="fDfeeList2">
+											
 												<tr>
-													<td><%=i%>
-														<%
-															i++;
-														%></td>
+													<td> </td>
 													<td><s:property value="feeId" /></td>
 													<td><s:property value="feeName" /></td>
 													<td><s:set var="app">
