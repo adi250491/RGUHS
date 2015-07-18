@@ -170,7 +170,7 @@ public class AffAction extends ActionSupport {
 
 		else {
 			log.info("College NAME ALREADY AVAILABLE");
-
+			parBeansList = parDAO.getUniversityList();
 			request.setAttribute("msg", "Institute Name is Already Registered");
 			return "failure";
 		}
