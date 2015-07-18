@@ -127,9 +127,11 @@
 
 
 
-				<form action="AddBulkColleges" enctype="multipart/form-data"
+				<form onsubmit="showProgress()" id="bulkForm" action="AddBulkColleges" enctype="multipart/form-data"
 					method="post">
-					<div class="row">
+					<div style="display:none" id="wait"><img src="img/ajax-loaders/ajax-loader-1.gif"
+                                 title="img/ajax-loaders/ajax-loader-1.gif"></div>
+					<div  class="row">
 						<div class="box col-md-12">
 							<div class="box-inner">
 								<div class="box-header well">
@@ -192,7 +194,7 @@
 						</div>
 						<div class="col-md-12">
 
-							<input type="submit" class="btn btn-success" value="Upload File">
+							<input type="submit"  class="btn btn-success" value="Upload File">
 
 
 
@@ -202,6 +204,7 @@
 
 					</div>
 				</form>
+				
 				<%-- <table>
 					<tr>
 						<td>Not Added College List is</td>
@@ -301,6 +304,10 @@
 	<script src="js/charisma.js"></script>
 
 	<script>
+		function showProgress()
+		{
+			document.getElementById("wait").style.display="block";
+		}
 		
 	</script>
 </body>
