@@ -238,11 +238,12 @@
 															<div class="control-group">
 																<div class="controls">
 																	<s:select theme="simple" headerKey=" " id="service"
-																		requiredLabel="true" headerValue="Select an Option"
-																		cssClass="form-control" data-rel="chosen"
-																		cssStyle="width:400px" list="serviceList"
+																		selected="selected" requiredLabel="true"
+																		headerValue="Select an Option" cssClass="form-control"
+																		data-rel="chosen" cssStyle="width:400px"
+																		list="serviceList"
 																		name="feeCollectionBean.service_type"
-																		value="{%serviceList}">
+																		value="%{#serviceValue}">
 
 
 
@@ -275,11 +276,11 @@
 
 
 																	<s:select theme="simple" headerKey=" " id="nationality"
-																		headerValue="Select an Option" cssClass="form-control"
-																		cssStyle="width:400px;" data-rel="chosen"
-																		list="nationalityList"
+																		selected="selected" headerValue="Select an Option"
+																		cssClass="form-control" cssStyle="width:400px;"
+																		data-rel="chosen" list="nationalityList"
 																		name="feeCollectionBean.nationality"
-																		value="{%nationalityList}">
+																		value="%{#nationalityValue}">
 
 
 
@@ -306,10 +307,11 @@
 
 
 																	<s:select theme="simple" headerKey=" " id="faculty"
-																		headerValue="Select an Option" cssClass="form-control"
-																		cssStyle="width:400px;" data-rel="chosen"
-																		list="facultyList" name="feeCollectionBean.faculty"
-																		value="{%facultyList}">
+																		selected="selected" headerValue="Select an Option"
+																		cssClass="form-control" cssStyle="width:400px;"
+																		data-rel="chosen" list="facultyList"
+																		name="feeCollectionBean.faculty"
+																		value="%{#facultyValue}">
 
 
 
@@ -339,10 +341,10 @@
 																<div class="controls">
 
 																	<s:select theme="simple" headerKey=" " id="course"
-																		headerValue="Select an Option" cssClass="form-control"
-																		cssStyle="width:400px;" data-rel="chosen"
-																		list="courseList" name="feeCollectionBean.course"
-																		value="{%courseList}">
+																		selected="selected" headerValue="Select an Option"
+																		cssClass="form-control" cssStyle="width:400px;"
+																		data-rel="chosen" list="courseList"
+																		name="feeCollectionBean.course" value="%{courseValue}">
 
 
 

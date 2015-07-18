@@ -37,6 +37,8 @@ import com.dexpert.feecollection.main.communication.email.EmailSessionBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
+import com.dexpert.feecollection.main.users.parent.ParBean;
+import com.dexpert.feecollection.main.users.parent.ParDAO;
 
 public class AffDAO {
 
@@ -44,6 +46,7 @@ public class AffDAO {
 	public static SessionFactory factory = ConnectionClass.getFactory();
 	static Logger log = Logger.getLogger(AffDAO.class.getName());
 	static Boolean isExist = false;
+	ParDAO parDAO = new ParDAO();
 
 	// static ArrayList<AffBean> existingCollegeList = new ArrayList<AffBean>();
 
@@ -87,6 +90,13 @@ public class AffDAO {
 			} catch (java.lang.NullPointerException e) {
 
 			}
+
+			ParBean parBean = new ParBean();
+			parBean = parDAO.viewUniversity(saveData.getParInstId());
+			
+			log.info("Parent Inst Name and IS ::" + parBean.getParInstName() + "  ::: " + parBean.getParInstId());
+
+			parBean.getAffBeanOneToManySet().add(saveData);
 
 			session.beginTransaction();
 			session.saveOrUpdate(saveData);
@@ -152,15 +162,33 @@ public class AffDAO {
 
 	}
 
+	// get direct child i.e. college list
 	public ArrayList<AffBean> getCollegesList() {
-
+		log.info("child class method executing");
 		Session session = factory.openSession();
 
 		Criteria criteria = session.createCriteria(AffBean.class);
 		criteria.addOrder(Order.asc("instName"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		ArrayList<AffBean> affBeansList = (ArrayList<AffBean>) criteria.list();
 		session.close();
 		return affBeansList;
+	}
+
+	// to get child college list based on university
+	public ParBean getUniversityCollegeList(LoginBean loginBean) {
+
+		log.info("parent class method executing");
+
+		Session session = factory.openSession();
+
+		Criteria criteria = session.createCriteria(ParBean.class);
+		criteria.add(Restrictions.eq("parInstId", loginBean.getParBean().getParInstId()));
+
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		ParBean parBean = (ParBean) criteria.list().iterator().next();
+		session.close();
+		return parBean;
 	}
 
 	public ArrayList<AffBean> getCollegesListByInstName(AffBean affBean) {

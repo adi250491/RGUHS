@@ -2,19 +2,25 @@ package com.dexpert.feecollection.main.users.parent;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import com.dexpert.feecollection.main.users.LoginBean;
+import com.dexpert.feecollection.main.users.affiliated.AffBean;
+import com.dexpert.feecollection.main.users.applicant.AppBean;
 
 @Entity
 @Table(name = "parent_inst_detail")
@@ -41,6 +47,10 @@ public class ParBean implements Serializable {
 	byte[] filesByteSize;
 
 	// ------------------------------------
+
+	// one to many relation ship with Institutes
+	@OneToMany(cascade = CascadeType.ALL)
+	Set<AffBean> affBeanOneToManySet;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	LoginBean loginBean;
@@ -131,6 +141,14 @@ public class ParBean implements Serializable {
 
 	public void setFilesByteSize(byte[] filesByteSize) {
 		this.filesByteSize = filesByteSize;
+	}
+
+	public Set<AffBean> getAffBeanOneToManySet() {
+		return affBeanOneToManySet;
+	}
+
+	public void setAffBeanOneToManySet(Set<AffBean> affBeanOneToManySet) {
+		this.affBeanOneToManySet = affBeanOneToManySet;
 	}
 
 }

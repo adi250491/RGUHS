@@ -15,7 +15,6 @@ import org.hibernate.criterion.Restrictions;
 import com.dexpert.feecollection.main.ConnectionClass;
 import com.dexpert.feecollection.main.users.affiliated.AffDAO;
 
-
 public class ParDAO {
 
 	// Declare Global Variables Here
@@ -53,7 +52,7 @@ public class ParDAO {
 	}
 
 	// method to register record of university
-	public static ParBean saveOrUpdate(ParBean parBean, String path) {
+	public ParBean saveOrUpdate(ParBean parBean, String path) {
 		// Declarations
 		// Open session from session factory
 		Session session = factory.openSession();
@@ -107,6 +106,7 @@ public class ParDAO {
 		try {
 
 			Criteria criteria = session.createCriteria(ParBean.class);
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			List<ParBean> list = criteria.list();
 			return list;
 
@@ -123,11 +123,12 @@ public class ParDAO {
 			criteria.add(Restrictions.eq("parInstId", id));
 			ParBean bean = (ParBean) criteria.list().iterator().next();
 			return bean;
-		} catch (Exception e) {
+		} finally {
+			session.close();
 			// TODO: handle exception
 		}
 		// TODO Auto-generated method stub
-		return null;
+
 	}
 
 }

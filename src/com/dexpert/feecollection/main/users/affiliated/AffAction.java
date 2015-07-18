@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,8 @@ import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
+import com.dexpert.feecollection.main.users.parent.ParBean;
+import com.dexpert.feecollection.main.users.parent.ParDAO;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class AffAction extends ActionSupport {
@@ -40,12 +43,15 @@ public class AffAction extends ActionSupport {
 	HttpSession ses = request.getSession();
 	ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
 	Boolean saved = true;
+	private Integer parInstId;
 	private LookupDAO lookupdao = new LookupDAO();
 	public AffBean affInstBean;
-	private ArrayList<AffFeeCalcDetail>calcList=new ArrayList<AffFeeCalcDetail>();
+	private ArrayList<AffFeeCalcDetail> calcList = new ArrayList<AffFeeCalcDetail>();
 	private AffFeePropBean propbean;
 	ArrayList<AffFeePropBean> dueList = new ArrayList<AffFeePropBean>();
 	AffDAO affDao = new AffDAO();
+	ParBean parBean = new ParBean();
+	ParDAO parDAO = new ParDAO();
 	FcDAO feeDAO = new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
@@ -72,6 +78,8 @@ public class AffAction extends ActionSupport {
 		// log.info("paramset is "+affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("List Size is ::" + instNameList.size());
+
+		
 
 		if (instNameList.isEmpty()) {
 
@@ -114,6 +122,14 @@ public class AffAction extends ActionSupport {
 
 			log.info("User Profile is  ::" + affInstBean.getLoginBean().getProfile());
 			creds.setProfile(affInstBean.getLoginBean().getProfile());
+
+			parBean = parDAO.viewUniversity(affInstBean.getParInstId());
+
+			log.info("Parent Inst Name and IS ::" + parBean.getParInstName() + "  ::: " + parBean.getParInstId());
+
+			parBean.getAffBeanOneToManySet().add(affInstBean);
+
+			parDAO.saveOrUpdate(parBean, null);
 
 			// for bidirectional relationship ,set parent record to child
 			// record
@@ -182,6 +198,14 @@ public class AffAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	// get collge list based on university ID
+	public String getUniversityCollegeList() {
+		HttpSession httpSession = request.getSession();
+		LoginBean loginBean = (LoginBean) httpSession.getAttribute("loginUserBean");
+		parBean = affDao.getUniversityCollegeList(loginBean);
+		return SUCCESS;
+	}
+
 	// get one college Detail to edit
 
 	public String viewCollegeDetail() {
@@ -211,7 +235,7 @@ public class AffAction extends ActionSupport {
 	// update COllege Record
 
 	public String updateCollegeDetail() {
-		//log.info("paramlist is " + affInstBean.getParamvalues().toString());
+		// log.info("paramlist is " + affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("list Size is ::" + instNameList.size());
 		if (instNameList.isEmpty()) {
@@ -459,76 +483,70 @@ public class AffAction extends ActionSupport {
 
 		return SUCCESS;
 	}
-	
-	public String UpdateCalcParameters()
-	{
-		AffFeePropBean feePropbean=new AffFeePropBean();
-				
-		//Get Fee Id
-		Integer feeId=(Integer)ses.getAttribute("sesFeeId");
-		//Get Institute Id
-		Integer InsId=(Integer)ses.getAttribute("sesInstId");
-		//Get Institute Bean from dB
-		AffBean instBean=affDao.getOneCollegeRecord(InsId);
-		//Get Institute Fee Property Bean from Institute Bean
-		Set<AffFeePropBean> feeProp=instBean.getFeeProps();
-		Iterator<AffFeePropBean>feeIt=feeProp.iterator();
-		while(feeIt.hasNext())
-		{
-			AffFeePropBean temp=feeIt.next();
-			if(temp.getFeeId()==feeId)
-			{
-				feePropbean=temp;
+
+	public String UpdateCalcParameters() {
+		AffFeePropBean feePropbean = new AffFeePropBean();
+
+		// Get Fee Id
+		Integer feeId = (Integer) ses.getAttribute("sesFeeId");
+		// Get Institute Id
+		Integer InsId = (Integer) ses.getAttribute("sesInstId");
+		// Get Institute Bean from dB
+		AffBean instBean = affDao.getOneCollegeRecord(InsId);
+		// Get Institute Fee Property Bean from Institute Bean
+		Set<AffFeePropBean> feeProp = instBean.getFeeProps();
+		Iterator<AffFeePropBean> feeIt = feeProp.iterator();
+		while (feeIt.hasNext()) {
+			AffFeePropBean temp = feeIt.next();
+			if (temp.getFeeId() == feeId) {
+				feePropbean = temp;
 			}
-			
+
 		}
-		//Add Fee Calc Detail Beans to Institute Fee Property Bean and update the Institute Bean
-		Set<AffFeeCalcDetail>multipliers=new HashSet<AffFeeCalcDetail>(calcList);
+		// Add Fee Calc Detail Beans to Institute Fee Property Bean and update
+		// the Institute Bean
+		Set<AffFeeCalcDetail> multipliers = new HashSet<AffFeeCalcDetail>(calcList);
 		feePropbean.setMultipliers(multipliers);
 		instBean.getFeeProps().add(feePropbean);
 		affDao.saveOrUpdate(instBean, null);
-		
-		//Remove session Attributes
+
+		// Remove session Attributes
 		ses.removeAttribute("sesInstId");
 		ses.removeAttribute("sesFeeId");
 		return SUCCESS;
 	}
 
 	// End of Action Methods
-	
-	private ArrayList<AffFeePropBean> calculateFee(AffBean institute)
-	{
-		//Get Associated Fees
-		ArrayList<AffFeePropBean>tempList=new ArrayList<AffFeePropBean>(institute.getFeeProps());
-		//Get First Fee and see if it is fixed or per applicant
-		Iterator<AffFeePropBean>tempIt=tempList.iterator();
-		while(tempIt.hasNext())
-		{
-			
-			AffFeePropBean propBean=tempIt.next();
-			PaymentDuesBean due=new PaymentDuesBean();
-			FeeDetailsBean feedetail=feeDAO.GetFees("id", null, propBean.getFeeId(), null).get(0);
-			//if Fixed update amount
-			if(feedetail.getCal_mode()==0)
-			{
+
+	private ArrayList<AffFeePropBean> calculateFee(AffBean institute) {
+		// Get Associated Fees
+		ArrayList<AffFeePropBean> tempList = new ArrayList<AffFeePropBean>(institute.getFeeProps());
+		// Get First Fee and see if it is fixed or per applicant
+		Iterator<AffFeePropBean> tempIt = tempList.iterator();
+		while (tempIt.hasNext()) {
+
+			AffFeePropBean propBean = tempIt.next();
+			PaymentDuesBean due = new PaymentDuesBean();
+			FeeDetailsBean feedetail = feeDAO.GetFees("id", null, propBean.getFeeId(), null).get(0);
+			// if Fixed update amount
+			if (feedetail.getCal_mode() == 0) {
 				log.info("Calculation Mode is fixed,... development pending on fixed mode");
 			}
-			
-			//if per Applicant see if calc multipliers have been set
-			if(feedetail.getCal_mode()==1)
-			{
-			Set<AffFeeCalcDetail>mults=propBean.getMultipliers();
-			//if set then calculate 
-			if(mults.size()>0)
-			{
-				
+
+			// if per Applicant see if calc multipliers have been set
+			if (feedetail.getCal_mode() == 1) {
+				Set<AffFeeCalcDetail> mults = propBean.getMultipliers();
+				// if set then calculate
+				if (mults.size() > 0) {
+
+				}
+				// if no then set zero
+
 			}
-			//if no then set zero
-				
-			}
-			
+
 		}
-		
+		return tempList;
+
 	}
 
 	// ---------------------------------------------------
@@ -676,6 +694,22 @@ public class AffAction extends ActionSupport {
 
 	public void setCalcList(ArrayList<AffFeeCalcDetail> calcList) {
 		this.calcList = calcList;
+	}
+
+	public Integer getParInstId() {
+		return parInstId;
+	}
+
+	public void setParInstId(Integer parInstId) {
+		this.parInstId = parInstId;
+	}
+
+	public ParBean getParBean() {
+		return parBean;
+	}
+
+	public void setParBean(ParBean parBean) {
+		this.parBean = parBean;
 	}
 
 	// End of Getter Setter Methods

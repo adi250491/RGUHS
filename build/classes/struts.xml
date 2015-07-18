@@ -40,6 +40,14 @@
 			<result name="success">Admin-MyColleges.jsp</result>
 
 		</action>
+		
+		<action name="GetCollegeListOnUniversity"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="getUniversityCollegeList">
+
+			<result name="success">Admin-MyColleges.jsp</result>
+
+		</action>
 
 
 		<action name="downloadFile"
@@ -115,6 +123,12 @@
 			class="com.dexpert.feecollection.main.users.parent.ParAction" method="viewUniDetail">
 
 			<result name="success">University-View-Detail.jsp</result>
+		</action>
+
+		<action name="GetUniversityDetail"
+			class="com.dexpert.feecollection.main.users.parent.ParAction" method="getUniversityDetail">
+
+			<result name="success">CollegeForm.jsp</result>
 		</action>
 
 
@@ -309,7 +323,7 @@
 
 
 		</action>
-	<action name="saveFeeCalcDetails"
+		<action name="saveFeeCalcDetails"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="UpdateCalcParameters">
 

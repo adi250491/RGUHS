@@ -3,11 +3,13 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html lang="en">
 <head>
+
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
 
-	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
+	loginUser = (LoginBean) session.getAttribute("loginUserBean"); 
+	String profile=(String)session.getAttribute("sesProfile");
 
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
@@ -265,12 +267,69 @@
 
 											<button class="btn btn-sm btn-info pull-right"
 												style="margin-right: 3%; float: right;"
-												onclick='window.open("CollegeForm.jsp", "CollegeForm", "width=500,height=700")'>
+												onclick='window.open("GetUniversityDetail", "CollegeForm", "width=500,height=700")'>
 												<i class="fa fa-plus"></i> Add College
 											</button>
 										</div>
 									</div>
 									<!---Content-->
+
+									<%
+										if (profile.contentEquals("Parent")){
+																																																																										System.out.println("Parent Class Table");
+									%>
+									<table
+										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
+										<thead>
+											<tr>
+												<th width="7%">Sr. No.</th>
+
+												<th>College Name</th>
+												<th>Place</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<%
+												int i = 1;
+											%>
+											<s:iterator value="parBean.affBeanOneToManySet">
+												<tr>
+													<td><%=i%></td>
+
+													<td class="center"><s:property value="instName" /></td>
+													<td class="center"><s:property value="place" /></td>
+													<td class="center"><a class="btn btn-success btn-sm"
+														title="Button To Display College Detail"
+														onclick="showDetails(<s:property value="instId"/>)"> <i
+															class="glyphicon glyphicon-zoom-in icon-white"></i> View
+													</a> <a class="btn btn-info btn-sm"
+														title="Button To Display College Detail"
+														onclick='window.open("GetAllInsParameters?instId=<s:property value="instId"/>", "CollegeForm", "width=500,height=700")'>
+															<i class="glyphicon glyphicon-cog icon-white"></i>
+															Configure
+													</a>
+														<button class="btn btn-sm btn-warning"
+															onclick='window.open("ViewCollegeFees?instId=<s:property value="instId"/>", "CollegeForm", "width=500,height=700")'>
+															Associated Fees</button></td>
+												</tr>
+
+												<%
+													i++;
+												%>
+											</s:iterator>
+
+
+										</tbody>
+									</table>
+
+									<%
+										}
+																																																				else{
+																																																					
+																																																					System.out.println("child Class Table");
+									%>
+
 									<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
@@ -315,6 +374,13 @@
 
 										</tbody>
 									</table>
+
+
+									<%
+										}
+									%>
+
+
 
 								</div>
 

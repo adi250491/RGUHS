@@ -34,6 +34,7 @@ public class AffBean implements Serializable {
 	@Id
 	@GeneratedValue(generator = "g1")
 	private Integer instId;
+	private Integer parInstId;
 
 	@Column(unique = true)
 	private String instName;
@@ -79,10 +80,9 @@ public class AffBean implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<AffFeePropBean> feeProps;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<PaymentDuesBean> dueFeesSet;
-
 
 	public Set<AppBean> getAplBeanSet() {
 		return aplBeanSet;
@@ -242,7 +242,13 @@ public class AffBean implements Serializable {
 	public void setDueFeesSet(Set<PaymentDuesBean> dueFeesSet) {
 		this.dueFeesSet = dueFeesSet;
 	}
-	
-	
+
+	public Integer getParInstId() {
+		return parInstId;
+	}
+
+	public void setParInstId(Integer parInstId) {
+		this.parInstId = parInstId;
+	}
 
 }

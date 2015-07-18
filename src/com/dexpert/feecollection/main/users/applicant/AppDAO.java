@@ -60,10 +60,11 @@ public class AppDAO {
 		// to get college record based on id to create relationship
 		affBean = aff.viewInstDetail(appBean.getAplInstId());
 		// one to one bidirectional
-
 		appBean.setAffBean(affBean);
-
 		affBean.setAppBean(appBean);
+		
+		// one to many Relationship
+		affBean.getAplBeanSet().add(appBean);
 
 		try {
 			Transaction tx = session.beginTransaction();
@@ -110,14 +111,14 @@ public class AppDAO {
 		Session session = factory.openSession();
 		try {
 
-			Integer id= bean.getAffBean().getInstId();
+			Integer id = bean.getAffBean().getInstId();
 			Criteria criteria = session.createCriteria(AffBean.class);
 
 			criteria.add(Restrictions.eq("instId", id));
 			AffBean affBean = (AffBean) criteria.list().iterator().next();
-			
-			log.info("List is ::"+affBean.getAplBeanSet().size());
-			log.info("List is ::"+affBean.getEmail());
+
+			log.info("List is ::" + affBean.getAplBeanSet().size());
+			log.info("List is ::" + affBean.getEmail());
 			return affBean;
 
 		} finally {

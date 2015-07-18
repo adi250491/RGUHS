@@ -97,7 +97,7 @@ public class ParAction extends ActionSupport {
 
 		}
 
-		parBean = ParDAO.saveOrUpdate(parBean, f + File.separator);
+		parBean = parDAO.saveOrUpdate(parBean, f + File.separator);
 		// -----Code for sending email//--------------------
 		EmailSessionBean email = new EmailSessionBean();
 		email.sendEmail(parBean.getParInstEmail(), "Welcome To Fee Collection Portal!", username, password,

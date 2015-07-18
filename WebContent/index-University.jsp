@@ -162,7 +162,7 @@
 							<%
 								if (!profile.contentEquals("Affiliated")){
 							%>
-							<li><a class="ajax-link" href="getCollegeList"><i
+							<li><a class="ajax-link" href="GetCollegeListOnUniversity"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
 							<%
 								}
