@@ -49,7 +49,7 @@ public class AppAction extends ActionSupport {
 
 		log.info("Applicant Name  ::" + appBean1.getAplFirstName());
 
-		log.info("College id  ::" + appBean1.getAplInstId());
+		
 
 		List<String> existEnrollmentList = aplDAO.existingEnrollNum(appBean1);
 		if (existEnrollmentList.isEmpty()) {

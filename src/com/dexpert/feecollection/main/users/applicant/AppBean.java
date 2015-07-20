@@ -30,7 +30,7 @@ public class AppBean implements Serializable {
 	private Integer aplId;
 	private String aplFirstName, aplLstName, aplEmail, aplAddress, aplMobilePri, aplMobileSec, enrollmentNumber,
 			gender;
-	private Integer aplInstId;
+	
 
 	// one to one bidirectional relationship with login
 	@OneToOne(cascade = CascadeType.ALL)
@@ -136,13 +136,7 @@ public class AppBean implements Serializable {
 		this.enrollmentNumber = enrollmentNumber;
 	}
 
-	public Integer getAplInstId() {
-		return aplInstId;
-	}
-
-	public void setAplInstId(Integer aplInstId) {
-		this.aplInstId = aplInstId;
-	}
+	
 
 	public String getGender() {
 		return gender;
