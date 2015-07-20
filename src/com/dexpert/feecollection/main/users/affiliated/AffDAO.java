@@ -91,12 +91,12 @@ public class AffDAO {
 
 			}
 
-			ParBean parBean = new ParBean();
-			parBean = parDAO.viewUniversity(saveData.getParInstId());
+			//ParBean parBean = new ParBean();
+		//	parBean = parDAO.viewUniversity(saveData.getParInstId());
 			
-			log.info("Parent Inst Name and IS ::" + parBean.getParInstName() + "  ::: " + parBean.getParInstId());
+		//	log.info("Parent Inst Name and IS ::" + parBean.getParInstName() + "  ::: " + parBean.getParInstId());
 
-			parBean.getAffBeanOneToManySet().add(saveData);
+		//	parBean.getAffBeanOneToManySet().add(saveData);
 
 			session.beginTransaction();
 			session.saveOrUpdate(saveData);
