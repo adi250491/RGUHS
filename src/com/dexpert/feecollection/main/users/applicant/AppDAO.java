@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -172,7 +173,13 @@ public class AppDAO {
 			Criteria criteria = session.createCriteria(AppBean.class);
 			criteria.add(Restrictions.eq("enrollmentNumber", EnrId));
 
-			AppBean appBeanList = (AppBean) criteria.list().iterator().next();
+			AppBean appBeanList=new AppBean();
+			try {
+				appBeanList = (AppBean) criteria.list().iterator().next();
+			} catch (java.util.NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return appBeanList;
 
 		} finally {

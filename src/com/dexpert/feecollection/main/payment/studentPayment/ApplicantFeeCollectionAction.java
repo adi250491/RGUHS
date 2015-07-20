@@ -27,6 +27,7 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 	static Logger log = Logger.getLogger(LookupAction.class.getName());
 
 	Map<String, String> serviceList = new HashMap<String, String>();
+	Map<String, String> serviceListSelected = new HashMap<String, String>();
 	Map<String, String> courseList = new HashMap<String, String>();
 	Map<String, String> nationalityList = new HashMap<String, String>();
 	Map<String, String> facultyList = new HashMap<String, String>();
@@ -53,11 +54,12 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 	}
 
 	public String submitParameter() {
-
+		ApplicantFeeCollectionBean tempBean=feeCollectionBean;
 		feeCollectionBean = afc.calculateTotalFee(feeCollectionBean);
+		feeCollectionBean.setService_type(tempBean.getService_type());
 		log.info("enroll ment  number ::" + appBean1.getEnrollmentNumber());
 		appBean1 = appDAO.getUserDetail(appBean1.getEnrollmentNumber());
-		
+		serviceListSelected.put(feeCollectionBean.getService_type(), serviceList.get(feeCollectionBean.getService_type()));
 		serviceList = dao.serviceTypeList();
 		courseList = dao.courseList();
 		facultyList = dao.facultyList();
@@ -153,4 +155,13 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 		this.facultyList = facultyList;
 	}
 
+	public Map<String, String> getServiceListSelected() {
+		return serviceListSelected;
+	}
+
+	public void setServiceListSelected(Map<String, String> serviceListSelected) {
+		this.serviceListSelected = serviceListSelected;
+	}
+
+	
 }

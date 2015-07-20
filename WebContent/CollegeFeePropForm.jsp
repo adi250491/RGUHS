@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.dexpert.feecollection.main.users.affiliated.AffFeePropBean"%>
 <html lang="en">
 <head>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -44,7 +45,17 @@
 
 <!-- The fav icon -->
 <link rel="shortcut icon" href="img/favicon.ico">
-
+<%
+AffFeePropBean propbean=new AffFeePropBean();
+try
+{
+	propbean=(AffFeePropBean)session.getAttribute("sesPropBean");
+}
+catch(Exception e)
+{
+	e.printStackTrace();
+}
+%>
 </head>
 
 <body>
@@ -108,12 +119,12 @@
 										<%-- <s:iterator value="affInstBean.feeSet"> --%>
 										<tr>
 												<td>1</td>
-												<td><s:property value="feeId"/></td>
-												<td><s:property value="feeName"/></td>
-												<td><input style="width:170px" class="form-control" type="date"></td>												
-											    <td><input style="width:170px"  class="form-control" type="date"></td>
-												<td><input style="width:170px"  class="form-control" type="date"></td>
-												<td><input style="width:100px" class="form-control" type="number"></td>
+												<td><%=propbean.getFeeId()%></td>
+												<td><%=propbean.getFeeName()%></td>
+												<td><input style="width:170px" class="form-control" type="date" value="<%=propbean.getStartDate()%>"></td>												
+											    <td><input style="width:170px"  class="form-control" type="date"  value="<%=propbean.getEndDate()%>"></td>
+												<td><input style="width:170px"  class="form-control" type="date" value="<%=propbean.getLateDate()%>"></td>
+												<td><input style="width:100px" class="form-control" type="number" value="<%=propbean.getLateAmount()%>"></td>
 												<td><button class="btn btn-success btn-sm">Save</button></td>
 
 											</tr>

@@ -479,6 +479,7 @@ public class AffAction extends ActionSupport {
 			tempbean2 = setIt.next();
 			if (tempbean2.getFeeId() == reqfeeId) {
 				propbean = tempbean2;
+				ses.setAttribute("sesPropBean", propbean);
 				return SUCCESS;
 			}
 

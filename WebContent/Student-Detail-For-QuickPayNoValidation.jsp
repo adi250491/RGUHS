@@ -237,15 +237,16 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<s:select theme="simple" headerKey=" " id="service"
-																		selected="selected" requiredLabel="true"
-																		headerValue="Select an Option" cssClass="form-control"
-																		data-rel="chosen" cssStyle="width:400px"
+																	<s:select theme="simple"  id="service"
+																		 requiredLabel="true"
+																		 data-rel="chosen"
+																		 cssStyle="width:400px"
 																		list="serviceList"
+																		
 																		name="feeCollectionBean.service_type"
-																		value="%{#serviceValue}">
+																		value="%{serviceListSelected}">
 
-
+																		
 
 																	</s:select>
 

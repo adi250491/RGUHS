@@ -114,7 +114,7 @@
 											    <td><s:property value="propbean.endDate"/></td>
 												<td><s:property value="propbean.lateDate"/></td>
 												<td><s:property value="propbean.lateAmount"/></td>
-												<td><button class="btn btn-success btn-sm">Edit</button></td>
+												<td><a class="btn btn-info btn-sm" href="CollegeFeePropForm.jsp"> Edit</a></td>
 
 											</tr>
 										
