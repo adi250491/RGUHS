@@ -103,7 +103,7 @@
 			<%
 				if (msg != null)
 
-																																							{
+																																											{
 			%>
 
 			<div
@@ -146,7 +146,17 @@
 											<thead>
 
 												<tr>
-													<th></th>
+													<th>
+														<%
+															if (profile.contentEquals("Affiliated")){
+																												
+																												
+																												System.out.print("Profile is ::"+profile);
+														%> <input type="hidden" name="aplInstId"
+														value="<%=loginUser.getAffBean().getInstId()%>"> <%
+ 	}
+ %>
+													</th>
 													<th></th>
 													<th></th>
 
@@ -225,7 +235,9 @@
 														</div></td>
 
 												</tr>
-
+												<%
+													if (!profile.contentEquals("Affiliated")){
+												%>
 
 												<tr>
 
@@ -234,7 +246,8 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<select data-rel="chosen" name="aplInstId" style="width:300px;">
+																	<select data-rel="chosen" name="aplInstId"
+																		style="width: 300px;">
 																		<option value="">--Select College--</option>
 																		<s:iterator value="affInstList">
 
@@ -252,7 +265,9 @@
 													</td>
 
 												</tr>
-
+												<%
+													}
+												%>
 
 												<tr>
 

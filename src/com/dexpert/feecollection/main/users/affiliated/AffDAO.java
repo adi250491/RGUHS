@@ -91,12 +91,13 @@ public class AffDAO {
 
 			}
 
-			//ParBean parBean = new ParBean();
-		//	parBean = parDAO.viewUniversity(saveData.getParInstId());
-			
-		//	log.info("Parent Inst Name and IS ::" + parBean.getParInstName() + "  ::: " + parBean.getParInstId());
+			// ParBean parBean = new ParBean();
+			// parBean = parDAO.viewUniversity(saveData.getParInstId());
 
-		//	parBean.getAffBeanOneToManySet().add(saveData);
+			// log.info("Parent Inst Name and IS ::" + parBean.getParInstName()
+			// + "  ::: " + parBean.getParInstId());
+
+			// parBean.getAffBeanOneToManySet().add(saveData);
 
 			session.beginTransaction();
 			session.saveOrUpdate(saveData);
@@ -163,14 +164,16 @@ public class AffDAO {
 	}
 
 	// get direct child i.e. college list
-	public ArrayList<AffBean> getCollegesList() {
+	public List<AffBean> getCollegesList() {
 		log.info("child class method executing");
 		Session session = factory.openSession();
 
 		Criteria criteria = session.createCriteria(AffBean.class);
 		criteria.addOrder(Order.asc("instName"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		ArrayList<AffBean> affBeansList = (ArrayList<AffBean>) criteria.list();
+		List<AffBean> affBeansList = criteria.list();
+
+		log.info("List size of college is ::" + affBeansList.size());
 		session.close();
 		return affBeansList;
 	}

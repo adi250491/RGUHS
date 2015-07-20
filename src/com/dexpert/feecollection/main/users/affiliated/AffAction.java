@@ -41,8 +41,9 @@ public class AffAction extends ActionSupport {
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	HttpSession ses = request.getSession();
-	ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
+	List<AffBean> affBeansList = new ArrayList<AffBean>();
 	Boolean saved = true;
+	List<String> list = new ArrayList<String>();
 	private Integer parInstId;
 	private LookupDAO lookupdao = new LookupDAO();
 	public AffBean affInstBean;
@@ -54,7 +55,7 @@ public class AffAction extends ActionSupport {
 	ParDAO parDAO = new ParDAO();
 	FcDAO feeDAO = new FcDAO();
 	static Logger log = Logger.getLogger(AffAction.class.getName());
-	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
+	public List<AffBean> affInstList = new ArrayList<AffBean>();
 	private ArrayList<Integer> paramIds = new ArrayList<Integer>();;
 	ArrayList<AffBean> failureAffBeanList = new ArrayList<AffBean>();
 	ArrayList<AffBean> existingInstitureRecordList = new ArrayList<AffBean>();
@@ -78,7 +79,8 @@ public class AffAction extends ActionSupport {
 		// log.info("paramset is "+affInstBean.getParamvalues().toString());
 		List<String> instNameList = affDao.getCollegeNameList(affInstBean.getInstName());
 		log.info("List Size is ::" + instNameList.size());
-
+		HttpSession httpSession = request.getSession();
+		LoginBean loginBean = (LoginBean) httpSession.getAttribute("loginUserBean");
 		if (instNameList.isEmpty()) {
 
 			if (parInstId == null) {
@@ -98,7 +100,6 @@ public class AffAction extends ActionSupport {
 				affInstBean.setFileUpload(fileUpload);
 				affInstBean.setFileUploadFileName(fileUploadFileName);
 
-				// affInstBean = affDao.saveOrUpdate(affInstBean);
 				log.info("The ID after saving is is " + affInstBean.getInstId());
 				// if saved successfully generate credentials and forward
 				// success
@@ -132,10 +133,6 @@ public class AffAction extends ActionSupport {
 
 				parBean = parDAO.viewUniversity(parInstId);
 
-				// log.info("Parent Inst Name and IS ::" +
-				// parBean.getParInstName() + "  ::: " +
-				// parBean.getParInstId());
-
 				parBean.getAffBeanOneToManySet().add(affInstBean);
 
 				parDAO.saveOrUpdate(parBean, null);
@@ -143,6 +140,9 @@ public class AffAction extends ActionSupport {
 				// for bidirectional relationship ,set parent record to child
 				// record
 				creds.setAffBean(affInstBean);
+
+				affInstBean.setParBeanOneToOne(parBean);
+
 				if (creds.getProfile().equals("Admin")) {
 
 					// for bidirectional relationship ,set child record to
@@ -205,11 +205,27 @@ public class AffAction extends ActionSupport {
 	public String getCollegeList() {
 
 		affInstList = affDao.getCollegesList();
+		log.info("College List is ::" + affInstList.size());
+		Iterator<AffBean> it = affInstList.iterator();
+		for (AffBean affBean : affInstList) {
+			log.info("University Name is ::" + affBean.getParBeanOneToOne().getParInstName());
+			list.add(affBean.getParBeanOneToOne().getParInstName());
 
+		}
+
+		/*
+		 * while (it.hasNext()) { affInstBean = (AffBean) it.next();
+		 * 
+		 * 
+		 * log.info("University Name is ::" +
+		 * affInstBean.getParBeanOneToOne().getParInstName());
+		 * 
+		 * }
+		 */
 		return SUCCESS;
 	}
 
-	// get collge list based on university ID
+	// get collgege list based on university ID
 	public String getUniversityCollegeList() {
 		HttpSession httpSession = request.getSession();
 		LoginBean loginBean = (LoginBean) httpSession.getAttribute("loginUserBean");
@@ -571,10 +587,6 @@ public class AffAction extends ActionSupport {
 		this.affInstBean = affInstBean;
 	}
 
-	public ArrayList<AffBean> getAffInstList() {
-		return affInstList;
-	}
-
 	public void setAffInstList(ArrayList<AffBean> affInstList) {
 		this.affInstList = affInstList;
 	}
@@ -691,8 +703,12 @@ public class AffAction extends ActionSupport {
 		this.dueList = dueList;
 	}
 
-	public ArrayList<AffBean> getAffBeansList() {
+	public List<AffBean> getAffBeansList() {
 		return affBeansList;
+	}
+
+	public void setAffBeansList(List<AffBean> affBeansList) {
+		this.affBeansList = affBeansList;
 	}
 
 	public void setAffBeansList(ArrayList<AffBean> affBeansList) {
@@ -721,6 +737,14 @@ public class AffAction extends ActionSupport {
 
 	public void setParBean(ParBean parBean) {
 		this.parBean = parBean;
+	}
+
+	public List<String> getList() {
+		return list;
+	}
+
+	public void setList(List<String> list) {
+		this.list = list;
 	}
 
 	// End of Getter Setter Methods

@@ -31,7 +31,7 @@
 	}
 %> --%>
 <meta charset="utf-8">
-<title>Fee Collection Portal - Student Detail for Quick Pay</title>
+<title>Fee Collection Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -237,25 +237,19 @@
 														<div class="box-content">
 															<div class="control-group">
 																<div class="controls">
-																	<s:select theme="simple"  id="service"
-																		 requiredLabel="true"
-																		 data-rel="chosen"
-																		 cssStyle="width:400px"
+																	<s:select theme="simple" id="service" headerKey=""
+																		headerValue="Select an Option" requiredLabel="true"
+																		data-rel="chosen" cssStyle="width:400px"
 																		list="serviceList"
-																		
-																		name="feeCollectionBean.service_type"
-																		value="%{serviceListSelected}">
+																		name="feeCollectionBean.service_type">
 
-																		
+
 
 																	</s:select>
 
 
 
-																	<script type="text/javascript">
-																		document
-																				.getElementById('service').value = "feeCollectionBean.nationality";
-																	</script>
+
 																</div>
 															</div>
 

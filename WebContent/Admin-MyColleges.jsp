@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@page import="com.dexpert.feecollection.main.users.LoginBean"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
 
@@ -34,7 +35,7 @@
 	}
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal- My Colleges</title>
+<title>FeeDesk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
@@ -276,7 +277,7 @@
 
 									<%
 										if (profile.contentEquals("Parent")){
-																																																																										System.out.println("Parent Class Table");
+																																																																																																																																																System.out.println("Parent Class Table");
 									%>
 									<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
@@ -325,9 +326,9 @@
 
 									<%
 										}
-																																																				else{
-																																																					
-																																																					System.out.println("child Class Table");
+																																																																																																																										else{
+																																																																																																																											
+																																																																																																																											System.out.println("child Class Table");
 									%>
 
 									<table
@@ -337,6 +338,7 @@
 												<th width="7%">Sr. No.</th>
 
 												<th>College Name</th>
+												<th>University Name</th>
 												<th>Place</th>
 												<th>Actions</th>
 											</tr>
@@ -345,15 +347,21 @@
 											<%
 												int i = 1;
 											%>
-											<s:iterator value="affInstList">
+
+											<c:forEach items="${affInstList}" var="aff">
 												<tr>
 													<td><%=i%></td>
 
-													<td class="center"><s:property value="instName" /></td>
-													<td class="center"><s:property value="place" /></td>
-													<td class="center"><a class="btn btn-success btn-sm"
+													<td class="center"><c:out value="${aff.instName}" /></td>
+
+													<td><c:out value="${aff.parBeanOneToOne.parInstName}" />
+													</td>
+
+													<td class="center"><c:out value="${aff.place}" /></td>
+													<td class="center"> <a
+														class="btn btn-success btn-sm"
 														title="Button To Display College Detail"
-														onclick="showDetails(<s:property value="instId"/>)"> <i
+														onclick="showDetails(<c:out value="${aff.instId}" />)"> <i
 															class="glyphicon glyphicon-zoom-in icon-white"></i> View
 													</a> <a class="btn btn-info btn-sm"
 														title="Button To Display College Detail"
@@ -369,8 +377,9 @@
 												<%
 													i++;
 												%>
-											</s:iterator>
 
+												<%-- </s:iterator> --%>
+											</c:forEach>
 
 										</tbody>
 									</table>
@@ -480,7 +489,7 @@
 		}
 		function showDetails(id) {
 			
-			
+			//var id=document.getElementById("instId").value;
 			
 			window.open("ViewCollegeDetails?instId="+id, "CollegeDetails",
 					"width=700,height=900");

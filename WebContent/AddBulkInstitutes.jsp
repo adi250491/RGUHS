@@ -5,7 +5,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>Fee Collection Portal - Add Bulk Colleges</title>
+<title>FeeDesk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">

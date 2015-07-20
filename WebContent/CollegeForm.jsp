@@ -6,7 +6,9 @@
 <%
 	//checking session
 	LoginBean loginUser = new LoginBean();
-	loginUser = (LoginBean) session.getAttribute("loginUserBean"); String profile=(String)session.getAttribute("sesProfile");
+	loginUser = (LoginBean) session.getAttribute("loginUserBean"); 
+	
+	String profile=(String)session.getAttribute("sesProfile");
 
 	if (loginUser == null) {
 		response.sendRedirect("Login.jsp");
@@ -104,7 +106,7 @@
 			<%
 				if (msg != null)
 
-									{
+														{
 			%>
 
 			<div
@@ -151,7 +153,17 @@
 													<th><input type="hidden"
 														name="affInstBean.loginBean.profile" value="Admin">
 													</th>
-													<th></th>
+													<th>
+														<%
+															if (profile.contentEquals("Parent")){
+																																																										System.out.println("profile is :"+profile);
+																																																																																																																																		System.out.println("Parent Class Table");
+														%> <input type="hidden" name="parInstId"
+														value="<%=loginUser.getParBean().getParInstId()%>">
+														<%
+															}
+														%>
+													</th>
 													<th></th>
 
 												</tr>
@@ -176,20 +188,25 @@
 															<input required="required" id="CollegeName" pattern="{6}"
 																name="affInstBean.instName"
 																value='<s:property value="affInstBean.instName" />'
-															placeholder="College Name (min 6 Character)" type="text"
-															class="form-control">
+																placeholder="College Name (min 6 Character)" type="text"
+																class="form-control">
 
 														</div></td>
 
 												</tr>
-
+												<%
+													if (profile.contentEquals("SU")){
+																																																				System.out.println("profile is :"+profile);
+																																																																																																																												System.out.println("Parent Class Table");
+												%>
 												<tr>
 
 													<td>University Name</td>
 													<td colspan="2">
 														<div id="the-basics" class="has-success">
-															<select data-rel="chosen" name="parInstId" style="width:300px;" >
-																<option value="">--Select College--</option>
+															<select data-rel="chosen" name="parInstId"
+																style="width: 300px;">
+																<option value="">--Select University--</option>
 																<s:iterator value="parBeansList">
 
 																	<option value='<s:property value="parInstId" />'><s:property
@@ -202,6 +219,9 @@
 													</td>
 
 												</tr>
+												<%
+													}
+												%>
 
 												<tr>
 

@@ -141,6 +141,14 @@
 												<td><s:property value="affInstBean.instName" /></td>
 
 											</tr>
+
+											<tr>
+
+												<td style="font-weight: bold;">University Name</td>
+												<td><s:property
+														value="affInstBean.parBeanOneToOne.parInstName" /></td>
+
+											</tr>
 											<tr>
 
 												<td style="font-weight: bold;">Principal's Name</td>
@@ -199,7 +207,7 @@
 							College Info</button>
 
 
-						
+
 
 
 						<button onclick="window.close()" class="btn btn-info">Close

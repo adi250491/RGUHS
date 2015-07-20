@@ -300,6 +300,7 @@
 
 												<th>Student Name</th>
 												<th>Mobile Number</th>
+												
 												<th>Place</th>
 
 												<th>Actions</th>

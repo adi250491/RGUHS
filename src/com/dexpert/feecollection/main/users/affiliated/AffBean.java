@@ -25,6 +25,7 @@ import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.applicant.AppBean;
+import com.dexpert.feecollection.main.users.parent.ParBean;
 
 @Entity
 @Table(name = "affiliated_institute_details")
@@ -82,6 +83,9 @@ public class AffBean implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<PaymentDuesBean> dueFeesSet;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private ParBean parBeanOneToOne;
 
 	public Set<AppBean> getAplBeanSet() {
 		return aplBeanSet;
@@ -240,6 +244,14 @@ public class AffBean implements Serializable {
 
 	public void setDueFeesSet(Set<PaymentDuesBean> dueFeesSet) {
 		this.dueFeesSet = dueFeesSet;
+	}
+
+	public ParBean getParBeanOneToOne() {
+		return parBeanOneToOne;
+	}
+
+	public void setParBeanOneToOne(ParBean parBeanOneToOne) {
+		this.parBeanOneToOne = parBeanOneToOne;
 	}
 
 }

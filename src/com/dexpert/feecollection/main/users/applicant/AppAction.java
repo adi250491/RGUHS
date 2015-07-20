@@ -29,7 +29,7 @@ public class AppAction extends ActionSupport {
 	static Logger log = Logger.getLogger(AffAction.class.getName());
 	AffBean affBean = new AffBean();
 	Integer aplInstId;
-	ArrayList<AffBean> affInstList = new ArrayList<AffBean>();
+	List<AffBean> affInstList = new ArrayList<AffBean>();
 	String fileFileName;
 	FileInputStream inputStream;
 	private File fileUpload;
@@ -49,8 +49,6 @@ public class AppAction extends ActionSupport {
 
 		log.info("Applicant Name  ::" + appBean1.getAplFirstName());
 
-		
-
 		List<String> existEnrollmentList = aplDAO.existingEnrollNum(appBean1);
 		if (existEnrollmentList.isEmpty()) {
 			if (aplInstId == null) {
@@ -60,7 +58,7 @@ public class AppAction extends ActionSupport {
 			}
 
 			appBean1 = aplDAO.saveOrUpdate(appBean1, aplInstId);
-
+			request.setAttribute("msg", "Student Addedd Successfully");
 			return SUCCESS;
 
 		} else {
@@ -227,11 +225,11 @@ public class AppAction extends ActionSupport {
 		this.aplInstId = aplInstId;
 	}
 
-	public ArrayList<AffBean> getAffInstList() {
+	public List<AffBean> getAffInstList() {
 		return affInstList;
 	}
 
-	public void setAffInstList(ArrayList<AffBean> affInstList) {
+	public void setAffInstList(List<AffBean> affInstList) {
 		this.affInstList = affInstList;
 	}
 
