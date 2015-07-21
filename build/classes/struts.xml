@@ -17,7 +17,7 @@
 				<param name="allowedTypes">text/html,text/plain,application/msword,text/richtext,application/pdf,image/jpeg</param>
 			</interceptor-ref>
 
-			<result name="success">/WaitPage.jsp</result>
+			<result name="success">Success.jsp</result>
 			<result name="failure">
 				CollegeForm.jsp
 			</result>

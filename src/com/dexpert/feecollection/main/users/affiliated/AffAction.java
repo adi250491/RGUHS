@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -14,6 +19,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -103,61 +110,8 @@ public class AffAction extends ActionSupport {
 				log.info("The ID after saving is is " + affInstBean.getInstId());
 				// if saved successfully generate credentials and forward
 				// success
-				String username;
-				// generate credentials for admin login
-				try {
-					username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
-							.concat(affDao.getRowCount().toString()));
 
-				} catch (java.lang.NullPointerException e) {
-					username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
-							.concat("1"));
-
-				}
-
-				String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
-				log.info("Password Generated is " + password);
-
-				PasswordEncryption.encrypt(password);
-				String encryptedPwd = PasswordEncryption.encStr;
-
-				LoginBean creds = new LoginBean();
-				creds.setPassword(encryptedPwd);
-				creds.setUserName(username);
-
-				log.info("User Name is ::" + username);
-				log.info("Password is ::" + password);
-
-				log.info("User Profile is  ::" + affInstBean.getLoginBean().getProfile());
-				creds.setProfile(affInstBean.getLoginBean().getProfile());
-
-				parBean = parDAO.viewUniversity(parInstId);
-
-				parBean.getAffBeanOneToManySet().add(affInstBean);
-
-				parDAO.saveOrUpdate(parBean, null);
-
-				// for bidirectional relationship ,set parent record to child
-				// record
-				creds.setAffBean(affInstBean);
-
-				affInstBean.setParBeanOneToOne(parBean);
-
-				if (creds.getProfile().equals("Admin")) {
-
-					// for bidirectional relationship ,set child record to
-					// Parent
-					// record
-					affInstBean.setLoginBean(creds);
-
-				}
-
-				affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
-
-				// -----Code for sending email//--------------------
-				EmailSessionBean email = new EmailSessionBean();
-				email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
-						affInstBean.getInstName());
+				affInstBean = affDao.saveOrUpdate(affInstBean, parInstId, f + File.separator);
 
 				request.setAttribute("msg", "Institute Added Successfully");
 				request.setAttribute("redirectLink", "Success.jsp");
@@ -283,7 +237,9 @@ public class AffAction extends ActionSupport {
 
 	}
 
-	public String configureCollegeParam() {
+	public String configureCollegeParam() throws InvalidKeyException, NoSuchAlgorithmException,
+			InvalidKeySpecException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
+			IllegalBlockSizeException, BadPaddingException {
 
 		log.info("parameter ids are " + paramIds.toString());
 		HashMap<Integer, FvBean> valueMap = (HashMap<Integer, FvBean>) ses.getAttribute("sesParamMap");
@@ -293,7 +249,7 @@ public class AffAction extends ActionSupport {
 			savedata.getParamvalues().add(valueMap.get(paramIds.get(i)));
 		}
 
-		affDao.saveOrUpdate(savedata, null);
+		affDao.saveOrUpdate(savedata, null, null);
 		ses.removeAttribute("sesAffBean");
 		ses.removeAttribute("sesParamMap");
 		request.setAttribute("msg", "Institute Updated Successfully");
@@ -393,7 +349,9 @@ public class AffAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	public String AddFees() {
+	public String AddFees() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException,
+			InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException,
+			BadPaddingException {
 		ArrayList<FeeDetailsBean> feelist = new ArrayList<FeeDetailsBean>();
 
 		AffBean collegedata = new AffBean();
@@ -429,7 +387,7 @@ public class AffAction extends ActionSupport {
 			// Add Fees to College Beans' FeeSet
 			collegedata.setFeeSet(feeset);
 			collegedata.setFeeProps(propSet);
-			affDao.saveOrUpdate(collegedata, null);
+			affDao.saveOrUpdate(collegedata, null, null);
 			request.setAttribute("msg", "Fees Updated Successfully");
 			// Save College Bean
 			return SUCCESS;
@@ -511,7 +469,9 @@ public class AffAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	public String UpdateCalcParameters() {
+	public String UpdateCalcParameters() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException,
+			InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException,
+			BadPaddingException {
 		AffFeePropBean feePropbean = new AffFeePropBean();
 
 		// Get Fee Id
@@ -539,7 +499,7 @@ public class AffAction extends ActionSupport {
 		Set<AffFeePropBean> calculateSet = new HashSet<AffFeePropBean>(calculatedFees);
 		instBean.setFeeProps(calculateSet);
 
-		affDao.saveOrUpdate(instBean, null);
+		affDao.saveOrUpdate(instBean, null, null);
 
 		// Remove session Attributes
 		ses.removeAttribute("sesInstId");
