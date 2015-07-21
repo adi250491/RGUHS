@@ -58,60 +58,20 @@ public class AffDAO {
 	// DAO Methods Here
 	// saveOrUpdate()
 	@SuppressWarnings("resource")
-	public AffBean saveOrUpdate(AffBean affInstBean, Integer parInstId, String path) throws InvalidKeyException,
+	public AffBean saveOrUpdate(AffBean affInstBean, String path) throws InvalidKeyException,
 			NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException,
 			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 
 		// Declarations
 		// Open session from session factory
 		Session session = factory.openSession();
-		String username;
-		// generate credentials for admin login
-		try {
-			username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
-					.concat(getRowCount().toString()));
+		
 
-		} catch (java.lang.NullPointerException e) {
-			username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4).concat("1"));
+		
 
-		}
+		
 
-		String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
-		// log.info("Password Generated is " + password);
-
-		PasswordEncryption.encrypt(password);
-		String encryptedPwd = PasswordEncryption.encStr;
-
-		LoginBean creds = new LoginBean();
-		creds.setPassword(encryptedPwd);
-		creds.setUserName(username);
-
-		log.info("University ID is ::" + parInstId);
-		creds.setProfile(affInstBean.getLoginBean().getProfile());
-
-		ParBean parBean1 = new ParBean();
-
-		parBean1 = parDAO.viewUniversity(parInstId);
-
-		// one to many relationship
-		parBean1.getAffBeanOneToManySet().add(affInstBean);
-		parDAO.saveOrUpdate(parBean1, null);
-
-		// for bidirectional relationship ,set parent record to child
-		// record
-		creds.setAffBean(affInstBean);
-
-		// one to one relationship
-		affInstBean.setParBeanOneToOne(parBean1);
-
-		if (creds.getProfile().equals("Admin")) {
-
-			// for bidirectional relationship ,set child record to
-			// Parent
-			// record
-			affInstBean.setLoginBean(creds);
-
-		}
+		
 		try {
 			byte[] bFile = null;
 			Integer fileSize = null;
@@ -146,14 +106,10 @@ public class AffDAO {
 			session.saveOrUpdate(affInstBean);
 			session.getTransaction().commit();
 
-			if (isInserted = true) {
 
-				// -----Code for sending email//--------------------
-				EmailSessionBean email = new EmailSessionBean();
-				email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
-						affInstBean.getInstName());
+				
 
-			}
+			
 			return affInstBean;
 
 		} catch (Exception e) {

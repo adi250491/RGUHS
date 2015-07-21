@@ -87,10 +87,13 @@ public class LoginAction extends ActionSupport {
 					httpSession.setAttribute("dashLink", "index-Admin.jsp");
 					return "superAdmin";
 				} else {
+					request.setAttribute("msg", "Invalid Username or Password");
+
 					return INPUT;
 				}
 
 			} else {
+				request.setAttribute("msg", "Invalid Username or Password");
 				return INPUT;
 
 			}

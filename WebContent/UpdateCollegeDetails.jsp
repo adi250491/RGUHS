@@ -98,6 +98,22 @@
 				<!-- content starts -->
 				<div></div>
 
+
+				<%
+					String msg = (String) request.getAttribute("msg");
+				%>
+				<%
+					if (msg != null) {
+				%>
+				<div style="font-weight: bold; font-size: medium; color: red;text-align: center;">
+
+					<%=msg%>
+				</div>
+
+				<%
+					}
+				%>
+
 				<form action="updateCollegeDetails" method="post">
 					<div class="row">
 						<div class="box col-md-12">
@@ -188,9 +204,9 @@
 												<tr>
 
 													<td style="font-weight: bold;">Address</td>
-													<td><textarea  class="form-control"
-														required="required" name="affInstBean.instAddress"><s:property value="affInstBean.instAddress" /></textarea>
-														</td>
+													<td><textarea class="form-control" required="required"
+															name="affInstBean.instAddress"><s:property
+																value="affInstBean.instAddress" /></textarea></td>
 
 												</tr>
 

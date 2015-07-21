@@ -73,8 +73,36 @@
 
 			<div class="row">
 				<div class="well col-md-5 center login-box">
-					<div class="alert alert-info">Please login with your Username
-						and Password.</div>
+
+					<%
+						String msg = (String) request.getAttribute("msg");
+					%>
+					<%
+						if (msg != null) {
+					%>
+					<div class="alert alert-info"
+						style="font-weight: bold; font-size: medium; color: red;">
+
+						<%=msg%>
+					</div>
+
+					<%
+						} else {
+					%>
+					<div class="alert alert-info">Please login with
+						your Username and Password.</div>
+					<%
+						}
+					%>
+
+
+
+
+
+
+
+
+
 					<form class="form-horizontal" action="LoginUser" method="post">
 						<fieldset>
 							<div class="input-group input-group-lg">
@@ -101,8 +129,7 @@
 
 							<div class="input-prepend">
 
-								<a href="StudentQuickPayMod">Click for Quick Pay
-								</a>
+								<a href="StudentQuickPayMod">Click for Quick Pay </a>
 
 							</div>
 							<div class="clearfix"></div>

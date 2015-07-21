@@ -96,6 +96,52 @@ public class AffAction extends ActionSupport {
 				return "failure";
 
 			} else {
+				String username;
+				// generate credentials for admin login
+				try {
+					username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
+							.concat(affDao.getRowCount().toString()));
+
+				} catch (java.lang.NullPointerException e) {
+					username = "Inst".concat(affInstBean.getInstName().replaceAll("\\s+", "").substring(0, 4)
+							.concat("1"));
+
+				}
+
+				String password = RandomPasswordGenerator.generatePswd(6, 8, 1, 2, 0);
+				// log.info("Password Generated is " + password);
+
+				PasswordEncryption.encrypt(password);
+				String encryptedPwd = PasswordEncryption.encStr;
+
+				LoginBean creds = new LoginBean();
+				creds.setPassword(encryptedPwd);
+				creds.setUserName(username);
+				log.info("University ID is ::" + parInstId);
+				creds.setProfile(affInstBean.getLoginBean().getProfile());
+
+				ParBean parBean1 = new ParBean();
+
+				parBean1 = parDAO.viewUniversity(parInstId);
+
+				// one to many relationship
+				parBean1.getAffBeanOneToManySet().add(affInstBean);
+				parDAO.saveOrUpdate(parBean1, null);
+
+				// for bidirectional relationship ,set parent record to child
+				// record
+				creds.setAffBean(affInstBean);
+
+				// one to one relationship
+				affInstBean.setParBeanOneToOne(parBean1);
+				if (creds.getProfile().equals("Admin")) {
+
+					// for bidirectional relationship ,set child record to
+					// Parent
+					// record
+					affInstBean.setLoginBean(creds);
+
+				}
 
 				String path = request.getServletContext().getRealPath("/");
 				path = path + File.separator;
@@ -111,7 +157,12 @@ public class AffAction extends ActionSupport {
 				// if saved successfully generate credentials and forward
 				// success
 
-				affInstBean = affDao.saveOrUpdate(affInstBean, parInstId, f + File.separator);
+				affInstBean = affDao.saveOrUpdate(affInstBean, f + File.separator);
+
+				// -----Code for sending email//--------------------
+				EmailSessionBean email = new EmailSessionBean();
+				email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
+						affInstBean.getInstName());
 
 				request.setAttribute("msg", "Institute Added Successfully");
 				request.setAttribute("redirectLink", "Success.jsp");
@@ -159,7 +210,7 @@ public class AffAction extends ActionSupport {
 	public String getCollegeList() {
 
 		affInstList = affDao.getCollegesList();
-		
+
 		return SUCCESS;
 	}
 
@@ -233,7 +284,7 @@ public class AffAction extends ActionSupport {
 			savedata.getParamvalues().add(valueMap.get(paramIds.get(i)));
 		}
 
-		affDao.saveOrUpdate(savedata, null, null);
+		affDao.saveOrUpdate(savedata, null);
 		ses.removeAttribute("sesAffBean");
 		ses.removeAttribute("sesParamMap");
 		request.setAttribute("msg", "Institute Updated Successfully");
@@ -371,7 +422,7 @@ public class AffAction extends ActionSupport {
 			// Add Fees to College Beans' FeeSet
 			collegedata.setFeeSet(feeset);
 			collegedata.setFeeProps(propSet);
-			affDao.saveOrUpdate(collegedata, null, null);
+			affDao.saveOrUpdate(collegedata, null);
 			request.setAttribute("msg", "Fees Updated Successfully");
 			// Save College Bean
 			return SUCCESS;
@@ -483,7 +534,7 @@ public class AffAction extends ActionSupport {
 		Set<AffFeePropBean> calculateSet = new HashSet<AffFeePropBean>(calculatedFees);
 		instBean.setFeeProps(calculateSet);
 
-		affDao.saveOrUpdate(instBean, null, null);
+		affDao.saveOrUpdate(instBean, null);
 
 		// Remove session Attributes
 		ses.removeAttribute("sesInstId");
