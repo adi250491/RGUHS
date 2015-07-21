@@ -126,7 +126,7 @@
 										<tbody>
 											<tr>
 
-												<td><strong>Enrollment NUmber</strong></td>
+												<td><strong>Enrollment Number</strong></td>
 												<td><div id="the-basics" class="has-success">
 														<s:property value="appBean1.enrollmentNumber" />
 
