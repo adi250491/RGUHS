@@ -288,13 +288,16 @@
 													<td><s:property value="lateDate" default="not Set" /></td>
 													<td class="center"><s:set var="dueAmt">
 															<s:property value="dueBean.netDue" default="0" />
-														</s:set> <s:if test='%{#dueAmt >"0"}'>
+														</s:set> <s:if test='%{#dueAmt >"0"&&calcFlag==1}'>
 
 															<input type="button" class="btn btn-danger"
 																onclick="openPaymentGateway(<s:property value="dueBean.netDue" default="0"  />)"
 																value="Pay">
 
-														</s:if></td>
+														</s:if>
+														<button
+															onclick='window.open("getFeeCalcDetails?instId=<%=session.getAttribute("sesId").toString()%>&reqFeeId=<s:property value='feeId'/>","CalcDetails","height=768,width=1024")'
+															class="btn btn-success btn-sm">Calculation Details</button></td>
 												</tr>
 
 												<%

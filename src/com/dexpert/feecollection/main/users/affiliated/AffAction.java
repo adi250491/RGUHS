@@ -535,6 +535,10 @@ public class AffAction extends ActionSupport {
 		Set<AffFeeCalcDetail> multipliers = new HashSet<AffFeeCalcDetail>(calcList);
 		feePropbean.setMultipliers(multipliers);
 		instBean.getFeeProps().add(feePropbean);
+		ArrayList<AffFeePropBean> calculatedFees = calculateFee(instBean);
+		Set<AffFeePropBean> calculateSet = new HashSet<AffFeePropBean>(calculatedFees);
+		instBean.setFeeProps(calculateSet);
+
 		affDao.saveOrUpdate(instBean, null);
 
 		// Remove session Attributes

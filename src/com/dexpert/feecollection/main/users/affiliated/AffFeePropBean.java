@@ -23,7 +23,7 @@ public class AffFeePropBean {
 	@Id
 	@GeneratedValue(generator = "g1")
 	private Integer propId;
-	private Integer feeId, collPeriodValue;
+	private Integer feeId, collPeriodValue,calcFlag;
 	private Date startDate,endDate,lateDate;
 	private String collPeriodUnit;
 	private Double lateAmount;
@@ -99,6 +99,12 @@ public class AffFeePropBean {
 	}
 	public void setMultipliers(Set<AffFeeCalcDetail> multipliers) {
 		this.multipliers = multipliers;
+	}
+	public Integer getCalcFlag() {
+		return calcFlag;
+	}
+	public void setCalcFlag(Integer calcFlag) {
+		this.calcFlag = calcFlag;
 	}
 	
 	
