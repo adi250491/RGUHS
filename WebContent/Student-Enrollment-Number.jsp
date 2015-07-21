@@ -5,7 +5,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>Fee Collection Portal - Student Enrollment Detail</title>
+<title>FeeDesk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">

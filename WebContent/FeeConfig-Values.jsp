@@ -33,7 +33,7 @@
 	int i = 1;
 %>
 <meta charset="utf-8">
-<title>Fee Collection Portal- Reports</title>
+<title>FeeDesk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description"
 	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
