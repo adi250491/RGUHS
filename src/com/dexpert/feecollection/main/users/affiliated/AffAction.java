@@ -159,23 +159,7 @@ public class AffAction extends ActionSupport {
 	public String getCollegeList() {
 
 		affInstList = affDao.getCollegesList();
-		log.info("College List is ::" + affInstList.size());
-		Iterator<AffBean> it = affInstList.iterator();
-		for (AffBean affBean : affInstList) {
-			log.info("University Name is ::" + affBean.getParBeanOneToOne().getParInstName());
-			list.add(affBean.getParBeanOneToOne().getParInstName());
-
-		}
-
-		/*
-		 * while (it.hasNext()) { affInstBean = (AffBean) it.next();
-		 * 
-		 * 
-		 * log.info("University Name is ::" +
-		 * affInstBean.getParBeanOneToOne().getParInstName());
-		 * 
-		 * }
-		 */
+		
 		return SUCCESS;
 	}
 
