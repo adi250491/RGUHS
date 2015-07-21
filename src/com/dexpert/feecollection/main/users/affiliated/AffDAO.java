@@ -47,6 +47,7 @@ public class AffDAO {
 	static Logger log = Logger.getLogger(AffDAO.class.getName());
 	static Boolean isExist = false;
 	ParDAO parDAO = new ParDAO();
+	boolean isInserted = true;
 
 	// static ArrayList<AffBean> existingCollegeList = new ArrayList<AffBean>();
 
@@ -60,6 +61,7 @@ public class AffDAO {
 	public AffBean saveOrUpdate(AffBean affInstBean, Integer parInstId, String path) throws InvalidKeyException,
 			NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException,
 			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+
 		// Declarations
 		// Open session from session factory
 		Session session = factory.openSession();
@@ -90,6 +92,8 @@ public class AffDAO {
 		ParBean parBean1 = new ParBean();
 
 		parBean1 = parDAO.viewUniversity(parInstId);
+
+		// one to many relationship
 		parBean1.getAffBeanOneToManySet().add(affInstBean);
 		parDAO.saveOrUpdate(parBean1, null);
 
@@ -97,6 +101,7 @@ public class AffDAO {
 		// record
 		creds.setAffBean(affInstBean);
 
+		// one to one relationship
 		affInstBean.setParBeanOneToOne(parBean1);
 
 		if (creds.getProfile().equals("Admin")) {
@@ -134,25 +139,21 @@ public class AffDAO {
 				affInstBean.setFileSize(fileSize);
 
 			} catch (java.lang.NullPointerException e) {
+				isInserted = false;
 
 			}
-
-			// ParBean parBean = new ParBean();
-			// parBean = parDAO.viewUniversity(saveData.getParInstId());
-
-			// log.info("Parent Inst Name and IS ::" + parBean.getParInstName()
-			// + "  ::: " + parBean.getParInstId());
-
-			// parBean.getAffBeanOneToManySet().add(saveData);
-
 			session.beginTransaction();
 			session.saveOrUpdate(affInstBean);
 			session.getTransaction().commit();
 
-			// -----Code for sending email//--------------------
-			EmailSessionBean email = new EmailSessionBean();
-			email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
-					affInstBean.getInstName());
+			if (isInserted = true) {
+
+				// -----Code for sending email//--------------------
+				EmailSessionBean email = new EmailSessionBean();
+				email.sendEmail(affInstBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
+						affInstBean.getInstName());
+
+			}
 			return affInstBean;
 
 		} catch (Exception e) {
