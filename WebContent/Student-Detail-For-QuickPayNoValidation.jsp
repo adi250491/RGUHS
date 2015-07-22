@@ -99,54 +99,22 @@
 				<div></div>
 
 
+				<%
+					String msg = (String) request.getAttribute("msg");
+				%>
 
-				<%-- <div class="row">
-					<div class="box col-md-12">
-						<div class="box-inner">
-							<div class="box-header well">
-								<h2>
-									<i class="glyphicon glyphicon-info-sign"></i> Applicant Detail
-								</h2>
+				<%
+					if (msg != null) {
+				%>
 
-								<div class="box-icon">
+				<div
+					style="color: red; text-align: center; font-size: medium; font-weight: bold; margin-top: 10px;">
+					<%=msg%>
 
-									<a href="#" class="btn btn-minimize btn-round btn-default"><i
-										class="glyphicon glyphicon-chevron-down"></i></a>
-
-								</div>
-							</div>
-							<div class="box-content row">
-								<div class="col-lg-12 col-md-12 animated fadeIn">
-
-									<table class="table table-condensed">
-										<thead>
-
-
-										</thead>
-										<tbody>
-											<tr>
-
-												<td><strong>Enrollment NUmber</strong></td>
-												<td><div id="the-basics" class="has-success">
-														<s:property value="appBean1.enrollmentNumber" />
-
-													</div></td>
-
-											</tr>
-
-										</tbody>
-									</table>
-
-
-								</div>
-
-
-							</div>
-						</div>
-					</div>
-
-
-				</div> --%>
+				</div>
+				<%
+					}
+				%>
 				<form action="submitingParameterNoValidate" method="get">
 
 
@@ -179,11 +147,15 @@
 											<tbody>
 
 												<tr>
-													<td style="font-weight: bold;">Enter Enrollment Number</td>
+													<td style="font-weight: bold;">Enrollment Number</td>
+													
 
 
-
-													<td><input style="width: 400px;" type="text"
+													<td>
+													<input  type="text" value="0"
+														name="validateFlag" hidden="hidden" >
+													
+													<input style="width: 400px;" type="text"
 														name="appBean1.enrollmentNumber" class="form-control"
 														required="required" id="enrollId"
 														value='<s:property value="appBean1.enrollmentNumber" />'></td>
@@ -194,7 +166,7 @@
 
 
 
-													<td><input style="width: 400px;" type="text" name="as"
+													<td><input style="width: 400px;" type="text" name="appBean1.aplFirstName"
 														class="form-control" required="required"
 														value='<s:property value="appBean1.aplFirstName" />'></td>
 
@@ -205,7 +177,7 @@
 
 
 													<td><input style="width: 400px;" type="text"
-														name="lstName" class="form-control" required="required"
+														name="appBean1.aplLstName" class="form-control" required="required"
 														value='<s:property value="appBean1.aplLstName" />'></td>
 
 												</tr>
@@ -215,7 +187,7 @@
 
 
 													<td><input style="width: 400px;" type="text"
-														name="contact" class="form-control" required="required"
+														name="appBean1.aplMobilePri" class="form-control" required="required"
 														value='<s:property value="appBean1.aplMobilePri" />'></td>
 
 												</tr>
@@ -270,23 +242,16 @@
 
 
 
-																	<s:select theme="simple" headerKey=" " id="nationality"
-																		selected="selected" headerValue="Select an Option"
+																	<s:select theme="simple" headerKey="" id="nationality"
+																		headerValue="Select an Option" requiredLabel="true"
 																		cssClass="form-control" cssStyle="width:400px;"
 																		data-rel="chosen" list="nationalityList"
-																		name="feeCollectionBean.nationality"
-																		value="%{#nationalityValue}">
+																		name="feeCollectionBean.nationality">
 
 
 
 																	</s:select>
 
-
-
-																	<script type="text/javascript">
-																		document
-																				.getElementById('nationality').value = "feeCollectionBean.nationality";
-																	</script>
 																</div>
 															</div>
 														</div>
@@ -301,25 +266,13 @@
 																<div class="controls">
 
 
-																	<s:select theme="simple" headerKey=" " id="faculty"
-																		selected="selected" headerValue="Select an Option"
+																	<s:select theme="simple" headerKey="" id="faculty"
+																		requiredLabel="true" headerValue="Select an Option"
 																		cssClass="form-control" cssStyle="width:400px;"
 																		data-rel="chosen" list="facultyList"
-																		name="feeCollectionBean.faculty"
-																		value="%{#facultyValue}">
-
-
+																		name="feeCollectionBean.faculty">
 
 																	</s:select>
-
-
-
-
-
-																	<script type="text/javascript">
-																		document
-																				.getElementById('faculty').value = "feeCollectionBean.faculty";
-																	</script>
 
 																</div>
 															</div>
@@ -335,20 +288,12 @@
 															<div class="control-group">
 																<div class="controls">
 
-																	<s:select theme="simple" headerKey=" " id="course"
-																		selected="selected" headerValue="Select an Option"
-																		cssClass="form-control" cssStyle="width:400px;"
-																		data-rel="chosen" list="courseList"
-																		name="feeCollectionBean.course" value="%{courseValue}">
-
-
+																	<s:select theme="simple" headerKey="" id="course"
+																		headerValue="Select an Option" cssClass="form-control"
+																		cssStyle="width:400px;" data-rel="chosen"
+																		list="courseList" name="feeCollectionBean.course">
 
 																	</s:select>
-
-																	<script type="text/javascript">
-																		document
-																				.getElementById('course').value = "feeCollectionBean.course";
-																	</script>
 																</div>
 															</div>
 														</div>
@@ -385,8 +330,60 @@
 											</tbody>
 										</table>
 
-										<button type="submit" class="btn btn-success">Calculate
-											Fee</button>
+
+										<table class="table table-condensed">
+											<tr>
+												<td>
+													<button type="submit" class="btn btn-success">Calculate
+														Fee</button>
+
+												</td>
+
+
+
+
+												<td><s:if test='%{#fee>"0.0"}'>
+
+
+														<input type="button" class="btn btn-danger"
+															onclick="openPaymentGateway()" value="Proceed For Payment">
+
+														<script type="text/javascript">
+															function openPaymentGateway() {
+
+																var fee = document
+																		.getElementById("feeId").value;
+																var id = document
+																		.getElementById("enrollId").value
+																		.trim();
+																id = id
+																		.replace(
+																				",",
+																				"")
+																id = id
+																		.replace(
+																				" ",
+																				"")
+
+																window.location = "AccessingPaymentGateway?feeValue="
+																		+ fee
+																		+ "&enrollId="
+																		+ id;
+
+															}
+														</script>
+
+
+
+													</s:if></td>
+												<td><input type="button" value="Back"
+													class="btn btn-default" onclick="window.history.back()">
+												</td>
+											</tr>
+
+										</table>
+
+
 
 									</div>
 
@@ -396,36 +393,8 @@
 						</div>
 						<div class="col-md-12">
 
-							<button onclick="window.close()" class="btn btn-info">Close
-							</button>
-
-							<s:if test='%{#fee>"0.0"}'>
-
-
-								<input type="button" class="btn btn-danger"
-									onclick="openPaymentGateway()" value="Pay">
-
-								<script type="text/javascript">
-									function openPaymentGateway() {
-
-										var fee = document
-												.getElementById("feeId").value;
-										var id = document
-												.getElementById("enrollId").value
-												.trim();
-										id = id.replace(",", "")
-										id = id.replace(" ", "")
-
-										window.location = "AccessingPaymentGateway?feeValue="
-												+ fee + "&enrollId=" + id;
-
-									}
-								</script>
-
-
-
-							</s:if>
-
+							<!-- <input type="button" class="btn btn-info" value="CLose"
+								onclick="window.close()"> -->
 
 
 
