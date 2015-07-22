@@ -381,6 +381,7 @@
 			class="com.dexpert.feecollection.main.fee.config.FcAction" method="FeeDetails">
 
 			<result name="success">FeeCalcDetails.jsp</result>
+			<result name="EDIT">FeeCalcDetailsEdit.jsp</result>
 
 		</action>
 	</package>

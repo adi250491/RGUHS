@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,10 @@ import com.dexpert.feecollection.main.fee.lookup.LookupBean;
 import com.dexpert.feecollection.main.fee.lookup.LookupDAO;
 import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
 import com.dexpert.feecollection.main.fee.lookup.values.FvDAO;
+import com.dexpert.feecollection.main.users.affiliated.AffBean;
+import com.dexpert.feecollection.main.users.affiliated.AffDAO;
 import com.dexpert.feecollection.main.users.affiliated.AffFeeCalcDetail;
+import com.dexpert.feecollection.main.users.affiliated.AffFeePropBean;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.opensymphony.xwork2.ActionSupport;
@@ -49,7 +53,8 @@ public class FcAction extends ActionSupport {
 	public ArrayList<FeeDetailsBean>fDfeeList2=new ArrayList<FeeDetailsBean>();
 	LookupDAO lpDao = new LookupDAO();
 	FvDAO fvdao = new FvDAO();
-	FcDAO configdao=new FcDAO(); 
+	FcDAO configdao=new FcDAO();
+	AffDAO instDAO=new AffDAO();
 
 	// Global Declarations End
 	// ----------------------
@@ -445,10 +450,39 @@ public class FcAction extends ActionSupport {
 	
 	public String FeeDetails()
 	{
+		Integer editFlag=0;
 		Integer id=Integer.parseInt(request.getParameter("reqFeeId").trim());
 		ses.setAttribute("sesFeeId", id);
 		Integer inst_id=Integer.parseInt(request.getParameter("instId").trim());
 		ses.setAttribute("sesInstId", inst_id);
+		AffFeePropBean feePropbean = new AffFeePropBean();
+		AffBean instituteBean=new AffBean();
+		instituteBean=instDAO.getOneCollegeRecord(inst_id);
+		HashMap<Integer,AffFeeCalcDetail>calcParamMap=new HashMap<Integer, AffFeeCalcDetail>();
+			Set<AffFeePropBean> feeProp = instituteBean.getFeeProps();
+			Iterator<AffFeePropBean> feeIt = feeProp.iterator();
+			while (feeIt.hasNext()) {
+				AffFeePropBean temp = feeIt.next();
+				if (temp.getFeeId() == id) {
+					feePropbean = temp;
+					if(temp.getCalcFlag()==1)
+					{
+						editFlag=1;
+					}
+				}
+
+			}
+			
+			if(editFlag==1)
+			{
+			Set<AffFeeCalcDetail>calcDetails=feePropbean.getMultipliers();
+					Iterator<AffFeeCalcDetail>calIt=calcDetails.iterator();
+					while(calIt.hasNext())
+					{
+						AffFeeCalcDetail calbean=calIt.next();
+						calcParamMap.put(calbean.getComboId(), calbean);
+					}
+		}
 		fDfeeList=configdao.GetFees("id", null, id, null);
 		FeeDetailsBean fdBean=new FeeDetailsBean();
 		fdBean=fDfeeList.get(0);
@@ -498,16 +532,31 @@ public class FcAction extends ActionSupport {
 				
 				tempList.clear();
 				tempList.addAll(comboMap.get(keyIt.next()));
+				if(editFlag==1)
+				{
+					temp.add(calcParamMap.get(tempList.get(0).getComboId()).getCalcId().toString());
+				}
 				temp.add(tempList.get(0).getComboId().toString());
 				
 				for (int i = 0; i < tempList.size(); i++) {
 					temp.add(ValueMap.get(tempList.get(i).getValueId()).getValue());
 				}
 				temp.add(tempList.get(0).getAmount().toString());
+				if(editFlag==1)
+				{
+					temp.add(calcParamMap.get(tempList.get(0).getComboId()).getMultiplier().toString());
+				}
 				tempbody.add(temp);
 			}
 			BodyList=tempbody;
+			if(editFlag==1)
+			{
+				return "EDIT";
+			}
+			else
+			{
 			return SUCCESS;
+			}
 		}
 		else
 		{

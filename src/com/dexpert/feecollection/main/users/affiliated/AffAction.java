@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -30,6 +29,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.dexpert.feecollection.main.communication.email.EmailSessionBean;
 import com.dexpert.feecollection.main.fee.PaymentDuesBean;
+import com.dexpert.feecollection.main.fee.config.FcBean;
 import com.dexpert.feecollection.main.fee.config.FcDAO;
 import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.fee.lookup.LookupBean;
@@ -413,7 +413,17 @@ public class AffAction extends ActionSupport {
 				AffFeePropBean tempbean = new AffFeePropBean();
 				tempbean.setFeeId(feelist.get(i).getFeeId());
 				tempbean.setFeeName(feelist.get(i).getFeeName());
-				tempbean.setDueBean(new PaymentDuesBean());
+				// Set Due Bean
+				PaymentDuesBean duebean = new PaymentDuesBean();
+				duebean.setDateCalculated(new Date());
+				duebean.setFeeId(tempbean.getFeeId());
+				duebean.setPayments_to_date((double) 0);
+				duebean.setPayee("Institute");
+				duebean.setTotal_fee_amount((double) 0);
+				duebean.setNetDue((double) 0);
+
+				tempbean.setDueBean(duebean);
+				tempbean.setCalcFlag(0);
 				propSet.add(tempbean);
 
 			}
@@ -529,6 +539,7 @@ public class AffAction extends ActionSupport {
 		// the Institute Bean
 		Set<AffFeeCalcDetail> multipliers = new HashSet<AffFeeCalcDetail>(calcList);
 		feePropbean.setMultipliers(multipliers);
+		feePropbean.setCalcFlag(1);
 		instBean.getFeeProps().add(feePropbean);
 		ArrayList<AffFeePropBean> calculatedFees = calculateFee(instBean);
 		Set<AffFeePropBean> calculateSet = new HashSet<AffFeePropBean>(calculatedFees);
@@ -547,6 +558,7 @@ public class AffAction extends ActionSupport {
 	private ArrayList<AffFeePropBean> calculateFee(AffBean institute) {
 		// Get Associated Fees
 		ArrayList<AffFeePropBean> tempList = new ArrayList<AffFeePropBean>(institute.getFeeProps());
+		ArrayList<AffFeePropBean> resList = new ArrayList<AffFeePropBean>(institute.getFeeProps());
 		// Get First Fee and see if it is fixed or per applicant
 		Iterator<AffFeePropBean> tempIt = tempList.iterator();
 		while (tempIt.hasNext()) {
@@ -554,6 +566,14 @@ public class AffAction extends ActionSupport {
 			AffFeePropBean propBean = tempIt.next();
 			PaymentDuesBean due = new PaymentDuesBean();
 			FeeDetailsBean feedetail = feeDAO.GetFees("id", null, propBean.getFeeId(), null).get(0);
+			List<FcBean> configs = new ArrayList<FcBean>();
+			configs = feedetail.getConfigs();
+			HashMap<Integer, Double> configMap = new HashMap<Integer, Double>();
+			Iterator<FcBean> configIt = configs.iterator();
+			while (configIt.hasNext()) {
+				FcBean tempconfig = configIt.next();
+				configMap.put(tempconfig.getComboId(), tempconfig.getAmount());
+			}
 			// if Fixed update amount
 			if (feedetail.getCal_mode() == 0) {
 				log.info("Calculation Mode is fixed,... development pending on fixed mode");
@@ -562,16 +582,29 @@ public class AffAction extends ActionSupport {
 			// if per Applicant see if calc multipliers have been set
 			if (feedetail.getCal_mode() == 1) {
 				Set<AffFeeCalcDetail> mults = propBean.getMultipliers();
+				Double feeDue = (double) 0;
 				// if set then calculate
 				if (mults.size() > 0) {
+					Iterator<AffFeeCalcDetail> mulIt = mults.iterator();
+					while (mulIt.hasNext()) {
+						AffFeeCalcDetail mul = mulIt.next();
+						Double amount = configMap.get(mul.getComboId());
+						feeDue = feeDue + (amount * mul.getMultiplier());
 
+					}
+					PaymentDuesBean dueBean = propBean.getDueBean();
+					dueBean.setTotal_fee_amount(feeDue);
+					dueBean.setDateCalculated(new Date());
+					dueBean.setNetDue(dueBean.getTotal_fee_amount() - dueBean.getPayments_to_date());
+					propBean.setDueBean(dueBean);
+					resList.add(propBean);
 				}
 				// if no then set zero
 
 			}
 
 		}
-		return tempList;
+		return resList;
 
 	}
 

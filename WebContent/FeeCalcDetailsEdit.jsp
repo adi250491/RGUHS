@@ -129,41 +129,54 @@
 												<tr>
 													<th>Sr. No.</th>
 													<th></th>
+													<th></th>
 													<s:iterator value="HeaderList" status="ind">
 
 														<th><s:property /></th>
 
 													</s:iterator>
-													<th>Amount Per Student</th>
-													<th>Number of Students</th>
+													<th>Amount</th>
+													<th>Existing Number of Students</th>
+													<th>Updated Number of Students</th>
+
 												</tr>
 											</thead>
 											<tbody>
 												<s:iterator value="BodyList">
 													<tr>
-														<td><%=i%> <s:property value="%{#ind.index}" /></td>
+														<td><%=i%> </td>
 														<s:iterator status="incr">
 
 
-															<td><s:if test="%{#incr.index==0}">
+															<s:if test="%{#incr.index==0}">
+															<td>
+																	<input value='<s:property />'
+																		name="calcList[<%=j%>].calcId" hidden="hidden">
+																		</td>
+																</s:if>
+																
+																 <s:elseif test="%{#incr.index==1}">
+																 <td>
 																	<input value='<s:property />'
 																		name="calcList[<%=j%>].comboId" hidden="hidden">
-																</s:if> <s:else>
-																	<s:property />
-																</s:else></td>
+																		</td>
+																</s:elseif> <s:else>
+																<td>
+																	<s:property /></td>
+																</s:else>
 
 
 														</s:iterator>
-														
+
 														<td><input name="calcList[<%=j%>].multiplier"
 															class="form-control" type="text" required="required"
 															placeholder="Enter Number of Students" pattern="[0-9]*">
-															</td>
+														</td>
 													</tr>
 													<%
-															i++;
-																									  j++;
-														%>
+														i++;
+																																				  j++;
+													%>
 												</s:iterator>
 											</tbody>
 										</table>
