@@ -58,20 +58,14 @@ public class AffDAO {
 	// DAO Methods Here
 	// saveOrUpdate()
 	@SuppressWarnings("resource")
-	public AffBean saveOrUpdate(AffBean affInstBean, String path) throws InvalidKeyException,
-			NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException,
-			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+	public AffBean saveOrUpdate(AffBean affInstBean, String path) throws InvalidKeyException, NoSuchAlgorithmException,
+			InvalidKeySpecException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
+			IllegalBlockSizeException, BadPaddingException {
 
 		// Declarations
 		// Open session from session factory
 		Session session = factory.openSession();
-		
 
-		
-
-		
-
-		
 		try {
 			byte[] bFile = null;
 			Integer fileSize = null;
@@ -103,13 +97,11 @@ public class AffDAO {
 
 			}
 			session.beginTransaction();
+
 			session.saveOrUpdate(affInstBean);
+
 			session.getTransaction().commit();
 
-
-				
-
-			
 			return affInstBean;
 
 		} catch (Exception e) {
@@ -319,8 +311,9 @@ public class AffDAO {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		List<String> affList = criteria.list();
-
+		session.close();
 		return affList;
+
 	}
 
 	// to check whether record is already exist or New
@@ -332,7 +325,7 @@ public class AffDAO {
 		criteria.add(Restrictions.eq("instName", instName));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<AffBean> affList = criteria.list();
-
+		session.close();
 		return affList;
 	}
 
@@ -417,6 +410,7 @@ public class AffDAO {
 			// notAddedCollegeList.add(affBean);
 
 		}
+
 		return affBeansList;
 
 	}

@@ -66,7 +66,8 @@ public class AffBean implements Serializable {
 	Set<AppBean> aplBeanSet;
 
 	// one to many relationship with FeeDetails)
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "affiliatedinstitute_feedetails", joinColumns = @JoinColumn(name = "inst_id"), inverseJoinColumns = @JoinColumn(name = "feeId"))
 	Set<FeeDetailsBean> feeSet;
 	// one to one bidirectional relationship with student and college
 	// child
@@ -78,10 +79,10 @@ public class AffBean implements Serializable {
 	@JoinTable(name = "affiliated_values", joinColumns = @JoinColumn(name = "inst_id"), inverseJoinColumns = @JoinColumn(name = "value_id"))
 	Set<FvBean> paramvalues;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	private Set<AffFeePropBean> feeProps;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	private Set<PaymentDuesBean> dueFeesSet;
 
 	@OneToOne(cascade = CascadeType.ALL)

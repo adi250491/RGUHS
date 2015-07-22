@@ -44,7 +44,9 @@
 
 <!-- The fav icon -->
 <link rel="shortcut icon" href="img/favicon.ico">
-<%int i=1; %>
+<%
+	int i = 1;
+%>
 </head>
 
 <body>
@@ -102,31 +104,38 @@
 											</tr>
 										</thead>
 										<tbody>
-										<s:if test="%{affInstBean.FeeSet.isEmpty()}">
-										<tr>
-													<td colspan="4">No Fees Associated with this Institute</td>
-													
-
-												</tr>
-										</s:if>
-										<s:else>
-											<s:iterator value="affInstBean.feeSet">
+											<s:if test="%{affInstBean.FeeSet.isEmpty()}">
 												<tr>
-													<td><%=i %><%i++;%></td>
-													<td><s:property value="feeId" /></td>
-													<td><s:property value="feeName" /></td>
-													<td><button
-															onclick='window.location="getFeeProps?instId=<s:property value='affInstBean.instId'/>&reqfeeId=<s:property value='feeId'/>"'
-															class="btn btn-success btn-sm">View Details</button>
-															<button
-															onclick='window.location="getFeeCalcDetails?instId=<s:property value='affInstBean.instId'/>&reqFeeId=<s:property value='feeId'/>"'
-															class="btn btn-success btn-sm">Calculation Details</button>
-															</td>
+													<td colspan="4">No Fees Associated with this Institute</td>
+
 
 												</tr>
-											</s:iterator>
-										</s:else>
-			
+											</s:if>
+											<s:else>
+												<s:iterator value="affInstBean.feeSet">
+													<tr>
+														<td><%=i%>
+															<%
+																i++;
+															%></td>
+														<td><s:property value="feeId" /></td>
+														<td><s:property value="feeName" /></td>
+														<td><button
+																onclick='window.location="getFeeProps?instId=<s:property value='affInstBean.instId'/>&reqfeeId=<s:property value='feeId'/>"'
+																class="btn btn-success btn-sm">View Details</button>
+															<button
+																onclick='window.location="getFeeCalcDetails?instId=<s:property value='affInstBean.instId'/>&reqFeeId=<s:property value='feeId'/>"'
+																class="btn btn-success btn-sm">Calculation
+																Details</button>
+															<button class="btn btn-danger btn-sm"
+																onclick='window.location="getFeeCalcDetails?instId=<s:property value='affInstBean.instId'/>&reqFeeId=<s:property value='feeId'/>"'>
+																<i class="fa fa-trash"></i>
+															</button></td>
+
+													</tr>
+												</s:iterator>
+											</s:else>
+
 										</tbody>
 									</table>
 

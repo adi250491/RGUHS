@@ -6,10 +6,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,9 +31,11 @@ public class FeeDetailsBean implements Serializable {
 	//private Boolean forApplicant=false,forInstitute=false,cal_mode=false;
 	private Integer forApplicant,forInstitute,cal_mode;
 
+	@Transient
+	Integer genericFlag;
 	
 	// one to many relationship with FeeDetails (Students)
-		@OneToMany(cascade = CascadeType.ALL)
+		@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 		private List<FcBean>configs;
 		
 	
@@ -132,6 +136,14 @@ public class FeeDetailsBean implements Serializable {
 
 	public void setConfigs(List<FcBean> configs) {
 		this.configs = configs;
+	}
+
+	public Integer getGenericFlag() {
+		return genericFlag;
+	}
+
+	public void setGenericFlag(Integer genericFlag) {
+		this.genericFlag = genericFlag;
 	}
 	
 

@@ -77,10 +77,11 @@ public class FcDAO {
 			} else if (filterKey.contentEquals("payee")) {
 				if (filterValue.contentEquals("applicant")) {
 					feeCr.add(Restrictions.eq("forApplicant", 1));
+					
 				}
 				if (filterValue.contentEquals("institute")) {
 					feeCr.add(Restrictions.eq("forInstitute", 1));
-				}
+									}
 			} else if (filterKey.contentEquals("name")) {
 				feeCr.add(Restrictions.eq("feeName", filterValue));
 			} else if (filterKey.contentEquals("id")) {
@@ -88,6 +89,8 @@ public class FcDAO {
 			} else if (filterKey.contentEquals("ids")) {
 				feeCr.add(Restrictions.in("feeId", ids));
 			}
+			feeCr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
 			Iterator<FeeDetailsBean> feeIt = feeCr.list().iterator();
 			while (feeIt.hasNext()) {
 				ResultList.add(feeIt.next());

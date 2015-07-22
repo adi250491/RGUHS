@@ -38,6 +38,7 @@
 
 	<%
 		String msg = (String) request.getAttribute("msg");
+		String link=(String)request.getAttribute("redirectLink");
 	%>
 
 
@@ -54,6 +55,12 @@
 	<%
 		}
 	%>
-
+	<%
+		if (link != null) {
+	%>
+<a href=<%=link%>>Okay!</a>
+<%
+		}
+	%>
 </body>
 </html>

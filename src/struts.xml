@@ -298,6 +298,14 @@
 			<result name="error">Success.jsp</result>
 
 		</action>
+		<action name="RemoveCollegeFees"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="RemoveFee">
+
+			<result name="success" >Success.jsp</result>
+			<result name="error">Success.jsp</result>
+
+		</action>
 		<action name="getFeeProps"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="viewFeeProps">

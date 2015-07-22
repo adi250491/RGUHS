@@ -379,7 +379,23 @@ public class AffAction extends ActionSupport {
 	}
 
 	public String GetFees() {
+		Integer instId = Integer.parseInt(request.getParameter("collId").trim());
+		AffBean instbean = affDao.getOneCollegeRecord(instId);
+		ArrayList<FeeDetailsBean> instfeeList = new ArrayList<FeeDetailsBean>(instbean.getFeeSet());
 		feeList = feeDAO.GetFees("payee", "institute", null, null);
+		for (int j = 0; j < instfeeList.size(); j++) {
+
+			for (int i = 0; i < feeList.size(); i++) {
+				if (instfeeList.get(j).getFeeId() == feeList.get(i).getFeeId()) {
+					feeList.get(i).setGenericFlag(1);
+				}
+				else
+				{
+					feeList.get(i).setGenericFlag(0);
+				}
+			}
+
+		}
 
 		return SUCCESS;
 	}
@@ -401,7 +417,12 @@ public class AffAction extends ActionSupport {
 			Iterator<String> idIt = FeeIds.iterator();
 			log.info(FeeIds.toString());
 			while (idIt.hasNext()) {
-				FeeIdsInt.add(Integer.parseInt(idIt.next()));
+				try {
+					FeeIdsInt.add(Integer.parseInt(idIt.next()));
+				} catch (java.lang.NumberFormatException e) {
+					// TODO Auto-generated catch block
+					FeeIdsInt.add(-1);
+				}
 			}
 			// Get College Data
 			collegedata = affDao.getOneCollegeRecord(id);
@@ -429,9 +450,13 @@ public class AffAction extends ActionSupport {
 			}
 
 			feeset.addAll(feelist);
+			feelist.clear();
 			// Add Fees to College Beans' FeeSet
 			collegedata.setFeeSet(feeset);
 			collegedata.setFeeProps(propSet);
+			// ////
+
+			// ///
 			affDao.saveOrUpdate(collegedata, null);
 			request.setAttribute("msg", "Fees Updated Successfully");
 			// Save College Bean
@@ -441,6 +466,24 @@ public class AffAction extends ActionSupport {
 
 			return ERROR;
 		}
+	}
+	public String RemoveFee() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException
+	{
+		Integer feeId=Integer.parseInt(request.getParameter("reqFeeId").trim());
+		Integer instId=Integer.parseInt(request.getParameter("collId").trim());
+		AffBean collegedata = affDao.getOneCollegeRecord(instId);
+		ArrayList<FeeDetailsBean>feeList=new ArrayList<FeeDetailsBean>(collegedata.getFeeSet());
+		for (int i = 0; i < feeList.size(); i++) {
+			if(feeId==feeList.get(i).getFeeId())
+				{
+				feeList.remove(i);
+				}
+		}
+		collegedata.setFeeSet(new HashSet<FeeDetailsBean>(feeList));
+		collegedata=affDao.saveOrUpdate(collegedata, null);
+		request.setAttribute("msg", "Fees Updated Successfully");
+		request.setAttribute("redirectlink", "Fees Updated Successfully");
+		return SUCCESS;
 	}
 
 	public String GetParameterListInstitute() {

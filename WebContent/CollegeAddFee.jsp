@@ -44,7 +44,9 @@
 
 <!-- The fav icon -->
 <link rel="shortcut icon" href="img/favicon.ico">
-<%int i=1; %>
+<%
+	int i = 1;
+%>
 </head>
 
 <body>
@@ -97,34 +99,57 @@
 												<th>Sr. No.</th>
 												<th>Fee ID</th>
 												<th>Fee Title</th>
-												<th><input id="collID" hidden="hidden" readonly="readonly"
+												<th><input id="collID" hidden="hidden"
+													readonly="readonly"
 													value='<%=request.getParameter("collId")%>'></th>
 
 											</tr>
 										</thead>
 										<tbody>
-										<s:iterator value="feeList">
-										
-										<tr>
-												<td><%=i %><%i++; %></td>
-												<td><s:property value="feeId"/></td>
-												<td><s:property value="feeName"/></td>
-												<td><button id='Add[<s:property value="feeId"/>]' onclick='AddToArray(<s:property value="feeId"/>)' class="btn btn-success btn-sm">Add</button>
-												<button style="display:none" id='Remove[<s:property value="feeId"/>]' onclick='RemoveFromValues(<s:property value="feeId"/>)' class="btn btn-warning btn-sm">Remove</button>
-												</td>
+											<s:iterator value="feeList">
 
-											</tr>
-										</s:iterator>
+												<tr>
+													<td><%=i%>
+														<%
+															i++;
+														%></td>
+													<td><s:property value="feeId" />
+														<s:set var="flag">
+															<s:property value="genericFlag" />
+														</s:set></td>
+													<td><s:property value="feeName" /></td>
+													<td><s:if test='%{#flag=="0"}'>
+															<button id='Add[<s:property value="feeId"/>]'
+																onclick='AddToArray(<s:property value="feeId"/>)'
+																class="btn btn-success btn-sm">Add</button>
+															<button style="display: none"
+																id='Remove[<s:property value="feeId"/>]'
+																onclick='RemoveFromValues(<s:property value="feeId"/>)'
+																class="btn btn-warning btn-sm">Remove</button>
+														</s:if> <s:else>
+															<button style="display: none"
+																id='Add[<s:property value="feeId"/>]'
+																onclick='AddToArray(<s:property value="feeId"/>)'
+																class="btn btn-success btn-sm">Add</button>
+															<button id='Remove[<s:property value="feeId"/>]'
+																onclick='RemoveFromValues(<s:property value="feeId"/>)'
+																class="btn btn-warning btn-sm">Remove</button>
+														</s:else></td>
+
+												</tr>
+											</s:iterator>
 										</tbody>
 									</table>
-									
+
 								</div>
 
 							</div>
 						</div>
 					</div>
 					<div class="col-md-12">
-						<button onclick='window.location="ViewCollegeFees?instId=<%=request.getParameter("collId")%>"' class="btn btn-success">Back</button>
+						<button
+							onclick='window.location="ViewCollegeFees?instId=<%=request.getParameter("collId")%>"'
+							class="btn btn-success">Back</button>
 						<button class="btn btn-warning" onclick='saveValues()'>Save</button>
 
 						<button onclick="window.close()" class="btn btn-info">Close
