@@ -128,7 +128,7 @@
 																class="btn btn-success btn-sm">Calculation
 																Details</button>
 															<button class="btn btn-danger btn-sm"
-																onclick='window.location="getFeeCalcDetails?instId=<s:property value='affInstBean.instId'/>&reqFeeId=<s:property value='feeId'/>"'>
+																onclick='window.location="RemoveCollegeFees?collId=<s:property value='affInstBean.instId'/>&reqFeeId=<s:property value='feeId'/>"'>
 																<i class="fa fa-trash"></i>
 															</button></td>
 

@@ -38,7 +38,7 @@
 
 	<%
 		String msg = (String) request.getAttribute("msg");
-		String link=(String)request.getAttribute("redirectLink");
+		String link=(String)request.getAttribute("redirectlink");
 	%>
 
 

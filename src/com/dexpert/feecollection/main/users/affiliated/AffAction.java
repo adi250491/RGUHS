@@ -482,7 +482,7 @@ public class AffAction extends ActionSupport {
 		collegedata.setFeeSet(new HashSet<FeeDetailsBean>(feeList));
 		collegedata=affDao.saveOrUpdate(collegedata, null);
 		request.setAttribute("msg", "Fees Updated Successfully");
-		request.setAttribute("redirectlink", "Fees Updated Successfully");
+		request.setAttribute("redirectlink", "ViewCollegeFees?instId="+instId);
 		return SUCCESS;
 	}
 

@@ -66,7 +66,7 @@ public class AffBean implements Serializable {
 	Set<AppBean> aplBeanSet;
 
 	// one to many relationship with FeeDetails)
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany( cascade = CascadeType.ALL)
 	@JoinTable(name = "affiliatedinstitute_feedetails", joinColumns = @JoinColumn(name = "inst_id"), inverseJoinColumns = @JoinColumn(name = "feeId"))
 	Set<FeeDetailsBean> feeSet;
 	// one to one bidirectional relationship with student and college
