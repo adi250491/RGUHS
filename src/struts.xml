@@ -343,12 +343,12 @@
 			<result name="error">Institute-Fees.jsp</result>
 
 		</action>
-		<action name="CollegeDueReport"
+		<!-- <action name="CollegeDueReport"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="collegeDueReport">
 
 			<result name="success">College-Due-Report.jsp</result>
-		</action>
+		</action> -->
 		<action name="TranactionReport"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="getInsTransactionDetails">

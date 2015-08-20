@@ -136,7 +136,7 @@
 				</ul>
 			</div>
 			<!-- theme selector ends -->
-			<!-- cart button starts -->
+			<%-- <!-- cart button starts -->
 			<div class="btn-group pull-right">
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
@@ -151,7 +151,7 @@
 						onclick='window.open("Cart.html", "MyCart", "width=500,height=900")'>View
 							Cart</a></li>
 				</ul>
-			</div>
+			</div> --%>
 			<!-- cart button ends -->
 		</div>
 	</div>
@@ -243,7 +243,7 @@
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-list-alt"></i> College Due Report
+									<i class="glyphicon glyphicon-list-alt"></i> Transaction Report
 									Detail
 								</h2>
 
@@ -256,27 +256,28 @@
 							</div>
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
-									<div class="row">
+									<!-- <div class="row">
 										<div class="col-md-12">
 											<button class="btn btn-sm btn-info pull-right"
 												onclick='window.open("LockFeature.jsp", "CollegeForm", "width=500,height=700")'>
 												<i class="fa fa-plus"></i> Print Report
 											</button>
 										</div>
-									</div>
+									</div> -->
 									<!---Content-->
 									<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
 										<thead>
 											<tr>
-												<th width="7%">Payee Id</th>
+												<th width="7%">Sr. No</th>
 												<th>Tranaction ID</th>
-												<th>Mode Of Tranaction</th>
+												<th>Transaction Mode</th>
 												<th>Payee Name</th>
-												<th>Payee Mobile</th>
+												<!-- <th>Payee Mobile</th>
 												<th>Payee Email</th>
-												<th>Payee Address</th>
+												<th>Payee Address</th> -->
 												<th>Amount</th>
+												<th>Payment Status</th>
 												<th>Tranaction Date</th>
 
 
@@ -290,7 +291,7 @@
 											<s:iterator value="transactionDetailsForReport">
 												<tr>
 
-													<s:set var="enroll">
+													<%-- <s:set var="enroll">
 														<s:property value="studentEnrollmentNumber" />
 													</s:set>
 													<s:if test="%{enroll==null}">
@@ -300,26 +301,33 @@
 													<s:else>
 													<td><span style="margin-left: 10px;"><s:property
 																	value="studentEnrollmentNumber" /></span></td>
-													</s:else>				
-														<td><span style="margin-left: 10px;"><s:property
-																	value="txnId" /></span></td>
-														<td><span style="margin-left: 10px;"><s:property
-																	value="paymentMode" /></span></td>
-														<td><span style="margin-left: 10px;"><s:property
-																	value="payeeName" /></span></td>
-														<td><span style="margin-left: 10px;"><s:property
-																	value="payeeMob" /></span></td>
-														<td><span style="margin-left: 10px;"><s:property
-																	value="payeeEmail" /></span></td>
-														<td><span style="margin-left: 10px;"><s:property
-																	value="payeeAdd" /></span></td>
-														<td><span style="margin-left: 10px;"><s:property
-																	value="payeeAmount" /></span></td>
-														<td><span style="margin-left: 10px;"><s:property
-																	value="transDate" /></span></td>
+													</s:else>	 --%>
+													<td><%=i%></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="txnId" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="paymentMode" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="payeeName" /></span></td>
+													<%-- <td><span style="margin-left: 10px;"><s:property
+																value="payeeMob" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="payeeEmail" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="payeeAdd" /></span></td> --%>
+													<td><span style="margin-left: 10px;"><s:property
+																value="payeeAmount" /></span></td>
+													<td>
+													<span style="margin-left: 10px;"><s:property
+																value="status" /></span>
+													
+													</td>
+													
+													<td><span style="margin-left: 10px;"><s:property
+																value="transDate" /></span></td>
 
 
-														<%-- <s:else>
+													<%-- <s:else>
 														<span style="margin-left: 10px;"><s:property
 																value="studentEnrollmentNumber" /></span>
 													</s:else>

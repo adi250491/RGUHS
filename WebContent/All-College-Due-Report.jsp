@@ -136,7 +136,7 @@
 				</ul>
 			</div>
 			<!-- theme selector ends -->
-			<!-- cart button starts -->
+			<%-- <!-- cart button starts -->
 			<div class="btn-group pull-right">
 				<button class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
@@ -151,7 +151,7 @@
 						onclick='window.open("Cart.html", "MyCart", "width=500,height=900")'>View
 							Cart</a></li>
 				</ul>
-			</div>
+			</div> --%>
 			<!-- cart button ends -->
 		</div>
 	</div>
@@ -243,8 +243,8 @@
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-list-alt"></i> College Due Report
-									Detail
+									<i class="glyphicon glyphicon-list-alt"></i> All College Due
+									Report Detail
 								</h2>
 
 								<div class="box-icon">
@@ -257,13 +257,16 @@
 							<div class="box-content row">
 								<div class="col-lg-12 col-md-12 animated fadeIn">
 									<div class="row">
-										<div class="col-md-12">
+										<!-- <div class="col-md-12">
 											<button class="btn btn-sm btn-info pull-right"
 												onclick='window.open("LockFeature.jsp", "CollegeForm", "width=500,height=700")'>
 												<i class="fa fa-plus"></i> Print Report
 											</button>
-										</div>
+										</div> -->
 									</div>
+									
+									<br>
+									<br>
 									<!---Content-->
 									<table
 										class="table table-condensed table-striped table-bordered bootstrap-datatable datatable responsive">
@@ -272,11 +275,12 @@
 												<th width="7%">Sr. No.</th>
 												<th>College Name</th>
 												<th>Payee</th>
-												<th>Due Date</th>
+												<!-- <th>Due Date</th> -->
 												<th>Payment To Date</th>
 												<th>Date Calculated</th>
 												<th>Net Due</th>
 												<th>Total_Fee_Amount</th>
+
 
 
 											</tr>
@@ -287,30 +291,34 @@
 											%>
 											<s:iterator value="affBeans" var="parent">
 												<tr>
-													
+
 													<s:iterator value="#parent.dueFeesSet">
-													<td><span style="margin-left: 10px;"><%=i%></span></td>
-													<td><span style="margin-left: 10px;"><s:property
-																value="#parent.instName" /></span></td>
-													<td><span style="margin-left: 10px;"><s:property
-																value="payee" /></span></td>
-													<td><span style="margin-left: 10px;"><s:property
-																value="dueDate" /></span></td>
-													<td><span style="margin-left: 10px;"><s:property
-																value="payments_to_date" /></span></td>
-													<td><span style="margin-left: 10px;"><s:property
-																value="dateCalculated" /></span></td>
-													<td><span style="margin-left: 10px;"><s:property
-																value="netDue" /></span></td>
-													<td><span style="margin-left: 10px;"><s:property
-																value="total_fee_amount" /></span></td>
-                                                     </s:iterator>
+
+
+														<td><span style="margin-left: 10px;"><%=i%></span></td>
+														<td><span style="margin-left: 10px;"><s:property
+																	value="#parent.instName" /></span></td>
+														<td><span style="margin-left: 10px;"><s:property
+																	value="payee" /></span></td>
+														<%-- <td><span style="margin-left: 10px;"><s:property
+																value="dueDate" /></span></td> --%>
+														<td><span style="margin-left: 10px;"><s:property
+																	value="payments_to_date" /></span></td>
+														<td><span style="margin-left: 10px;"><s:property
+																	value="dateCalculated" /></span></td>
+														<td><span style="margin-left: 10px;"><s:property
+																	value="netDue" /></span></td>
+														<td><span style="margin-left: 10px;"><s:property
+																	value="total_fee_amount" /></span></td>
+
+
+													</s:iterator>
+
 												</tr>
-                                       
+
 												<%
 													i++;
 												%>
-												
 											</s:iterator>
 
 

@@ -59,6 +59,22 @@ public class AffDAO {
 	// ---------------------------------------------------
 
 	// DAO Methods Here
+
+	public List<TransactionBean> getTransactionOfColleges(List<Integer> ides) {
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(TransactionBean.class);
+		List<TransactionBean> collegesTransactionList = criteria.add(Restrictions.in("insId", ides)).list();
+		session.close();
+		return collegesTransactionList;
+	}
+
+	public ParBean getTrasactionReportForUniversity(Integer universityId) {
+		Session session = factory.openSession();
+		ParBean parBean = (ParBean) session.get(ParBean.class, universityId);
+		session.close();
+		return parBean;
+	}
+
 	// saveOrUpdate()
 	@SuppressWarnings("resource")
 	public AffBean saveOrUpdate(AffBean affInstBean, String path) throws InvalidKeyException, NoSuchAlgorithmException,
@@ -119,15 +135,14 @@ public class AffDAO {
 		}
 
 	}
-	
-	public List<AffBean> getAllCollege(List<Integer> ides)
-	{
-	log.info("list of Ides  "+ides);	
-	Session  session=factory.openSession();	
-	Criteria criteria=session.createCriteria(AffBean.class);	
-	List<AffBean> affBeansList=criteria.add(Restrictions.in("instId", ides)).list();
-	session.close();
-	return affBeansList;
+
+	public List<AffBean> getAllCollege(List<Integer> ides) {
+		log.info("list of Ides  " + ides);
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(AffBean.class);
+		List<AffBean> affBeansList = criteria.add(Restrictions.in("instId", ides)).list();
+		session.close();
+		return affBeansList;
 	}
 
 	public ArrayList<AffBean> getInstitutes(String filterKey, String filterVal, ArrayList<Integer> idList,
@@ -529,14 +544,23 @@ public class AffDAO {
 
 		return transactionDetails;
 	}
-	 public List<AffBean> getAllTransactionRecordsForSU()
-	    {
-	    	Session session=factory.openSession();
-	    	Criteria criteria=session.createCriteria(AffBean.class);
-	    	List<AffBean> collegesTransactionList=criteria.list();
-	    	session.close();
-	    	return collegesTransactionList;
-	    	
-	    	
-	    }
+
+	public List<AffBean> getAllTransactionRecordsForSU() {
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(AffBean.class);
+		List<AffBean> collegesTransactionList = criteria.list();
+		session.close();
+		return collegesTransactionList;
+
+	}
+	
+	public List<TransactionBean> getAllTransactionRecordsForSuper() {
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(TransactionBean.class);
+		List<TransactionBean> collegesTransactionList = criteria.list();
+		session.close();
+		return collegesTransactionList;
+
+	}
+	
 }

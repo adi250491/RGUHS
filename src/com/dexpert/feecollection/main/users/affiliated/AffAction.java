@@ -684,9 +684,25 @@ public class AffAction extends ActionSupport {
 	}
 
 	public String getInsTransactionDetails() {
-		Integer insId = (Integer) ses.getAttribute("sesId");
-		String superAdmin = (String) ses.getAttribute("sesProfile");
-		transactionDetailsForReport = affDao.getTransactionDetails(insId, superAdmin);
+		Integer idOfLoginer = (Integer) ses.getAttribute("sesId");
+		String profile = (String) ses.getAttribute("sesProfile");
+		if (profile.contentEquals("Parent")) {
+			ParBean parBean = affDao.getTrasactionReportForUniversity(idOfLoginer);
+			List<Integer> allCollegeId = parDAO.getIdesOfAllCollege(idOfLoginer);
+			transactionDetailsForReport = affDao.getTransactionOfColleges(allCollegeId);
+			log.info("Number of Transaction Done by Colleges Belongs to That University"
+					+ transactionDetailsForReport.size());
+			return SUCCESS;
+
+		} else if (profile.contentEquals("SU")) {
+			transactionDetailsForReport = affDao.getAllTransactionRecordsForSuper();
+			
+			log.info("List Size ::"+transactionDetailsForReport.size());
+			return SUCCESS;
+
+		}
+
+		transactionDetailsForReport = affDao.getTransactionDetails(idOfLoginer, profile);
 		return SUCCESS;
 	}
 

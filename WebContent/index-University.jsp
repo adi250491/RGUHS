@@ -252,7 +252,7 @@
 					</div>
 				</div>
 				<!--/row-->
-				<div class=" row">
+				<%-- <div class=" row">
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<a data-toggle="tooltip"
 							title="1 new student requests. Click here to view"
@@ -278,7 +278,7 @@
 					</div>
 
 
-				</div>
+				</div> --%>
 				<!--/row-->
 				<!-- content ends -->
 			</div>

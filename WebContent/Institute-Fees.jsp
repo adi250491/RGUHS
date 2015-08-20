@@ -297,10 +297,10 @@ ment-Summary.html">Proceed To
 																value="Pay">
 
 														</s:if>
-														<button
+														<%-- <button
 															onclick='window.open("getFeeCalcDetails?instId=<%=session.getAttribute("sesId").toString()%>&reqFeeId=<s:property value='feeId'/>","CalcDetails","height=768,width=1024")'
 															class="btn btn-success btn-sm">Calculation
-															Details</button></td>
+															Details</button> --%></td>
 												</tr>
 
 												<%
