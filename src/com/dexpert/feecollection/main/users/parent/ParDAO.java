@@ -2,7 +2,10 @@ package com.dexpert.feecollection.main.users.parent;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -13,6 +16,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
+import com.dexpert.feecollection.main.users.affiliated.AffBean;
 import com.dexpert.feecollection.main.users.affiliated.AffDAO;
 
 public class ParDAO {
@@ -48,6 +52,21 @@ public class ParDAO {
 			// close session
 			session.close();
 		}
+
+	}
+
+	public List<Integer> getIdesOfAllCollege(Integer id) {
+		List<Integer> listOfIdes = new ArrayList<Integer>();
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(ParBean.class);
+		ParBean parBean = (ParBean) criteria.add(Restrictions.eq("parInstId", id)).list().iterator().next();
+		Set<AffBean> affBean = parBean.getAffBeanOneToManySet();
+		Iterator<AffBean> itr = affBean.iterator();
+		while (itr.hasNext()) {
+			listOfIdes.add(itr.next().getInstId());
+		}
+		log.info("list size is" + listOfIdes.size());
+		return listOfIdes;
 
 	}
 

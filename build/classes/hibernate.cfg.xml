@@ -50,8 +50,9 @@
 			class="com.dexpert.feecollection.main.payment.studentPayment.NationalityBean" />
 		<mapping
 			class="com.dexpert.feecollection.main.payment.studentPayment.ServiceTypeBean" />
-		<mapping
-			class="com.dexpert.feecollection.main.payment.studentPayment.TransactionBean" />
+		<mapping class="com.dexpert.feecollection.challan.ChallanBean" />
+
+		<mapping class="com.dexpert.feecollection.challan.TransactionBean" />
 
 
 	</session-factory>

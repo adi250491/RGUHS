@@ -227,6 +227,26 @@
 			method="viewCollegeDetail">
 			<result name="success">CollegeDetails.jsp</result>
 		</action>
+		
+		
+		<action name="TranactionReport"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="getInsTransactionDetails">
+
+			<result name="success">/Transaction-Due-Report.jsp</result>
+
+
+		</action>
+
+		<action name="CollegeDueReport"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="collegeDueReport">
+
+			<result name="success">College-Due-Report.jsp</result>
+			<result name="AllCollegeDues">All-College-Due-Report.jsp</result>
+		</action>
+
+
 		<action name="ViewCollegeFees"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="viewCollegeDetail">
@@ -343,8 +363,8 @@
 			method="UpdateCalcParameters">
 			<result name="success">Success.jsp</result>
 		</action>
-		
-		
+
+
 		<action name="RetrieveUserSession"
 			class="com.dexpert.feecollection.main.RetrieveUserSessionAction"
 			method="RetrieveSessionUpdateTrans">
@@ -587,7 +607,7 @@
 			method="responseHandelling">
 
 			<result name="success">TransactionResponsePage.jsp</result>
-            <result name="home" type="redirect">getInstDues</result>
+			<result name="home" type="redirect">getInstDues</result>
 		</action>
 	</package>
 

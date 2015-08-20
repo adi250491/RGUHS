@@ -52,6 +52,8 @@ public class AffAction extends ActionSupport {
 	List<AffBean> affBeansList = new ArrayList<AffBean>();
 	Boolean saved = true;
 	List<String> list = new ArrayList<String>();
+	private Set<PaymentDuesBean> dueFeesSet;
+	private List<AffBean> affBeans;
 	private Integer parInstId;
 	private LookupDAO lookupdao = new LookupDAO();
 	public AffBean affInstBean;
@@ -77,7 +79,8 @@ public class AffAction extends ActionSupport {
 	private Integer fileSize;
 	private String contentType;
 	private AffBean affBean;
-    private List<TransactionBean> transactionDetailsForReport;
+	private List<TransactionBean> transactionDetailsForReport;
+
 	// End of Global Variables
 
 	// ---------------------------------------------------
@@ -559,12 +562,34 @@ public class AffAction extends ActionSupport {
 	// to get College Due Report
 
 	public String collegeDueReport() {
+		String profile = (String) ses.getAttribute("sesProfile");
+		if (profile.contentEquals("Parent")) {
+			Integer universityId = (Integer) ses.getAttribute("sesId");
+			List<Integer> institeIdes = parDAO.getIdesOfAllCollege(universityId);
+			affBeans = affDao.getAllCollege(institeIdes);
+			log.info("Aff Bean List" + affBeans.size());
+			return "AllCollegeDues";
+		} else if (profile.contentEquals("SU")) {
+
+			log.info("Super Admin");
+			affBeans = affDao.getAllTransactionRecordsForSU();
+			return "AllCollegeDues";
+		}
 		// Get id from session
 		Integer id = (Integer) ses.getAttribute("sesId");
-        //get the affBean from db to get set of due
-		affBean=affDao.getCollegeDues(id);
+		// get the affBean from db to get set of due
+		affBean = affDao.getCollegeDues(id);
+		dueFeesSet = affBean.getDueFeesSet();
 		return SUCCESS;
 	}
+
+	/*
+	 * // to get College Due Report
+	 * 
+	 * public String collegeDueReport() { // Get id from session Integer id =
+	 * (Integer) ses.getAttribute("sesId"); //get the affBean from db to get set
+	 * of due affBean=affDao.getCollegeDues(id); return SUCCESS; }
+	 */
 
 	public String UpdateCalcParameters() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException,
 			InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException,
@@ -660,8 +685,8 @@ public class AffAction extends ActionSupport {
 
 	public String getInsTransactionDetails() {
 		Integer insId = (Integer) ses.getAttribute("sesId");
-		String superAdmin=(String)ses.getAttribute("sesProfile");
-		transactionDetailsForReport =affDao.getTransactionDetails(insId,superAdmin);
+		String superAdmin = (String) ses.getAttribute("sesProfile");
+		transactionDetailsForReport = affDao.getTransactionDetails(insId, superAdmin);
 		return SUCCESS;
 	}
 
@@ -868,9 +893,22 @@ public class AffAction extends ActionSupport {
 	public void setTransactionDetailsForReport(List<TransactionBean> transactionDetailsForReport) {
 		this.transactionDetailsForReport = transactionDetailsForReport;
 	}
-	
-	
-	
+
+	public List<AffBean> getAffBeans() {
+		return affBeans;
+	}
+
+	public void setAffBeans(List<AffBean> affBeans) {
+		this.affBeans = affBeans;
+	}
+
+	public Set<PaymentDuesBean> getDueFeesSet() {
+		return dueFeesSet;
+	}
+
+	public void setDueFeesSet(Set<PaymentDuesBean> dueFeesSet) {
+		this.dueFeesSet = dueFeesSet;
+	}
 
 	// End of Getter Setter Methods
 }
