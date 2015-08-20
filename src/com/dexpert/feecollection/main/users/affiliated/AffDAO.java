@@ -34,9 +34,9 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.dexpert.feecollection.challan.TransactionBean;
 import com.dexpert.feecollection.main.ConnectionClass;
 import com.dexpert.feecollection.main.communication.email.EmailSessionBean;
-import com.dexpert.feecollection.main.payment.studentPayment.TransactionBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
@@ -514,7 +514,7 @@ public class AffDAO {
 			transactionDetails = criteria.list();
 		} else {
 			transactionDetails = criteria.add(Restrictions.eq("insId", instituteId)).list();
-	
+
 		}
 
 		return transactionDetails;

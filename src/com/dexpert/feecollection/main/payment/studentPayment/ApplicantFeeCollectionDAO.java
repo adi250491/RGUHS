@@ -17,6 +17,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import com.dexpert.feecollection.challan.TransactionBean;
 import com.dexpert.feecollection.main.ConnectionClass;
 import com.dexpert.feecollection.main.fee.PaymentDuesBean;
 import com.dexpert.feecollection.main.fee.lookup.LookupDAO;
@@ -235,6 +236,86 @@ public class ApplicantFeeCollectionDAO {
 		session.save(transaction);
 		hibernateTran.commit();
 		session.close();
+	}
+	
+	public void updateTransTable(String txnId, String RspCode, String dueStr, String studentEnrollmentNo, String payMode) {
+		TransactionBean newBean = new TransactionBean();
+		newBean.setTxnId(txnId);
+		Session session = factory.openSession();
+
+		log.info("DUe String is ::" + dueStr);
+		try {
+			log.info("updateTransTable method :");
+			TransactionBean oldBean = (TransactionBean) session.get(TransactionBean.class, txnId);
+
+			if (RspCode.equals("0")) {
+				Transaction transaction = session.beginTransaction();
+
+				oldBean.setStatus("Paid");
+
+				session.merge(oldBean);
+				transaction.commit();
+
+				if (dueStr.contains("!")) {
+					log.info("If ::::::::::::::::");
+					String collectionOfFeeIdAndAmount[] = dueStr.split("!");
+					log.info("collection Array 11111" + collectionOfFeeIdAndAmount[0]);
+					log.info("Size of comple Array" + collectionOfFeeIdAndAmount.length);
+					for (String singleFeeIdAndAmount : collectionOfFeeIdAndAmount) {
+
+						String feeIdAndAmount[] = singleFeeIdAndAmount.split("~");
+						log.info("Array size after spiting by ~" + feeIdAndAmount[0]);
+						log.info("Fee Id AMount is ::" + feeIdAndAmount[0]);
+						log.info("Enrollment  is ::" + studentEnrollmentNo);
+
+						SQLQuery sqlQuery = session
+								.createSQLQuery("SELECT * FROM sgi.fee_dues_master where feeId=:feeId and enrollmentNumber_Fk=:enroll");
+						sqlQuery.setParameter("feeId", feeIdAndAmount[0]);
+						sqlQuery.setParameter("enroll", studentEnrollmentNo);
+						sqlQuery.addEntity(PaymentDuesBean.class);
+						PaymentDuesBean paymentDue = (PaymentDuesBean) sqlQuery.list().iterator().next();
+						Transaction tran = session.beginTransaction();
+						paymentDue.setNetDue((paymentDue.getNetDue() - Double.parseDouble(feeIdAndAmount[1])));
+						Double paymentToDate = paymentDue.getPayments_to_date() == null ? 0.0d : paymentDue
+								.getPayments_to_date();
+						log.info("payment to date" + paymentToDate);
+						paymentDue.setPayments_to_date(paymentToDate + Double.parseDouble(feeIdAndAmount[1]));
+						session.merge(paymentDue);
+						tran.commit();
+					}
+
+				}
+
+				else {
+
+					String feeIdAndAmount[] = dueStr.split("~");
+					SQLQuery sqlQuery = session
+							.createSQLQuery("SELECT * FROM sgi.fee_dues_master where feeId=:feeId and enrollmentNumber_Fk=:enroll");
+					sqlQuery.setParameter("feeId", feeIdAndAmount[0]);
+					sqlQuery.setParameter("enroll", studentEnrollmentNo);
+					sqlQuery.addEntity(PaymentDuesBean.class);
+					PaymentDuesBean paymentDue = (PaymentDuesBean) sqlQuery.list().iterator().next();
+					Transaction tran = session.beginTransaction();
+					paymentDue.setNetDue((paymentDue.getNetDue() - Double.parseDouble(feeIdAndAmount[1])));
+					paymentDue.setPayments_to_date(paymentDue.getPayments_to_date() == null ? 0.0d : paymentDue
+							.getPayments_to_date() + Double.parseDouble(feeIdAndAmount[1]));
+					session.merge(paymentDue);
+					tran.commit();
+
+				}
+
+			} else {
+				Transaction transaction = session.beginTransaction();
+				oldBean.setStatus("Declined");
+				session.merge(oldBean);
+				transaction.commit();
+			}
+
+		} finally {
+
+			session.close();
+		}
+
 	}
 
 }

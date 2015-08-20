@@ -343,7 +343,8 @@
 			method="UpdateCalcParameters">
 			<result name="success">Success.jsp</result>
 		</action>
-
+		
+		
 		<action name="RetrieveUserSession"
 			class="com.dexpert.feecollection.main.RetrieveUserSessionAction"
 			method="RetrieveSessionUpdateTrans">

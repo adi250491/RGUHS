@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
+import com.dexpert.feecollection.challan.TransactionBean;
 import com.dexpert.feecollection.main.fee.config.FcDAO;
 import com.dexpert.feecollection.main.fee.lookup.LookupAction;
 import com.dexpert.feecollection.main.users.affiliated.AffBean;
