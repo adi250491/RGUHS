@@ -16,13 +16,14 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class EmailSessionBean {
-
+	
+	
 	private int port = 587;
-	private String host = "send.one.com";
-	private String from = "aditya@dexpertsystems.com";
+	private String host = "smtp.gmail.com";
+	private String from = "feedesk@srslive.in";
 	private boolean auth = true;
-	private String username = "aditya@dexpertsystems.com";
-	private String password = "Perfection33";
+	private String username = "feedesk@srslive.in";
+	private String password = "feedesk@srs";
 	private Protocol protocol = Protocol.TLS;
 	private boolean debug = true;
 
