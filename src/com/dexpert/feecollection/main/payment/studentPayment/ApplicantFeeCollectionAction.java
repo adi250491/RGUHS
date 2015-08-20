@@ -1,7 +1,10 @@
 package com.dexpert.feecollection.main.payment.studentPayment;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +17,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
+import com.dexpert.feecollection.main.fee.config.FcDAO;
 import com.dexpert.feecollection.main.fee.lookup.LookupAction;
+import com.dexpert.feecollection.main.users.affiliated.AffBean;
+import com.dexpert.feecollection.main.users.affiliated.AffDAO;
 import com.dexpert.feecollection.main.users.applicant.AppBean;
 import com.dexpert.feecollection.main.users.applicant.AppDAO;
 import com.opensymphony.xwork2.ActionSupport;
@@ -24,22 +30,68 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	HttpSession httpSession = request.getSession();
-	static Logger log = Logger.getLogger(LookupAction.class.getName());
+	static Logger log = Logger.getLogger(ApplicantFeeCollectionAction.class.getName());
 
 	Map<String, String> serviceList = new HashMap<String, String>();
 	Map<String, String> serviceListSelected = new HashMap<String, String>();
 	Map<String, String> courseList = new HashMap<String, String>();
+	Map<String, String> courseListSelected = new HashMap<String, String>();
 	Map<String, String> nationalityList = new HashMap<String, String>();
+	Map<String, String> nationalitySelected = new HashMap<String, String>();
 	Map<String, String> facultyList = new HashMap<String, String>();
-
+	Map<String, String> facultyListSelected = new HashMap<String, String>();
+	private String noValidate = "1";
 	ApplicantFeeCollectionBean feeCollectionBean = new ApplicantFeeCollectionBean();
 	ApplicantFeeCollectionDAO dao = new ApplicantFeeCollectionDAO();
-	AppBean appBean1 = new AppBean();
+	AppBean appBean1;
 	List<ApplicantFeeCollectionBean> collectionBeanList = new ArrayList<ApplicantFeeCollectionBean>();
 	ApplicantFeeCollectionDAO afc = new ApplicantFeeCollectionDAO();
 	AppDAO appDAO = new AppDAO();
+	FcDAO fcDAO = new FcDAO();
+	AffDAO affDAO = new AffDAO();
 
 	// //
+
+	public String responseHandelling() {
+
+		String respCode = request.getParameter("RPS");
+		log.info("responese code:::::: "+respCode);
+		String txnId = request.getParameter("txnID");
+		log.info("Transaction id returned by sabpaisa="+txnId);
+		String paymentMode = request.getParameter("paymentMode");
+		log.info("payment mode is::::"+paymentMode);
+		if (paymentMode.contentEquals("Cash") || paymentMode.contentEquals("Cheque")||paymentMode.contentEquals("null")) {
+			if (respCode.contentEquals("0")) {
+				afc.updateTransactionStatus(txnId, null, paymentMode);
+			} else  {
+				afc.updateTransactionStatus(txnId, "Cancelled", paymentMode);
+				return "home";
+			}
+
+		} else {
+			if (respCode.equals("0")) {
+				httpSession = (HttpSession) request.getServletContext().getAttribute(txnId);
+				HashMap<String, String> hmap = (HashMap<String, String>) httpSession.getAttribute("hmap");
+				String dueString=hmap.get("dueString");
+				String enrollmentNumber=hmap.get("enrollId");
+				Integer insId=null;
+				if(enrollmentNumber==null){
+				try{	
+				insId=Integer.parseInt(hmap.get("insId"));
+				}catch(NumberFormatException nf)
+				{
+				insId=null;	
+				}
+				}
+			 afc.updateTransactionStatus(txnId, "Paid", paymentMode);	
+			 afc.updateFeeduesTableDetail(dueString, enrollmentNumber, insId);
+
+			} else {
+
+			}
+		}
+		return SUCCESS;
+	}
 
 	// get Student Service Detail
 
@@ -54,12 +106,36 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 	}
 
 	public String submitParameter() {
-		ApplicantFeeCollectionBean tempBean=feeCollectionBean;
-		feeCollectionBean = afc.calculateTotalFee(feeCollectionBean);
+
+		ApplicantFeeCollectionBean tempBean = feeCollectionBean;
+
+		try {
+
+			feeCollectionBean = afc.calculateTotalFee(feeCollectionBean);
+
+		} catch (java.util.NoSuchElementException e) {
+
+			feeCollectionBean.setFee(0.0);
+			log.info("Combination Not available");
+		}
+
 		feeCollectionBean.setService_type(tempBean.getService_type());
-		log.info("enroll ment  number ::" + appBean1.getEnrollmentNumber());
-		appBean1 = appDAO.getUserDetail(appBean1.getEnrollmentNumber());
-		serviceListSelected.put(feeCollectionBean.getService_type(), serviceList.get(feeCollectionBean.getService_type()));
+		feeCollectionBean.setCourse(tempBean.getCourse());
+		feeCollectionBean.setNationality(tempBean.getNationality());
+		feeCollectionBean.setFaculty(tempBean.getFaculty());
+
+		// appBean1 = appDAO.getUserDetail(appBean1.getEnrollmentNumber());
+
+		serviceListSelected.put(feeCollectionBean.getService_type(),
+				serviceList.get(feeCollectionBean.getService_type()));
+
+		facultyListSelected.put(feeCollectionBean.getFaculty(), facultyList.get(feeCollectionBean.getFaculty()));
+
+		courseListSelected.put(feeCollectionBean.getCourse(), courseList.get(feeCollectionBean.getCourse()));
+
+		nationalitySelected.put(feeCollectionBean.getNationality(),
+				nationalityList.get(feeCollectionBean.getNationality()));
+
 		serviceList = dao.serviceTypeList();
 		courseList = dao.courseList();
 		facultyList = dao.facultyList();
@@ -68,20 +144,76 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	// jumping to payment Gateway
+	// jumping to payment Gateway for RGUHS
 
 	public void studentToPaymentGateway() throws IOException {
-
-		String enrolId = request.getParameter("enrollId");
 		String fee = request.getParameter("feeValue");
-		log.info("Enroll ment Id is ::" + enrolId);
-
+		String url = null;
+		TransactionBean tran = new TransactionBean();
+		// HttpSession httpSession =
+		// ServletActionContext.getRequest().getSession();
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		Date date = new Date(timestamp.getTime());
+		String txnId = Idgenerator.transxId();
+		log.info("Session Started");
+		String enrolId = request.getParameter("enrollId");
 		appBean1 = appDAO.getUserDetail(enrolId);
-		String user = appBean1.getAplFirstName().concat(" ").concat(appBean1.getAplLstName());
+		String returnUrl = "http://localhost:8080/RGUHS0.0.3.3/ReturnPage.jsp";
+		if (appBean1 != null) {
 
-		log.info("enrollment Number ::" + enrolId);
-		log.info("Total Fee CAlculated ::" + fee);
-		String url = "http://localhost:8083/SabPaisa/?name=" + user + "&amount=" + fee;
+			// tran.setDueString(dueString);
+			tran.setInsId(appBean1.getAffBean().getInstId());
+			tran.setPayeeAdd(appBean1.getAplAddress());
+			tran.setPayeeAmount(Double.parseDouble(request.getParameter("feeValue")));
+			tran.setPayeeEmail(appBean1.getAplEmail());
+			tran.setPayeeMob(appBean1.getAplMobilePri());
+			tran.setPayeeName(appBean1.getAplFirstName() + appBean1.getAplLstName());
+			tran.setStatus("Pending");
+			tran.setTransDate(date);
+			tran.setTxnId(txnId);
+			String user = appBean1.getAplFirstName().concat(" ").concat(appBean1.getAplLstName());
+			url = "http://localhost:2015/SabPaisa?Name=" + user + "&amt=" + fee + "&RollNo="
+					+ appBean1.getEnrollmentNumber() + "&Contact=" + appBean1.getAplMobilePri() + "&Email="
+					+ appBean1.getAplEmail() + "&client=RGUHS" + "&ru=" + returnUrl + "&hmap=" + "&txnId=" + txnId;
+
+		} else {
+			// tran.setDueString(dueString);
+			// tran.setInsId(insId);
+			// tran.setPayeeAdd(affBean.getInstAddress());
+			tran.setPayeeAmount(Double.parseDouble(fee));
+			tran.setPayeeEmail(request.getParameter("email"));
+			tran.setPayeeMob(request.getParameter("contact"));
+			tran.setPayeeName(request.getParameter("firstName").concat(request.getParameter("lstName")));
+			tran.setStatus("Pending");
+			tran.setTransDate(date);
+			tran.setTxnId(txnId);
+			String user = request.getParameter("firstName").concat(request.getParameter("lstName"));
+			url = "http://localhost:2015/SabPaisa?Name=" + user + "&amt=" + fee + "&RollNo=" + enrolId + "&Contact="
+					+ request.getParameter("contact") + "&Email=" + request.getParameter("email") + "&client=RGUHS"
+					+ "&ru=" + returnUrl + "&hmap=" + "&txnId=" + txnId;
+
+		}
+
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("enrollId", enrolId);
+		hashMap.put("txnID", txnId);
+		hashMap.put("QP", "True");
+		httpSession.setAttribute("dueStr", "");
+		httpSession.setAttribute("hmap", hashMap);
+		httpSession.getServletContext().setAttribute(txnId, httpSession);
+
+		// String returnUrl =
+		// "http://49.50.72.228:8080/RGUHS0.3.2/ReturnPage.jsp";
+		appBean1 = appDAO.getUserDetail(enrolId);
+
+		dao.saveStudentTransaction(tran);
+
+		// String url = "http://49.50.72.228:8080/SabPaisa?Name=" + user +
+		// "&amt=" + fee + "&RollNo="
+		// + appBean1.getEnrollmentNumber() + "&Contact=" +
+		// appBean1.getAplMobilePri() + "&Email="
+		// + appBean1.getAplEmail() + "&client=RGUHS" + "&ru=" + returnUrl +
+		// "&hmap=" + "&txnId=" + transId;
 		response.sendRedirect(url);
 
 	}
@@ -90,11 +222,55 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 
 	public void instPaymentGateway() throws IOException {
 
-		String user = request.getParameter("feeName");
 		String fee = request.getParameter("amt");
+		String user = request.getParameter("feeName");
+		log.info("Fee Name is" + user);
+		Integer feeId = fcDAO.getFeeIdByName(user);
+		String dueString = feeId.toString().concat("~").concat(fee);
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		Date date = new Date(timestamp.getTime());
+		Integer insId = (Integer) httpSession.getAttribute("sesId");
+		AffBean affBean = affDAO.getOneCollegeRecord(insId);
+		String txnId = Idgenerator.transxId();
+		log.info("Transaction id generated by client"+txnId);
+		TransactionBean tran = new TransactionBean();
+		tran.setDueString(dueString);
+		tran.setInsId(insId);
+		tran.setPayeeAdd(affBean.getInstAddress());
+		tran.setPayeeAmount(Double.parseDouble(fee));
+		tran.setPayeeEmail(affBean.getEmail());
+		tran.setPayeeMob(affBean.getContactNumber());
+		tran.setPayeeName(affBean.getInstName());
+		tran.setStatus("Pending");
+		tran.setTransDate(date);
+		tran.setTxnId(txnId);
+		//
+		dao.insertPaymentDetails(tran);
 
-		String url = "http://localhost:8083/SabPaisa/?name=" + user + "&amount=" + fee;
+		String returnUrl = "http://localhost:8080/RGUHS0.0.3.3/ReturnPage.jsp";
+
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+
+		hashMap.put("insId", insId.toString());
+		hashMap.put("txnID", txnId);
+		hashMap.put("dueString",dueString);
+		httpSession.setAttribute("hmap", hashMap);
+		httpSession.getServletContext().setAttribute(txnId, httpSession);
+
+		// String url = "http://49.50.72.228:8080/SabPaisa?Name=" + name +
+		// "&amt=" + fee + "&txnId=" + txnId + "&RollNo="
+		// + enrollmentId + "&client=SGI" + "&ru=" +
+		// returnUrl+"&Contact="+mobileNumberPrimary;
+
+		String url = "http://localhost:2015/SabPaisa?Name=" + affBean.getInstName() + "&amt=" + fee + "&txnId=" + txnId
+				+ "&RollNo=" + null + "&client=RGU" + "&ru=" + returnUrl + "&Contact=" + affBean.getContactNumber();
+
 		response.sendRedirect(url);
+
+		/*
+		 * String url = "http://49.50.72.228:8080/SabPaisa?name=" + user +
+		 * "&amount=" + fee; response.sendRedirect(url);
+		 */
 
 	}
 
@@ -163,5 +339,12 @@ public class ApplicantFeeCollectionAction extends ActionSupport {
 		this.serviceListSelected = serviceListSelected;
 	}
 
-	
+	public String getNoValidate() {
+		return noValidate;
+	}
+
+	public void setNoValidate(String noValidate) {
+		this.noValidate = noValidate;
+	}
+
 }

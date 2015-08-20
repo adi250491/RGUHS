@@ -49,11 +49,11 @@ public class ParBean implements Serializable {
 	// ------------------------------------
 
 	// one to many relation ship with Institutes
-	@OneToMany( fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parBeanManyToOne")
 	Set<AffBean> affBeanOneToManySet;
 
-	// @OneToOne(cascade = CascadeType.ALL, mappedBy = "parBeanOneToOne")
-	// private AffBean affBeanOneToOneBi;
+	/*@OneToOne(cascade = CascadeType.ALL,mappedBy="parBeanOneToOne")
+	private AffBean affBeanOneToOneBi;*/
 
 	@OneToOne(cascade = CascadeType.ALL)
 	LoginBean loginBean;
@@ -153,5 +153,7 @@ public class ParBean implements Serializable {
 	public void setAffBeanOneToManySet(Set<AffBean> affBeanOneToManySet) {
 		this.affBeanOneToManySet = affBeanOneToManySet;
 	}
+
+	
 
 }

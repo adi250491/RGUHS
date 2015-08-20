@@ -302,7 +302,7 @@
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="RemoveFee">
 
-			<result name="success" >Success.jsp</result>
+			<result name="success">Success.jsp</result>
 			<result name="error">Success.jsp</result>
 
 		</action>
@@ -328,19 +328,28 @@
 			method="collegeDueReport">
 
 			<result name="success">College-Due-Report.jsp</result>
+		</action>
+		<action name="TranactionReport"
+			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
+			method="getInsTransactionDetails">
+
+			<result name="success">/Transaction-Due-Report.jsp</result>
 
 
 		</action>
+
 		<action name="saveFeeCalcDetails"
 			class="com.dexpert.feecollection.main.users.affiliated.AffAction"
 			method="UpdateCalcParameters">
-
 			<result name="success">Success.jsp</result>
-
-
 		</action>
 
-
+		<action name="RetrieveUserSession"
+			class="com.dexpert.feecollection.main.RetrieveUserSessionAction"
+			method="RetrieveSessionUpdateTrans">
+			<result name="home" type="redirect">getInstDues</result>
+			<result name="quickPay" type="redirect">StudentQuickPayMod</result>
+		</action>
 
 	</package>
 
@@ -569,6 +578,15 @@
 
 			<result name="success">Student-Detail-For-QuickPayNoValidation.jsp
 			</result>
+		</action>
+
+
+		<action name="ResponseAction"
+			class="com.dexpert.feecollection.main.payment.studentPayment.ApplicantFeeCollectionAction"
+			method="responseHandelling">
+
+			<result name="success">TransactionResponsePage.jsp</result>
+            <result name="home" type="redirect">getInstDues</result>
 		</action>
 	</package>
 

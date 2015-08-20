@@ -465,9 +465,12 @@ public class FcAction extends ActionSupport {
 				AffFeePropBean temp = feeIt.next();
 				if (temp.getFeeId() == id) {
 					feePropbean = temp;
-					if(temp.getCalcFlag()==1)
+					log.info("temp is"+temp.getCalcFlag());
+					if((temp.getCalcFlag()==null?0:temp.getCalcFlag())==1)
 					{
+						
 						editFlag=1;
+						
 					}
 				}
 
@@ -562,6 +565,7 @@ public class FcAction extends ActionSupport {
 		{
 			//return error when no no config found in feedetail bean
 			return ERROR;
+			
 		}
 	}
 	

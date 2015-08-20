@@ -35,6 +35,7 @@ import com.dexpert.feecollection.main.fee.config.FeeDetailsBean;
 import com.dexpert.feecollection.main.fee.lookup.LookupBean;
 import com.dexpert.feecollection.main.fee.lookup.LookupDAO;
 import com.dexpert.feecollection.main.fee.lookup.values.FvBean;
+import com.dexpert.feecollection.main.payment.studentPayment.TransactionBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
@@ -57,6 +58,7 @@ public class AffAction extends ActionSupport {
 	private ArrayList<AffFeeCalcDetail> calcList = new ArrayList<AffFeeCalcDetail>();
 	private AffFeePropBean propbean;
 	ArrayList<AffFeePropBean> dueList = new ArrayList<AffFeePropBean>();
+	List<ParBean> parBeansList = new ArrayList<ParBean>();
 	AffDAO affDao = new AffDAO();
 	ParBean parBean = new ParBean();
 	ParDAO parDAO = new ParDAO();
@@ -74,7 +76,8 @@ public class AffAction extends ActionSupport {
 	private String fileUploadFileName;
 	private Integer fileSize;
 	private String contentType;
-
+	private AffBean affBean;
+    private List<TransactionBean> transactionDetailsForReport;
 	// End of Global Variables
 
 	// ---------------------------------------------------
@@ -91,7 +94,7 @@ public class AffAction extends ActionSupport {
 		if (instNameList.isEmpty()) {
 
 			if (parInstId == null) {
-
+				parBeansList = parDAO.getUniversityList();
 				request.setAttribute("msg", "Please Select University");
 				return "failure";
 
@@ -133,7 +136,7 @@ public class AffAction extends ActionSupport {
 				creds.setAffBean(affInstBean);
 
 				// one to one relationship
-				affInstBean.setParBeanOneToOne(parBean1);
+				// affInstBean.setParBeanOneToOne(parBean1);
 				if (creds.getProfile().equals("Admin")) {
 
 					// for bidirectional relationship ,set child record to
@@ -175,7 +178,7 @@ public class AffAction extends ActionSupport {
 
 		else {
 			log.info("College NAME ALREADY AVAILABLE");
-
+			parBeansList = parDAO.getUniversityList();
 			request.setAttribute("msg", "Institute Name is Already Registered");
 			return "failure";
 		}
@@ -355,12 +358,17 @@ public class AffAction extends ActionSupport {
 			File f = new File(path + "/RGUHS/");
 			f.mkdir();
 
+			// try {
 			affBeansList = affDao.importExcelFileToDatabase(fileUploadFileName, fileUpload, f + File.separator);
+			// } catch (java.lang.NullPointerException e) {
 
+			// request.setAttribute("msg",
+			// "Please Create University Credential First");
+			// return ERROR;
+			// }
 			Iterator<AffBean> iterator = affBeansList.iterator();
 			while (iterator.hasNext()) {
 				AffBean affBean = (AffBean) iterator.next();
-				log.info("Colleges in action class are ::" + affBean.getInstName());
 
 			}
 
@@ -388,9 +396,7 @@ public class AffAction extends ActionSupport {
 			for (int i = 0; i < feeList.size(); i++) {
 				if (instfeeList.get(j).getFeeId() == feeList.get(i).getFeeId()) {
 					feeList.get(i).setGenericFlag(1);
-				}
-				else
-				{
+				} else {
 					feeList.get(i).setGenericFlag(0);
 				}
 			}
@@ -467,22 +473,23 @@ public class AffAction extends ActionSupport {
 			return ERROR;
 		}
 	}
-	public String RemoveFee() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException
-	{
-		Integer feeId=Integer.parseInt(request.getParameter("reqFeeId").trim());
-		Integer instId=Integer.parseInt(request.getParameter("collId").trim());
+
+	public String RemoveFee() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException,
+			InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException,
+			BadPaddingException {
+		Integer feeId = Integer.parseInt(request.getParameter("reqFeeId").trim());
+		Integer instId = Integer.parseInt(request.getParameter("collId").trim());
 		AffBean collegedata = affDao.getOneCollegeRecord(instId);
-		ArrayList<FeeDetailsBean>feeList=new ArrayList<FeeDetailsBean>(collegedata.getFeeSet());
+		ArrayList<FeeDetailsBean> feeList = new ArrayList<FeeDetailsBean>(collegedata.getFeeSet());
 		for (int i = 0; i < feeList.size(); i++) {
-			if(feeId==feeList.get(i).getFeeId())
-				{
+			if (feeId == feeList.get(i).getFeeId()) {
 				feeList.remove(i);
-				}
+			}
 		}
 		collegedata.setFeeSet(new HashSet<FeeDetailsBean>(feeList));
-		collegedata=affDao.saveOrUpdate(collegedata, null);
+		collegedata = affDao.saveOrUpdate(collegedata, null);
 		request.setAttribute("msg", "Fees Updated Successfully");
-		request.setAttribute("redirectlink", "ViewCollegeFees?instId="+instId);
+		request.setAttribute("redirectlink", "ViewCollegeFees?instId=" + instId);
 		return SUCCESS;
 	}
 
@@ -552,8 +559,10 @@ public class AffAction extends ActionSupport {
 	// to get College Due Report
 
 	public String collegeDueReport() {
-		log.info("COllege Due Report");
-
+		// Get id from session
+		Integer id = (Integer) ses.getAttribute("sesId");
+        //get the affBean from db to get set of due
+		affBean=affDao.getCollegeDues(id);
 		return SUCCESS;
 	}
 
@@ -595,8 +604,6 @@ public class AffAction extends ActionSupport {
 		ses.removeAttribute("sesFeeId");
 		return SUCCESS;
 	}
-
-	// End of Action Methods
 
 	private ArrayList<AffFeePropBean> calculateFee(AffBean institute) {
 		// Get Associated Fees
@@ -651,6 +658,14 @@ public class AffAction extends ActionSupport {
 
 	}
 
+	public String getInsTransactionDetails() {
+		Integer insId = (Integer) ses.getAttribute("sesId");
+		String superAdmin=(String)ses.getAttribute("sesProfile");
+		transactionDetailsForReport =affDao.getTransactionDetails(insId,superAdmin);
+		return SUCCESS;
+	}
+
+	// End of Action Methods
 	// ---------------------------------------------------
 
 	// Keep Getter Setter Methods Here
@@ -821,6 +836,41 @@ public class AffAction extends ActionSupport {
 	public void setList(List<String> list) {
 		this.list = list;
 	}
+
+	public List<ParBean> getParBeansList() {
+		return parBeansList;
+	}
+
+	public void setParBeansList(List<ParBean> parBeansList) {
+		this.parBeansList = parBeansList;
+	}
+
+	public List<AffBean> getAffInstList() {
+		return affInstList;
+	}
+
+	public void setAffInstList(List<AffBean> affInstList) {
+		this.affInstList = affInstList;
+	}
+
+	public AffBean getAffBean() {
+		return affBean;
+	}
+
+	public void setAffBean(AffBean affBean) {
+		this.affBean = affBean;
+	}
+
+	public List<TransactionBean> getTransactionDetailsForReport() {
+		return transactionDetailsForReport;
+	}
+
+	public void setTransactionDetailsForReport(List<TransactionBean> transactionDetailsForReport) {
+		this.transactionDetailsForReport = transactionDetailsForReport;
+	}
+	
+	
+	
 
 	// End of Getter Setter Methods
 }

@@ -144,7 +144,9 @@
 						class="hidden-sm hidden-xs"> Cart</span> <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="College-Payment-Summary.html">Proceed To
+					<li><a href="College-
+
+ment-Summary.html">Proceed To
 							Checkout</a></li>
 					<li class="divider"></li>
 					<li><a href="#"
@@ -291,13 +293,14 @@
 														</s:set> <s:if test='%{#dueAmt >"0"&&calcFlag==1}'>
 
 															<input type="button" class="btn btn-danger"
-																onclick="openPaymentGateway(<s:property value="dueBean.netDue" default="0"  />)"
+																onclick="openPaymentGateway('<s:property value="dueBean.netDue" default="0"  />','<s:property value="feeName" />')"
 																value="Pay">
 
 														</s:if>
 														<button
 															onclick='window.open("getFeeCalcDetails?instId=<%=session.getAttribute("sesId").toString()%>&reqFeeId=<s:property value='feeId'/>","CalcDetails","height=768,width=1024")'
-															class="btn btn-success btn-sm">Calculation Details</button></td>
+															class="btn btn-success btn-sm">Calculation
+															Details</button></td>
 												</tr>
 
 												<%
@@ -310,9 +313,9 @@
 									</table>
 
 									<script type="text/javascript">
-									function openPaymentGateway(dueAmt) {
-						var feeNm=document.getElementById('feeName').value;
-										window.location = "instPaymentGateway?feeName="+feeNm+"&amt="+dueAmt;
+									function openPaymentGateway(dueAmt,feeName) {
+						
+					   window.location = "instPaymentGateway?feeName="+feeName+"&amt="+dueAmt;
 
 									}
 								</script>

@@ -173,12 +173,11 @@ public class AppDAO {
 			Criteria criteria = session.createCriteria(AppBean.class);
 			criteria.add(Restrictions.eq("enrollmentNumber", EnrId));
 
-			AppBean appBeanList=new AppBean();
+			AppBean appBeanList=null;
 			try {
 				appBeanList = (AppBean) criteria.list().iterator().next();
 			} catch (java.util.NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				appBeanList=null;
 			}
 			return appBeanList;
 

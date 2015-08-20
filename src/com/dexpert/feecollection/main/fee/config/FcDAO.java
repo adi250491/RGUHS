@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
@@ -45,8 +47,8 @@ public class FcDAO {
 			session.close();
 		}
 	}
-	public void saveFeeDetails(FeeDetailsBean savedata)
-	{
+
+	public void saveFeeDetails(FeeDetailsBean savedata) {
 		// Declarations
 
 		// Open session from session factory
@@ -55,7 +57,7 @@ public class FcDAO {
 			session.beginTransaction();
 			session.saveOrUpdate(savedata);
 			session.getTransaction().commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -77,11 +79,11 @@ public class FcDAO {
 			} else if (filterKey.contentEquals("payee")) {
 				if (filterValue.contentEquals("applicant")) {
 					feeCr.add(Restrictions.eq("forApplicant", 1));
-					
+
 				}
 				if (filterValue.contentEquals("institute")) {
 					feeCr.add(Restrictions.eq("forInstitute", 1));
-									}
+				}
 			} else if (filterKey.contentEquals("name")) {
 				feeCr.add(Restrictions.eq("feeName", filterValue));
 			} else if (filterKey.contentEquals("id")) {
@@ -107,5 +109,15 @@ public class FcDAO {
 		}
 	}
 
+	// 786
+	public Integer getFeeIdByName(String feeName) {
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(FeeDetailsBean.class);
+		criteria.add(Restrictions.eq("feeName", feeName)).setProjection(Projections.property("feeId"));
+		Integer feeId = (Integer) criteria.list().iterator().next();
+		session.close();
+		return feeId;
+
+	}
 	// DAO Methods End
 }

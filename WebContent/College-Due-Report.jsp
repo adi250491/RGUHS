@@ -170,14 +170,14 @@
 								href='<%=session.getAttribute("dashLink").toString()%>'><i
 									class="glyphicon glyphicon-home"></i><span> Dashboard</span></a></li>
 							<%
-								if (profile.contentEquals("SU")){
+								if (profile.contentEquals("SU")) {
 							%><li><a class="ajax-link" href="UniversityDetailRecord"><i
 									class="fa fa-building"></i><span> Parent Institute</span></a></li>
 							<%
 								}
 							%>
 							<%
-								if (!profile.contentEquals("Affiliated")){
+								if (!profile.contentEquals("Affiliated")) {
 							%>
 							<li><a class="ajax-link" href="getCollegeList"><i
 									class="fa fa-building"></i><span> Affiliated Institutes</span></a></li>
@@ -185,14 +185,14 @@
 								}
 							%>
 							<%
-								if (profile.contentEquals("Affiliated")){
+								if (profile.contentEquals("Affiliated")) {
 							%><li><a class="ajax-link" href="StudentTotalRecord"><i
 									class="glyphicon glyphicon-home"></i><span> Student</span></a></li>
 							<%
 								}
 							%>
 							<%
-								if (!profile.contentEquals("Affiliated")){
+								if (!profile.contentEquals("Affiliated")) {
 							%>
 							<li><a class="ajax-link" href="Admin-FeeConfig.jsp"><i
 									class="fa fa-building"></i><span> Fee Configuration</span></a></li>
@@ -200,7 +200,7 @@
 								}
 							%>
 							<%
-								if (profile.contentEquals("Affiliated")){
+								if (profile.contentEquals("Affiliated")) {
 							%><li><a class="ajax-link" href="getInstDues"><i
 									class="fa fa-list-alt"></i><span> Fee Payment</span></a></li>
 							<%
@@ -243,7 +243,8 @@
 						<div class="box-inner">
 							<div class="box-header well">
 								<h2>
-									<i class="glyphicon glyphicon-list-alt"></i> College Due Report Detail
+									<i class="glyphicon glyphicon-list-alt"></i> College Due Report
+									Detail
 								</h2>
 
 								<div class="box-icon">
@@ -269,12 +270,13 @@
 										<thead>
 											<tr>
 												<th width="7%">Sr. No.</th>
+												<th>Payee</th>
+												<th>Due Date</th>
+												<th>Payment To Date</th>
+												<th>Date Calculated</th>
+												<th>Net Due</th>
+												<th>Total_Fee_Amount</th>
 
-												<th>Institute Name</th>
-												<th>Contact Number</th>
-												<th>College Email</th>
-												<th>Institute Address</th>
-												<th>Place</th>
 
 											</tr>
 										</thead>
@@ -282,21 +284,21 @@
 											<%
 												int i = 1;
 											%>
-											<s:iterator value="affInstList">
+											<s:iterator value="affBean.dueFeesSet">
 												<tr>
 													<td><span style="margin-left: 10px;"><%=i%></span></td>
-
 													<td><span style="margin-left: 10px;"><s:property
-																value="instName" /></span></td>
+																value="payee" /></span></td>
 													<td><span style="margin-left: 10px;"><s:property
-																value="contactNumber" /></span></td>
-
+																value="dueDate" /></span></td>
 													<td><span style="margin-left: 10px;"><s:property
-																value="email" /></span></td>
+																value="payments_to_date" /></span></td>
 													<td><span style="margin-left: 10px;"><s:property
-																value="instAddress" /></span></td>
+																value="dateCalculated" /></span></td>
 													<td><span style="margin-left: 10px;"><s:property
-																value="place" /></span></td>
+																value="netDue" /></span></td>
+													<td><span style="margin-left: 10px;"><s:property
+																value="total_fee_amount" /></span></td>
 
 												</tr>
 

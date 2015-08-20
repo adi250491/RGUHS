@@ -361,9 +361,9 @@ boolean view=false;
 		$(function() {
 
 			$('#tags input').on('keyup', function(e) {
-				if (/(188|13)/.test(e.which)) {
+			if (/(188|13)/.test(e.which)) {
 
-					var txt = this.value.replace(/[^a-zA-Z]/g, '');
+					var txt = this.value.replace(",", '');
 					AddToArray(txt);
 					if (txt) {
 						$(this).before('<span class="tag">' + txt + '</span>');

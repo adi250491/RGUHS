@@ -9,8 +9,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -34,6 +36,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.dexpert.feecollection.main.ConnectionClass;
 import com.dexpert.feecollection.main.communication.email.EmailSessionBean;
+import com.dexpert.feecollection.main.payment.studentPayment.TransactionBean;
 import com.dexpert.feecollection.main.users.LoginBean;
 import com.dexpert.feecollection.main.users.PasswordEncryption;
 import com.dexpert.feecollection.main.users.RandomPasswordGenerator;
@@ -334,12 +337,12 @@ public class AffDAO {
 	@SuppressWarnings("resource")
 	public ArrayList<AffBean> importExcelFileToDatabase(String fileUploadFileName, File fileUpload, String path)
 			throws Exception {
-		ArrayList<AffBean> notAddedCollegeList = new ArrayList<AffBean>();
+		// ArrayList<AffBean> notAddedCollegeList = new ArrayList<AffBean>();
 		String instName, email, ContactPerson, instAddress, place;
 		Integer contactNum, mobileNum;
 		ArrayList<AffBean> affBeansList = new ArrayList<AffBean>();
 		AffBean affBean = new AffBean();
-
+		ArrayList<AffBean> totalCollegeList = new ArrayList<AffBean>();
 		FileInputStream fileInputStream = new FileInputStream(fileUpload);
 
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fileInputStream);
@@ -361,10 +364,6 @@ public class AffDAO {
 				Cell cell = (Cell) cellIterator.next();
 
 				switch (cell.getCellType()) {
-
-				case Cell.CELL_TYPE_NUMERIC:
-
-					break;
 
 				case Cell.CELL_TYPE_STRING:
 
@@ -403,20 +402,16 @@ public class AffDAO {
 			affBean.setPlace(place);
 
 			affBeansList.add(affBean);
-
+			log.info("Parent " + affBean.getInstName());
 			addBulkData(affBean);
-			log.info("Not Addedd COllege List is ::" + notAddedCollegeList.size());
-			// }
-			// notAddedCollegeList.add(affBean);
 
 		}
 
-		return affBeansList;
+		return totalCollegeList;
 
 	}
 
 	// ---------------------------------------------------
-
 	// to save record into Database
 	public ArrayList<AffBean> addBulkData(AffBean affBean) throws InvalidKeyException, NoSuchAlgorithmException,
 			InvalidKeySpecException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
@@ -425,9 +420,11 @@ public class AffDAO {
 		ArrayList<AffBean> collegeListFromDB = new ArrayList<AffBean>();
 		ArrayList<AffBean> notAddedCollegeList = new ArrayList<AffBean>();
 		collegeListFromDB = getCollegesListByInstName(affBean);
-
+		HttpSession httpSession = request.getSession();
+		LoginBean loginBean = (LoginBean) httpSession.getAttribute("loginUserBean");
+		String userprofile = httpSession.getAttribute("sesProfile").toString();
+		log.info("CHild " + affBean.getInstName());
 		if (collegeListFromDB.isEmpty()) {
-			log.info(affBean.getInstName() + " is new in Table ");
 
 			String username;
 
@@ -445,24 +442,49 @@ public class AffDAO {
 			PasswordEncryption.encrypt(password);
 			String encryptedPwd = PasswordEncryption.encStr;
 
+			// ------------------------------------------
 			LoginBean creds = new LoginBean();
 			creds.setPassword(encryptedPwd);
 			creds.setUserName(username);
 
-			String profile = "Admin";
-			creds.setProfile(profile);
+			String collegeProfile = "Admin";
+			creds.setProfile(collegeProfile);
 			affBean.setLoginBean(creds);
-			creds.setProfile(profile);
+			creds.setProfile(collegeProfile);
 
-			// for bidirectional relationship ,set parent record to child // //
+			// -----------------------------------------
+
+			// one to one Bidirectional relationship with login
+			// for bidirectional relationship ,set parent record to child
 			// record
 			creds.setAffBean(affBean);
+
+			// one to one relationship
+
 			if (creds.getProfile().equals("Admin")) {
 
-				// for bidirectional relationship ,set child record to Parent //
+				// for bidirectional relationship ,set child record to
+				// Parent
 				// record
 				affBean.setLoginBean(creds);
-			} // -----Code for sending email
+
+			}
+
+			// ------------------------------
+			ParBean parBean1 = new ParBean();
+			// one to many Bidirectional relationship
+			Set<AffBean> affBeansSet = new HashSet<AffBean>();
+
+			parBean1 = parDAO.viewUniversity(loginBean.getParBean().getParInstId());
+			log.info("Parent Login is :: " + parBean1.getParInstId() + " ::: " + parBean1.getParInstName());
+			affBeansSet = parBean1.getAffBeanOneToManySet();
+
+			affBeansSet.add(affBean);
+
+			parBean1.setAffBeanOneToManySet(affBeansSet);
+
+			parDAO.saveOrUpdate(parBean1, null);
+			// ----------------------------
 
 			EmailSessionBean email = new EmailSessionBean();
 			email.sendEmail(affBean.getEmail(), "Welcome To Fee Collection Portal!", username, password,
@@ -476,4 +498,26 @@ public class AffDAO {
 		}
 		return notAddedCollegeList;
 	}
+
+	public AffBean getCollegeDues(Integer collegeId) {
+		Session session = factory.openSession();
+		AffBean affBean = (AffBean) session.get(AffBean.class, collegeId);
+		session.close();
+		return affBean;
+	}
+
+	public List<TransactionBean> getTransactionDetails(Integer instituteId, String superAdmin) {
+		List<TransactionBean> transactionDetails = null;
+		Session session = factory.openSession();
+		Criteria criteria = session.createCriteria(TransactionBean.class);
+		if (superAdmin != null) {
+			transactionDetails = criteria.list();
+		} else {
+			transactionDetails = criteria.add(Restrictions.eq("insId", instituteId)).list();
+	
+		}
+
+		return transactionDetails;
+	}
+
 }

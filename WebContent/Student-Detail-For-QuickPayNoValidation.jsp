@@ -115,9 +115,9 @@
 				<%
 					}
 				%>
-				<form action="submitingParameterNoValidate" method="get">
+				<form action="submitingParameterNoValidate" method="post">
 
-
+					<input type="hidden" name="noValidate" value="1">
 
 
 					<div class="row">
@@ -148,16 +148,13 @@
 
 												<tr>
 													<td style="font-weight: bold;">Enrollment Number</td>
-													
 
 
-													<td>
-													<input  type="text" value="0"
-														name="validateFlag" hidden="hidden" >
-													
-													<input style="width: 400px;" type="text"
-														name="appBean1.enrollmentNumber" class="form-control"
-														required="required" id="enrollId"
+
+													<td><input type="text" value="0" name="validateFlag"
+														hidden="hidden"> <input style="width: 400px;" 
+														type="text" name="appBean1.enrollmentNumber" pattern="[a-zA-Z0-9]*"
+														class="form-control" required="required" id="enrollId"
 														value='<s:property value="appBean1.enrollmentNumber" />'></td>
 
 												</tr>
@@ -166,8 +163,9 @@
 
 
 
-													<td><input style="width: 400px;" type="text" name="appBean1.aplFirstName"
-														class="form-control" required="required"
+													<td><input style="width: 400px;" type="text"
+														name="appBean1.aplFirstName" class="form-control"
+														required="required" id="firstNameId"
 														value='<s:property value="appBean1.aplFirstName" />'></td>
 
 												</tr>
@@ -177,17 +175,19 @@
 
 
 													<td><input style="width: 400px;" type="text"
-														name="appBean1.aplLstName" class="form-control" required="required"
+														name="appBean1.aplLstName" class="form-control"
+														required="required" id="lstNameId"
 														value='<s:property value="appBean1.aplLstName" />'></td>
 
 												</tr>
 												<tr>
-													<td style="font-weight: bold;">Contact</td>
+													<td style="font-weight: bold;">Mobile No.</td>
 
 
 
 													<td><input style="width: 400px;" type="text"
-														name="appBean1.aplMobilePri" class="form-control" required="required"
+														name="appBean1.aplMobilePri" class="form-control"
+														required="required" id="contactId" pattern="[789][0-9]{9}"
 														value='<s:property value="appBean1.aplMobilePri" />'></td>
 
 												</tr>
@@ -197,7 +197,8 @@
 
 
 													<td><input style="width: 400px;" type="email"
-														name="email" class="form-control" required="required"
+														id="emailId" name="appBean1.aplEmail" class="form-control"
+														required="required"
 														value='<s:property value="appBean1.aplEmail" />'></td>
 
 												</tr>
@@ -319,6 +320,11 @@
 																		<s:set var="fee">
 																			<s:property value="feeCollectionBean.fee" />
 																		</s:set>
+
+
+
+
+
 																	</div>
 
 																</div>
@@ -346,7 +352,8 @@
 
 
 														<input type="button" class="btn btn-danger"
-															onclick="openPaymentGateway()" value="Proceed For Payment">
+															onclick="openPaymentGateway()"
+															value="Proceed For Payment">
 
 														<script type="text/javascript">
 															function openPaymentGateway() {
@@ -356,19 +363,33 @@
 																var id = document
 																		.getElementById("enrollId").value
 																		.trim();
-																id = id
-																		.replace(
-																				",",
-																				"")
-																id = id
-																		.replace(
-																				" ",
-																				"")
+
+																var fName = document
+																		.getElementById("firstNameId").value
+																		.trim();
+																var lName = document
+																		.getElementById("lstNameId").value
+																		.trim();
+
+																var con = document
+																		.getElementById("contactId").value
+																		.trim();
+																var emailId = document
+																		.getElementById("emailId").value
+																		.trim();
 
 																window.location = "AccessingPaymentGateway?feeValue="
 																		+ fee
 																		+ "&enrollId="
-																		+ id;
+																		+ id
+																		+ "&firstName="
+																		+ fName
+																		+ "&lstName="
+																		+ lName
+																		+ "&contact="
+																		+ con
+																		+ "&email="
+																		+ emailId;
 
 															}
 														</script>

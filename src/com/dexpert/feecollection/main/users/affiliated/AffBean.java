@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -60,17 +61,25 @@ public class AffBean implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	LoginBean loginBean;
 
+	// bidirectional many to one
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "Parent_id_fk", referencedColumnName = "parInstId")
+	ParBean parBeanManyToOne;
+
 	// one to many relationship with Applicants (Students)
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = AppBean.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "InsId_Fk", referencedColumnName = "instId")
 	Set<AppBean> aplBeanSet;
 
 	// one to many relationship with FeeDetails)
-	@ManyToMany( cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "affiliatedinstitute_feedetails", joinColumns = @JoinColumn(name = "inst_id"), inverseJoinColumns = @JoinColumn(name = "feeId"))
 	Set<FeeDetailsBean> feeSet;
 	// one to one bidirectional relationship with student and college
 	// child
+/*
+	@OneToOne(cascade = CascadeType.ALL)
+	private ParBean parBeanOneToOne;*/
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "affBean")
 	private AppBean appBean;
@@ -79,14 +88,12 @@ public class AffBean implements Serializable {
 	@JoinTable(name = "affiliated_values", joinColumns = @JoinColumn(name = "inst_id"), inverseJoinColumns = @JoinColumn(name = "value_id"))
 	Set<FvBean> paramvalues;
 
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<AffFeePropBean> feeProps;
 
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="InsId_FK",referencedColumnName="instId")
 	private Set<PaymentDuesBean> dueFeesSet;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	private ParBean parBeanOneToOne;
 
 	public Set<AppBean> getAplBeanSet() {
 		return aplBeanSet;
@@ -247,12 +254,13 @@ public class AffBean implements Serializable {
 		this.dueFeesSet = dueFeesSet;
 	}
 
-	public ParBean getParBeanOneToOne() {
-		return parBeanOneToOne;
+	public ParBean getParBeanManyToOne() {
+		return parBeanManyToOne;
 	}
 
-	public void setParBeanOneToOne(ParBean parBeanOneToOne) {
-		this.parBeanOneToOne = parBeanOneToOne;
+	public void setParBeanManyToOne(ParBean parBeanManyToOne) {
+		this.parBeanManyToOne = parBeanManyToOne;
 	}
 
+	
 }

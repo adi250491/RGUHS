@@ -284,7 +284,7 @@ try{
 									</p>
 									<p class="btn-group">
 										<button class="btn btn-default" title="Get Transaction Report"
-											onclick="TransactionReport()">Transaction Report</button>
+											onclick="window.location='TranactionReport'">Transaction Report</button>
 									</p>
 
 

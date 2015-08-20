@@ -7,8 +7,8 @@
 
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/rguhs</property>
-		<property name="hibernate.connection.username">dexpertuser</property>
-		<property name="hibernate.connection.password">Dspl_2014</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
 		<property name="hibernate.c3p0.min_size">7</property>
 		<property name="hibernate.c3p0.max_size">10</property>
 		<property name="hibernate.c3p0.timeout">1000</property>
@@ -28,7 +28,8 @@
 		<mapping class="com.dexpert.feecollection.main.users.LoginBean" />
 		<mapping class="com.dexpert.feecollection.main.users.superadmin.SaBean" />
 		<mapping class="com.dexpert.feecollection.main.users.affiliated.AffBean" />
-		<mapping class="com.dexpert.feecollection.main.users.affiliated.AffFeeCalcDetail" />
+		<mapping
+			class="com.dexpert.feecollection.main.users.affiliated.AffFeeCalcDetail" />
 		<mapping
 			class="com.dexpert.feecollection.main.users.affiliated.AffFeePropBean" />
 		<mapping class="com.dexpert.feecollection.main.users.applicant.AppBean" />
@@ -49,7 +50,8 @@
 			class="com.dexpert.feecollection.main.payment.studentPayment.NationalityBean" />
 		<mapping
 			class="com.dexpert.feecollection.main.payment.studentPayment.ServiceTypeBean" />
-
+		<mapping
+			class="com.dexpert.feecollection.main.payment.studentPayment.TransactionBean" />
 
 
 	</session-factory>

@@ -129,8 +129,7 @@
 
 				<form onsubmit="showProgress()" id="bulkForm" action="AddBulkColleges" enctype="multipart/form-data"
 					method="post">
-					<div style="display:none" id="wait"><img src="img/ajax-loaders/ajax-loader-1.gif"
-                                 title="img/ajax-loaders/ajax-loader-1.gif"></div>
+					
 					<div  class="row">
 						<div class="box col-md-12">
 							<div class="box-inner">
@@ -164,15 +163,15 @@
 											<tbody>
 
 
-												<tr>
+												<tr id="browseDiv">
 
-													<td style="font-weight: bold;">Upload Excel File</td>
+													<td style="font-weight: bold;" id="uploadiv">Upload Excel File</td>
 													<td><input type="file" name="fileUpload" size="40"
 														class="form-control" required="required"></td>
 
 												</tr>
 
-												<tr>
+												<tr id="templateDiv">
 													<td colspan="2"><a style="text-align: center;"
 														href="DownloadExcelTemplateFileForCollege">Download
 															Template</a></td>
@@ -192,7 +191,7 @@
 
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-12" id="btnDiv">
 
 							<input type="submit"  class="btn btn-success" value="Upload File">
 
@@ -201,6 +200,10 @@
 							<button onclick="window.close()" class="btn btn-info">Close</button>
 
 						</div>
+						
+						
+						<div style="display:none;text-align: center;" id="wait"><img src="img/ajax-loaders/ajax-loader-6.gif"
+                                 title="img/ajax-loaders/ajax-loader-6.gif"></div>
 
 					</div>
 				</form>
@@ -307,6 +310,9 @@
 		function showProgress()
 		{
 			document.getElementById("wait").style.display="block";
+			document.getElementById("btnDiv").style.display="none";
+			document.getElementById("templateDiv").style.display="none";
+			document.getElementById("uploadiv").disabled=true;
 		}
 		
 	</script>

@@ -76,9 +76,10 @@ public class AppAction extends ActionSupport {
 		HttpSession httpSession = request.getSession();
 		LoginBean loginBean = (LoginBean) httpSession.getAttribute("loginUserBean");
 
-		log.info("Login User Name ::" + loginBean.getUserName());
-		log.info("Login inst ID ::" + loginBean.getAffBean().getInstId());
-		log.info("Login inst Name ::" + loginBean.getAffBean().getInstName());
+		 //log.info("Login User Name ::" + loginBean.getUserName());
+		// log.info("Login inst ID ::" + loginBean.getAffBean().getInstId());
+		// log.info("Login inst Name ::" +
+		// loginBean.getAffBean().getInstName());
 
 		// appBeansList = aplDAO.getAllStudentList();
 		affBean = aplDAO.getStudentDetail(loginBean);

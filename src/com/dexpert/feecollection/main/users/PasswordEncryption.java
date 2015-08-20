@@ -83,6 +83,7 @@ public class PasswordEncryption {
 			utf8 = dcipher.doFinal(enc);
 			String charSet = "UTF-8";
 			plainStr = new String(utf8, charSet);
+			
 			/*logger.info("Decryption message plain Text :" + plainStr);*/
 		} catch (InvalidKeySpecException e) {
 

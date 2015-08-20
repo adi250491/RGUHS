@@ -67,10 +67,10 @@
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 
-			if (cookie.getName().equals("user"))
-				usercookie = cookie.getValue();
-			if (cookie.getName().equals("JSESSIONID"))
-				sessionID = cookie.getValue();
+	if (cookie.getName().equals("user"))
+		usercookie = cookie.getValue();
+	if (cookie.getName().equals("JSESSIONID"))
+		sessionID = cookie.getValue();
 		}
 	} else {
 		sessionID = session.getId();
@@ -128,8 +128,8 @@
 
 
 
-				<form action="AddBulkStudent" enctype="multipart/form-data"
-					method="post">
+				<form action="AddBulkStudent" onsubmit="showProgress()"
+					enctype="multipart/form-data" method="post">
 					<div class="row">
 						<div class="box col-md-12">
 							<div class="box-inner">
@@ -173,7 +173,7 @@
 												</tr>
 
 
-												<tr>
+												<tr id="templateDiv">
 													<td colspan="2"><a style="text-align: center;"
 														href="DownloadExcelTemplateFile">Download Template</a></td>
 
@@ -189,10 +189,14 @@
 
 
 								</div>
+								<div style="display: none; text-align: center;" id="wait">
+									<img src="img/ajax-loaders/ajax-loader-6.gif"
+										title="img/ajax-loaders/ajax-loader-6.gif">
+								</div>
 
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-12" id="btnDiv">
 
 							<input type="submit" id="btnSub" class="btn btn-success"
 								value="Upload File">
@@ -201,32 +205,20 @@
 
 							<button onclick="window.close()" class="btn btn-info">Close</button>
 
-							<div id="msg"></div>
-
-							<%-- <script type="text/javascript">
-								function WaitPage() {
-
-									var x = document.getElementById("btnSub");
-
-									setTimeout(
-											function() {
-												x.disabled = true;
-												document.getElementById("msg").innerHTML = "Please Wait While Processing";
-											}, 3000);
-
-									setTimeout(function() {
-										x.disabled = false;
-									}, 3000);
-
-								}
-							</script> --%>
 
 						</div>
 
 					</div>
 				</form>
 
-
+				<script>
+					function showProgress() {
+						document.getElementById("wait").style.display = "block";
+						document.getElementById("btnDiv").style.display = "none";
+						document.getElementById("templateDiv").style.display = "none";
+						document.getElementById("uploadiv").disabled = true;
+					}
+				</script>
 
 
 

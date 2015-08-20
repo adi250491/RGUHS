@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.dexpert.feecollection.main.users.affiliated.AffBean;
 @Entity
 @Table(name = "fee_dues_master")
 public class PaymentDuesBean implements Serializable {
@@ -21,6 +25,15 @@ public class PaymentDuesBean implements Serializable {
 	private Integer feeId;
 	private Date dueDate,dateCalculated;
 	private Double total_fee_amount,payments_to_date,netDue;
+	@ManyToOne(targetEntity=AffBean.class,fetch=FetchType.EAGER)
+	private AffBean affBean;
+	
+	public AffBean getAffBean() {
+		return affBean;
+	}
+	public void setAffBean(AffBean affBean) {
+		this.affBean = affBean;
+	}
 	public Integer getDueId() {
 		return dueId;
 	}
